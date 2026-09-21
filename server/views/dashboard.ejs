@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head', { title: 'Dashboard' }) %>
+</head>
+<body>
+<div class="app">
+  <%- include('partials/sidebar', { active: 'dashboard' }) %>
+  <div class="main">
+    <%- include('partials/topbar', { title: 'Operations dashboard' }) %>
+    <div class="content">
+      <section class="kpis">
+        <div class="kpi-card">
+          <small>Farmers onboarded</small>
+          <strong>186</strong>
+          <span>▲ 24 this month</span>
+        </div>
+        <div class="kpi-card">
+          <small>Fields monitored</small>
+          <strong>42</strong>
+          <span>96% sensors online</span>
+        </div>
+        <div class="kpi-card">
+          <small>Avg AgriScore</small>
+          <strong>695</strong>
+          <span>▲ 18 vs last cycle</span>
+        </div>
+        <div class="kpi-card">
+          <small>Open advisories</small>
+          <strong>07</strong>
+          <span>3 high priority</span>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>IoT sensor activity</b>
+              <div class="sub">Moisture, nutrients and weather signals this week</div>
+            </div>
+            <div class="select">Last week ▾</div>
+          </div>
+          <div class="metric">42h 18min <span class="up">▲8%</span></div>
+          <div class="bar-chart">
+            <div class="bar-col">
+              <div class="bar-track"><div class="bar" style="height:72%"></div></div>
+              <span class="bar-label">Mon</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-track"><div class="bar" style="height:56%"></div></div>
+              <span class="bar-label">Tue</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-track"><div class="bar" style="height:38%"></div></div>
+              <span class="bar-label">Wed</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-track">
+                <div class="tooltip">
+                  <div>Block B · Thu</div>
+                  <b>Soil pass 5h 12m</b>
+                  Drone 2h 40m<br>
+                  Advisory 19m
+                </div>
+                <div class="bar active" style="height:86%"></div>
+              </div>
+              <span class="bar-label">Thu</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-track"><div class="bar" style="height:68%"></div></div>
+              <span class="bar-label">Fri</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-track"><div class="bar" style="height:78%"></div></div>
+              <span class="bar-label">Sat</span>
+            </div>
+            <div class="bar-col">
+              <div class="bar-track"><div class="bar" style="height:34%"></div></div>
+              <span class="bar-label">Sun</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Drone / NDVI progress</b>
+              <div class="sub">Aerial monitoring across north cluster</div>
+            </div>
+            <div class="select">Maize cycle ▾</div>
+          </div>
+          <div class="progress">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="list">
+            <div class="i"><span>Soil baseline mapping</span><span class="status-done">Completed</span></div>
+            <div class="i"><span>Canopy stress scan</span><span class="status-live">In progress</span></div>
+            <div class="i"><span>Irrigation gap report</span><span class="status-wait">Queued</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-3">
+        <div class="card span-2">
+          <div class="card-head">
+            <div>
+              <b>Farm & plot network</b>
+              <div class="sub">GPS-mapped fields with live telemetry and credit band</div>
+            </div>
+            <div class="select">All clusters ▾</div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Farmer</th>
+                <th>Moisture</th>
+                <th>Stress</th>
+                <th>AgriScore</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Block A · 2.4 ha</td>
+                <td>Amina Yusuf</td>
+                <td>74%</td>
+                <td>Low</td>
+                <td>742</td>
+                <td><span class="tag green">Healthy</span></td>
+              </tr>
+              <tr>
+                <td>Block B · 1.8 ha</td>
+                <td>Chidi Okeke</td>
+                <td>68%</td>
+                <td>Low</td>
+                <td>711</td>
+                <td><span class="tag green">Healthy</span></td>
+              </tr>
+              <tr>
+                <td>Block C · 3.1 ha</td>
+                <td>Fatima Bello</td>
+                <td>51%</td>
+                <td>Watch</td>
+                <td>633</td>
+                <td><span class="tag amber">Watchlist</span></td>
+              </tr>
+              <tr>
+                <td>Block D · 2.0 ha</td>
+                <td>Ibrahim Musa</td>
+                <td>44%</td>
+                <td>High</td>
+                <td>581</td>
+                <td><span class="tag blue">Advisory</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <b>AgriScore network</b>
+          <div class="mini"><span>Fields online</span><b>40/42</b></div>
+          <div class="mini"><span>Sensor health</span><b>96%</b></div>
+          <div class="mini"><span>Credit band B</span><b>Standard</b></div>
+          <div class="rings">
+            <div class="rings-label"><strong>695</strong>AgriScore</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>AI advisories</b>
+              <div class="sub">English + local language alerts via SMS / USSD</div>
+            </div>
+            <div class="select">Today ▾</div>
+          </div>
+          <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+          <div class="mini"><span>Irrigation guidance</span><b>3 sent</b></div>
+          <div class="mini"><span>Pest / disease watch</span><b>2 sent</b></div>
+          <div class="mini"><span>Input timing</span><b>2 sent</b></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Yield confidence</b>
+              <div class="sub">Season KPI across verified farm profiles</div>
+            </div>
+            <div class="select">This month ▾</div>
+          </div>
+          <div class="metric" style="margin-top:12px">90.75% <span class="up">▲12%</span></div>
+          <div class="area"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<%- include('partials/scripts') %>
+</body>
+</html>

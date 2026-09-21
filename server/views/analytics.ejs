@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head', { title: 'Analytics' }) %>
+</head>
+<body>
+<div class="app">
+  <%- include('partials/sidebar', { active: 'analytics' }) %>
+  <div class="main">
+    <%- include('partials/topbar', { title: 'Analytics' }) %>
+    <div class="content">
+      <section class="kpis">
+        <div class="kpi-card"><small>Yield confidence</small><strong>90.75%</strong><span>▲ 12% this month</span></div>
+        <div class="kpi-card"><small>Fields scanned</small><strong>28/42</strong><span>▲ 6 this month</span></div>
+        <div class="kpi-card"><small>Reports shared</small><strong>06</strong><span>With farmers</span></div>
+        <div class="kpi-card"><small>Avg moisture</small><strong>62%</strong><span class="amber">4 fields low</span></div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Yield confidence trend</b>
+              <div class="sub">Season KPI across verified farm profiles</div>
+            </div>
+            <div class="select">This month ▾</div>
+          </div>
+          <div class="metric">90.75% <span class="up">▲12%</span></div>
+          <div class="area"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Field health mix</b>
+              <div class="sub">Portfolio distribution by stress level</div>
+            </div>
+          </div>
+          <div class="seg seg-lg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+          <div class="legend">
+            <span><i style="background:#0b5b3e"></i>Healthy 62%</span>
+            <span><i style="background:#d5f17f"></i>Watch 26%</span>
+            <span><i style="background:#d8693f"></i>Stressed 12%</span>
+          </div>
+          <div class="mini"><span>Healthy fields</span><b>26</b></div>
+          <div class="mini"><span>Watchlist</span><b>11</b></div>
+          <div class="mini"><span>Stressed</span><b>05</b></div>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Top yielding fields</b>
+              <div class="sub">Best performers this season</div>
+            </div>
+          </div>
+          <div class="list">
+            <div class="i"><span>Block A · Amina Yusuf</span><span class="status-done">2.8 t/ha</span></div>
+            <div class="i"><span>Block K · Lateef Jimoh</span><span class="status-done">2.6 t/ha</span></div>
+            <div class="i"><span>Block B · Chidi Okeke</span><span class="status-done">2.4 t/ha</span></div>
+            <div class="i"><span>Block E · Ngozi Eze</span><span class="status-done">2.2 t/ha</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Operational summary</b>
+              <div class="sub">Platform activity across modules</div>
+            </div>
+          </div>
+          <div class="mini"><span>Active farmers</span><b>168</b></div>
+          <div class="mini"><span>Sensors reporting</span><b>178</b></div>
+          <div class="mini"><span>Flights flown</span><b>18</b></div>
+          <div class="mini"><span>Advisories sent</span><b>222</b></div>
+          <div class="mini"><span>Credit profiles</span><b>86</b></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<%- include('partials/scripts') %>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - Agriksense</title>
+<meta name="description" content="Access your Agriksense account. Agricultural intelligence for operations and finance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<nav class="nav auth-nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/"><img class="brand-logo" src="images/logo/logo-dark.png" alt="Agriksense"></a>
+    <div class="nav-links">
+      <a href="/#platform">Platform</a><a href="/#network">Network</a><a href="/#field">Field</a><a href="/#credit">Credit</a>
+    </div>
+    <a class="nav-contact" href="/login">Login</a>
+    <a class="nav-cta" href="/signup">Sign up ↗</a>
+    <button class="mobile-menu" aria-label="menu">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner">
+    <a href="/#platform">Platform</a>
+    <a href="/#network">Network</a>
+    <a href="/#field">Field</a>
+    <a href="/#credit">Credit</a>
+    <a href="/login" style="margin-top:20px;color:var(--lime)">Login</a>
+    <a href="/signup" style="color:var(--lime)">Sign up</a>
+  </div>
+  <button class="mobile-nav-close" aria-label="close menu">✕</button>
+</div>
+
+<main class="auth-main">
+  <div class="auth-container">
+    <div class="auth-visual">
+      <div class="auth-visual-content">
+        <div class="auth-logo"><img src="images/logo/logo-tile.png" alt="Agriksense" class="brand-logo-mark"></div>
+        <h1>Welcome back to<br>Agriksense</h1>
+        <p>Access your agricultural intelligence workspace. Monitor fields, track AgriScores, and coordinate operations in real time.</p>
+        <div class="auth-features">
+          <div class="auth-feature">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>Real-time field telemetry</span>
+          </div>
+          <div class="auth-feature">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>AgriScore credit infrastructure</span>
+          </div>
+          <div class="auth-feature">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>Multi-channel farmer access</span>
+          </div>
+        </div>
+      </div>
+      <div class="auth-visual-bg"></div>
+    </div>
+
+    <div class="auth-form-panel">
+      <div class="auth-form-wrap">
+        <div class="auth-header">
+          <h2>Log in to your account</h2>
+          <p>Enter your credentials to access your workspace</p>
+        </div>
+
+        <form class="auth-form" action="#" method="post">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+          </div>
+
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" name="remember">
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-submit">Log in</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Don't have an account? <a href="/signup">Sign up</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head', { title: 'Farmers' }) %>
+</head>
+<body>
+<div class="app">
+  <%- include('partials/sidebar', { active: 'farmers' }) %>
+  <div class="main">
+    <%- include('partials/topbar', { title: 'Farmers' }) %>
+    <div class="content">
+      <section class="kpis">
+        <div class="kpi-card"><small>Total farmers</small><strong>186</strong><span>▲ 24 this month</span></div>
+        <div class="kpi-card"><small>Verified profiles</small><strong>168</strong><span>90% of onboarded</span></div>
+        <div class="kpi-card"><small>GPS plotted</small><strong>162</strong><span>▲ 12 this month</span></div>
+        <div class="kpi-card"><small>Credit-ready</small><strong>112</strong><span class="amber">74 awaiting docs</span></div>
+      </section>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input type="text" placeholder="Search farmers by name, phone or location">
+        </div>
+        <button class="btn btn-ghost">All clusters ▾</button>
+        <button class="btn btn-primary">+ Onboard farmer</button>
+      </div>
+
+      <section class="grid-3">
+        <div class="card span-2">
+          <div class="card-head">
+            <div>
+              <b>Farmer registry</b>
+              <div class="sub">Registered farmers with farm setup, GPS mapping and credit status</div>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Farmer</th>
+                <th>Location</th>
+                <th>Plots</th>
+                <th>AgriScore</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="row"><span class="sm">AY</span><span><b>Amina Yusuf</b><small>+234 803 111 2233</small></span></div></td>
+                <td>Kano</td>
+                <td>2 plots · 2.4 ha</td>
+                <td>742</td>
+                <td><span class="tag green">Verified</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm co">CO</span><span><b>Chidi Okeke</b><small>+234 802 445 6710</small></span></div></td>
+                <td>Enugu</td>
+                <td>1 plot · 1.8 ha</td>
+                <td>711</td>
+                <td><span class="tag green">Verified</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm fb">FB</span><span><b>Fatima Bello</b><small>+234 805 220 1180</small></span></div></td>
+                <td>Kaduna</td>
+                <td>3 plots · 3.1 ha</td>
+                <td>633</td>
+                <td><span class="tag blue">GPS mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm im">IM</span><span><b>Ibrahim Musa</b><small>+234 809 771 4420</small></span></div></td>
+                <td>Katsina</td>
+                <td>2 plots · 2.0 ha</td>
+                <td>581</td>
+                <td><span class="tag amber">Docs pending</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm ne">NE</span><span><b>Ngozi Eze</b><small>+234 806 300 9917</small></span></div></td>
+                <td>Plateau</td>
+                <td>2 plots · 2.6 ha</td>
+                <td>684</td>
+                <td><span class="tag green">Verified</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm sa">SA</span><span><b>Sani Abdullahi</b><small>+234 807 556 3389</small></span></div></td>
+                <td>Jigawa</td>
+                <td>1 plot · 1.5 ha</td>
+                <td>645</td>
+                <td><span class="tag blue">GPS mapped</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Onboarding funnel</b>
+              <div class="sub">Farmer lifecycle across registration steps</div>
+            </div>
+          </div>
+          <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+          <div class="mini"><span>Registered</span><b>186</b></div>
+          <div class="mini"><span>GPS plotted</span><b>162</b></div>
+          <div class="mini"><span>Verification done</span><b>150</b></div>
+          <div class="mini"><span>Credit-ready</span><b>112</b></div>
+          <div class="rings">
+            <div class="rings-label"><strong>90%</strong>pipeline</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<%- include('partials/scripts') %>
+</body>
+</html>
