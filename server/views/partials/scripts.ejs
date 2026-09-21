@@ -1,4 +1,9 @@
 <script>
+  const hasSession = !!localStorage.getItem("agriksense_token");
+  if (!hasSession) {
+    window.location.replace("/login");
+  }
+
   const sidebar = document.getElementById("sidebar");
   const menuBtn = document.getElementById("menuBtn");
   if (menuBtn) {
@@ -18,6 +23,15 @@
     });
     sidebar.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => sidebar.classList.remove("open"));
+    });
+  }
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("agriksense_token");
+      localStorage.removeItem("agriksense_user");
+      window.location.href = "/login";
     });
   }
 
