@@ -25,7 +25,12 @@ const app = Fastify({ logger: true });
 
 await app.register(cors, {
   origin: (origin, cb) => {
+    const normalize = (o) => (o || "").replace(/^https?:\/\/(www\.)?/, "https://");
     if (!origin || origins.includes("*") || origins.includes(origin) || origins.includes("null")) {
+      cb(null, true);
+      return;
+    }
+    if (origins.some((allowed) => normalize(allowed) === normalize(origin))) {
       cb(null, true);
       return;
     }
