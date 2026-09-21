@@ -10,10 +10,26 @@
     <%- include('partials/topbar', { title: 'Drone Monitoring' }) %>
     <div class="content">
       <section class="kpis">
-        <div class="kpi-card"><small>Flights this week</small><strong>18</strong><span>2 live now</span></div>
-        <div class="kpi-card"><small>Fields scanned</small><strong>28/42</strong><span>▲ 6 this week</span></div>
-        <div class="kpi-card"><small>Stress alerts</small><strong>03</strong><span class="amber">1 high priority</span></div>
-        <div class="kpi-card"><small>Reports generated</small><strong>06</strong><span>Shared with farmers</span></div>
+        <div class="kpi-card">
+          <small>Active drones</small>
+          <strong>3 of 4</strong>
+          <span>1 on charge</span>
+        </div>
+        <div class="kpi-card">
+          <small>Area scanned</small>
+          <strong>312</strong>
+          <span>ha this week</span>
+        </div>
+        <div class="kpi-card">
+          <small>NDVI coverage</small>
+          <strong>81%</strong>
+          <span>of active farms</span>
+        </div>
+        <div class="kpi-card">
+          <small>Flies scheduled</small>
+          <strong>14</strong>
+          <span class="amber">3 for review</span>
+        </div>
       </section>
 
       <section class="grid-2">
@@ -21,74 +37,76 @@
           <div class="card-head">
             <div>
               <b>Flight schedule</b>
-              <div class="sub">Aerial monitoring missions across field clusters</div>
+              <div class="sub">Upcoming drone missions across clusters</div>
             </div>
-            <div class="select">This week ▾</div>
           </div>
-          <table class="table">
+          <div class="table-wrap"><table class="table">
             <thead>
               <tr>
-                <th>Flight</th>
-                <th>Field</th>
-                <th>Payload</th>
+                <th>Mission</th>
+                <th>Cluster</th>
+                <th>Area</th>
                 <th>Time</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><b>FL-2044</b><br><small>Drone DX-03</small></td>
-                <td>Block B · Chidi Okeke</td>
-                <td>NDVI</td>
-                <td>Today 3:12 PM</td>
-                <td><span class="tag green">Live</span></td>
+                <td><b>NDVI scan</b><small>MAV21</small></td>
+                <td>Maize belt</td>
+                <td>18 ha</td>
+                <td>08:00</td>
+                <td><span class="tag green">Done</span></td>
               </tr>
               <tr>
-                <td><b>FL-2043</b><br><small>Drone DX-01</small></td>
-                <td>Block A · Amina Yusuf</td>
-                <td>RGB</td>
-                <td>Today 2:05 PM</td>
-                <td><span class="tag blue">Completed</span></td>
+                <td><b>NDVI scan</b><small>MAV21</small></td>
+                <td>Rice cluster</td>
+                <td>12 ha</td>
+                <td>09:30</td>
+                <td><span class="tag green">Done</span></td>
               </tr>
               <tr>
-                <td><b>FL-2042</b><br><small>Drone DX-02</small></td>
-                <td>Block C · Fatima Bello</td>
-                <td>NDVI</td>
-                <td>Today 11:40 AM</td>
-                <td><span class="tag amber">Processing</span></td>
+                <td><b>Pest survey</b><small>MAV20</small></td>
+                <td>Tomato farms</td>
+                <td>11 ha</td>
+                <td>11:00</td>
+                <td><span class="tag blue">Flying</span></td>
               </tr>
               <tr>
-                <td><b>FL-2041</b><br><small>Drone DX-01</small></td>
-                <td>Block D · Ibrahim Musa</td>
-                <td>Multispectral</td>
-                <td>Yesterday 4:10 PM</td>
-                <td><span class="tag gray">Scheduled</span></td>
+                <td><b>Irrigation check</b><small>MAV18</small></td>
+                <td>Rice cluster</td>
+                <td>9 ha</td>
+                <td>14:45</td>
+                <td><span class="tag amber">Queued</span></td>
+              </tr>
+              <tr>
+                <td><b>Salt stress scan</b><small>MAV22</small></td>
+                <td>Beans block</td>
+                <td>8 ha</td>
+                <td>16:20</td>
+                <td><span class="tag amber">Queued</span></td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         <div class="card">
           <div class="card-head">
             <div>
               <b>NDVI coverage</b>
-              <div class="sub">Vegetation health across scanned fields</div>
+              <div class="sub">Vegetation health scans completed per crop</div>
             </div>
           </div>
           <div class="dev-kpis">
-            <div><strong>0.68</strong><small>Avg NDVI</small></div>
-            <div><strong>28</strong><small>Fields scanned</small></div>
-          </div>
-          <div class="seg seg-lg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
-          <div class="legend">
-            <span><i style="background:#0b5b3e"></i>Healthy 58%</span>
-            <span><i style="background:#d5f17f"></i>Moderate 34%</span>
-            <span><i style="background:#d8693f"></i>Stressed 8%</span>
+            <div class="dev"><b>81%</b><span>Overall</span></div>
+            <div class="dev"><b>24</b><span>Scans</span></div>
+            <div class="dev"><b>4.2</b><span>Avg flights/wk</span></div>
           </div>
           <div class="list">
-            <div class="i"><span>Canopy stress scan</span><span class="status-live">In progress</span></div>
-            <div class="i"><span>Irrigation gap report</span><span class="status-wait">Queued</span></div>
-            <div class="i"><span>Soil baseline mapping</span><span class="status-done">Completed</span></div>
+            <div class="item"><span><i class="dot green"></i>Maize</span><div class="progress"><i style="width:88%"></i></div><b>88%</b></div>
+            <div class="item"><span><i class="dot green"></i>Rice</span><div class="progress"><i style="width:76%"></i></div><b>76%</b></div>
+            <div class="item"><span><i class="dot amber"></i>Tomato</span><div class="progress"><i style="width:58%"></i></div><b>58%</b></div>
+            <div class="item"><span><i class="dot amber"></i>Beans</span><div class="progress"><i style="width:52%"></i></div><b>52%</b></div>
           </div>
         </div>
       </section>

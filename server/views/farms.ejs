@@ -10,118 +10,161 @@
     <%- include('partials/topbar', { title: 'Farms & Plots' }) %>
     <div class="content">
       <section class="kpis">
-        <div class="kpi-card"><small>Total fields</small><strong>42</strong><span>▲ 3 this month</span></div>
-        <div class="kpi-card"><small>Total area</small><strong>92.6 ha</strong><span>Across 9 LGA</span></div>
-        <div class="kpi-card"><small>GPS coverage</small><strong>95.2%</strong><span>40 of 42 plotted</span></div>
-        <div class="kpi-card"><small>Avg soil moisture</small><strong>62%</strong><span class="amber">4 fields below 50%</span></div>
+        <div class="kpi-card">
+          <small>Active farms</small>
+          <strong>142</strong>
+          <span>▲ 18 this month</span>
+        </div>
+        <div class="kpi-card">
+          <small>Total hectares</small>
+          <strong>386</strong>
+          <span>2.7 ha avg plot</span>
+        </div>
+        <div class="kpi-card">
+          <small>Crops monitored</small>
+          <strong>12</strong>
+          <span>Maize, beans, rice, tomato</span>
+        </div>
+        <div class="kpi-card">
+          <small>Plots mapped</small>
+          <strong>162</strong>
+          <span class="amber">24 pending GPS</span>
+        </div>
       </section>
 
       <section class="grid-3">
         <div class="card">
-          <b>North cluster</b>
-          <div class="mini"><span>Fields</span><b>14</b></div>
-          <div class="mini"><span>Mapped area</span><b>31.2 ha</b></div>
-          <div class="mini"><span>Avg moisture</span><b>61%</b></div>
-          <div class="mini"><span>Active alerts</span><b class="red">02</b></div>
+          <div class="card-head">
+            <div>
+              <b>Maize belt</b>
+              <div class="sub">18 farms · 54 ha</div>
+            </div>
+            <span class="tag green">Active</span>
+          </div>
+          <div class="mini"><span>Avg yield (2025)</span><b>3.1 t/ha</b></div>
+          <div class="mini"><span>Soil health</span><b>Good</b></div>
+          <div class="mini"><span>Next event</span><b>Fertilizer · wk 12</b></div>
         </div>
         <div class="card">
-          <b>Central cluster</b>
-          <div class="mini"><span>Fields</span><b>12</b></div>
-          <div class="mini"><span>Mapped area</span><b>27.4 ha</b></div>
-          <div class="mini"><span>Avg moisture</span><b>66%</b></div>
-          <div class="mini"><span>Active alerts</span><b>00</b></div>
+          <div class="card-head">
+            <div>
+              <b>Rice cluster</b>
+              <div class="sub">12 farms · 31 ha</div>
+            </div>
+            <span class="tag green">Active</span>
+          </div>
+          <div class="mini"><span>Avg yield (2025)</span><b>3.4 t/ha</b></div>
+          <div class="mini"><span>Soil health</span><b>Good</b></div>
+          <div class="mini"><span>Next event</span><b>Irrigation · daily</b></div>
         </div>
         <div class="card">
-          <b>South cluster</b>
-          <div class="mini"><span>Fields</span><b>16</b></div>
-          <div class="mini"><span>Mapped area</span><b>34.0 ha</b></div>
-          <div class="mini"><span>Avg moisture</span><b>58%</b></div>
-          <div class="mini"><span>Active alerts</span><b class="red">03</b></div>
+          <div class="card-head">
+            <div>
+              <b>Tomato farms</b>
+              <div class="sub">7 farms · 11 ha</div>
+            </div>
+            <span class="tag amber">Needs input</span>
+          </div>
+          <div class="mini"><span>Avg yield (2025)</span><b>6.8 t/ha</b></div>
+          <div class="mini"><span>Soil health</span><b>Fair</b></div>
+          <div class="mini"><span>Next event</span><b>Pest control · now</b></div>
         </div>
       </section>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input type="text" placeholder="Search farms by cluster, crop or location">
+        </div>
+        <button class="btn btn-ghost">All crops ▾</button>
+        <button class="btn btn-primary">+ Register plot</button>
+      </div>
 
       <section class="grid-3">
         <div class="card span-2">
           <div class="card-head">
             <div>
               <b>Farm & plot network</b>
-              <div class="sub">GPS-mapped plots with live telemetry and crop stage</div>
+              <div class="sub">Registered plots, crop assignment and map status</div>
             </div>
-            <div class="select">All clusters ▾</div>
           </div>
-          <table class="table">
+          <div class="table-wrap"><table class="table">
             <thead>
               <tr>
-                <th>Field / Plot</th>
-                <th>Farmer</th>
+                <th>Plot</th>
                 <th>Crop</th>
                 <th>Area</th>
-                <th>Moisture</th>
-                <th>Status</th>
+                <th>Cluster</th>
+                <th>Map</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><b>Block A</b><br><small>Plot A1 · GPS locked</small></td>
-                <td>Amina Yusuf</td>
+                <td><div class="row"><span class="sm">AY</span><span><b>AY - North field</b><small>Amina Yusuf · 2024</small></span></div></td>
                 <td>Maize</td>
-                <td>2.4 ha</td>
-                <td>74%</td>
-                <td><span class="tag green">Healthy</span></td>
+                <td>1.6 ha</td>
+                <td>Maize belt</td>
+                <td><span class="tag green">Mapped</span></td>
               </tr>
               <tr>
-                <td><b>Block B</b><br><small>Plot B1 · GPS locked</small></td>
-                <td>Chidi Okeke</td>
-                <td>Maize</td>
-                <td>1.8 ha</td>
-                <td>68%</td>
-                <td><span class="tag green">Healthy</span></td>
-              </tr>
-              <tr>
-                <td><b>Block C</b><br><small>Plot C1-C3 · GPS locked</small></td>
-                <td>Fatima Bello</td>
-                <td>Sorghum</td>
-                <td>3.1 ha</td>
-                <td>51%</td>
-                <td><span class="tag amber">Watchlist</span></td>
-              </tr>
-              <tr>
-                <td><b>Block D</b><br><small>Plot D1-D2 · GPS locked</small></td>
-                <td>Ibrahim Musa</td>
-                <td>Millet</td>
-                <td>2.0 ha</td>
-                <td>44%</td>
-                <td><span class="tag blue">Advisory</span></td>
-              </tr>
-              <tr>
-                <td><b>Block E</b><br><small>Plot E1 · GPS pending</small></td>
-                <td>Ngozi Eze</td>
+                <td><div class="row"><span class="sm co">CO</span><span><b>CO - Riverside</b><small>Chidi Okeke · 2025</small></span></div></td>
                 <td>Rice</td>
-                <td>2.6 ha</td>
-                <td>70%</td>
-                <td><span class="tag gray">Mapping due</span></td>
+                <td>1.8 ha</td>
+                <td>Rice cluster</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm fb">FB</span><span><b>FB - Valley plot</b><small>Fatima Bello · 2024</small></span></div></td>
+                <td>Tomato</td>
+                <td>1.1 ha</td>
+                <td>Tomato farms</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm im">IM</span><span><b>IM - East field</b><small>Ibrahim Musa · 2025</small></span></div></td>
+                <td>Maize</td>
+                <td>2.0 ha</td>
+                <td>Maize belt</td>
+                <td><span class="tag amber">Pending</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm ne">NE</span><span><b>NE - Hill plot</b><small>Ngozi Eze · 2023</small></span></div></td>
+                <td>Beans</td>
+                <td>1.4 ha</td>
+                <td>Beans block</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm sa">SA</span><span><b>SA - South field</b><small>Sani Abdullahi · 2025</small></span></div></td>
+                <td>Maize</td>
+                <td>1.5 ha</td>
+                <td>Maize belt</td>
+                <td><span class="tag green">Mapped</span></td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         <div class="card">
           <div class="card-head">
             <div>
               <b>Plot GPS mapping</b>
-              <div class="sub">Digital farm profiles for credit scoring</div>
+              <div class="sub">Farm plots with coordinates on file</div>
             </div>
           </div>
-          <div class="progress">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
+          <div class="map">
+            <span class="pin" style="left:28%;top:26%"></span>
+            <span class="pin" style="left:58%;top:40%"></span>
+            <span class="pin" style="left:42%;top:64%"></span>
+            <span class="pin" style="left:72%;top:58%"></span>
+            <span class="pin" style="left:18%;top:58%"></span>
           </div>
-          <div class="mini"><span>Plot polygons mapped</span><b>40/42</b></div>
-          <div class="mini"><span>Verified boundaries</span><b>36</b></div>
-          <div class="mini"><span>Need revisits</span><b>02</b></div>
-          <div class="mini"><span>Awaiting farmer pickup</span><b>04</b></div>
+          <div class="legend">
+            <span class="legend-item"><i class="dot green"></i>Mapped</span>
+            <span class="legend-item"><i class="dot amber"></i>Pending</span>
+          </div>
+          <div class="mini"><span>Mapped</span><b>162</b></div>
+          <div class="mini"><span>Pending</span><b>24</b></div>
         </div>
       </section>
     </div>

@@ -286,6 +286,16 @@ button{font:inherit;cursor:pointer;border:0;background:none}
 }
 
 .table{width:100%;border-collapse:collapse;font-size:13px}
+.table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  margin:0 -4px;
+  padding:0 4px;
+}
+.table-wrap .table{min-width:480px}
+.table-wrap::-webkit-scrollbar{height:6px}
+.table-wrap::-webkit-scrollbar-thumb{background:#d5dcd5;border-radius:99px}
+.table-wrap::-webkit-scrollbar-track{background:transparent}
 .table th,.table td{text-align:left;padding:12px 8px;border-top:1px solid #eef1ed}
 .table th{font-size:11px;color:#889189;text-transform:uppercase;letter-spacing:.06em;font-weight:600;border-top:0}
 .table td b{font-size:13px}
@@ -527,19 +537,37 @@ button{font:inherit;cursor:pointer;border:0;background:none}
   .content{padding:16px}
 }
 @media(max-width:560px){
-  .kpis{grid-template-columns:1fr}
-   .metric{font-size:28px}
+  .app{display:block}
+  .content{padding:14px;gap:12px}
+  .kpis{grid-template-columns:1fr;gap:10px}
+  .kpi-card{display:flex;align-items:center;justify-content:space-between;padding:13px 15px}
+  .kpi-card small{margin:0}
+  .kpi-card strong{font-size:22px;margin:0;flex:0 0 auto}
+  .kpi-card span{margin:0 0 0 8px;text-align:right}
+  .metric{font-size:28px}
+  .card{padding:15px}
+  .card-head b{font-size:13px}
   .bar-chart{gap:6px;height:230px}
   .bar-track{min-height:150px}
   .bar{width:18px}
   .tooltip{width:118px;font-size:10px}
-  .topbar{padding:0 14px}
   .toolbar{flex-direction:column;align-items:stretch}
   .search{min-width:0}
   .btn{justify-content:center}
   .table{font-size:12px}
+  .table-wrap .table{min-width:520px}
+  .topbar{padding:0 12px;height:58px}
+  .topbar-left h1{font-size:16px}
   .topbar-left .pill{display:none}
+  .topbar-right{gap:6px}
+  .icon-btn{width:32px;height:32px}
+  .user-chip span:last-child{display:none}
+  .user-chip{padding:4px 4px}
   .roster{grid-template-columns:1fr}
   .plot-map,.ndvi{grid-template-columns:repeat(6,1fr);gap:4px}
   .clusters{grid-template-columns:1fr}
+  .rings{width:128px;height:128px}
+  .rings:before{width:84px;height:84px}
+  .dev-kpis{flex-direction:column}
+  .dev-kpis > div{min-width:100%}
 }

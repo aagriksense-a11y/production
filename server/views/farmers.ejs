@@ -10,10 +10,26 @@
     <%- include('partials/topbar', { title: 'Farmers' }) %>
     <div class="content">
       <section class="kpis">
-        <div class="kpi-card"><small>Total farmers</small><strong>186</strong><span>▲ 24 this month</span></div>
-        <div class="kpi-card"><small>Verified profiles</small><strong>168</strong><span>90% of onboarded</span></div>
-        <div class="kpi-card"><small>GPS plotted</small><strong>162</strong><span>▲ 12 this month</span></div>
-        <div class="kpi-card"><small>Credit-ready</small><strong>112</strong><span class="amber">74 awaiting docs</span></div>
+        <div class="kpi-card">
+          <small>Total farmers</small>
+          <strong>186</strong>
+          <span>▲ 24 this month</span>
+        </div>
+        <div class="kpi-card">
+          <small>Verified profiles</small>
+          <strong>168</strong>
+          <span>90% of onboarded</span>
+        </div>
+        <div class="kpi-card">
+          <small>GPS plotted</small>
+          <strong>162</strong>
+          <span>▲ 12 this month</span>
+        </div>
+        <div class="kpi-card">
+          <small>Credit-ready</small>
+          <strong>112</strong>
+          <span class="amber">74 awaiting docs</span>
+        </div>
       </section>
 
       <div class="toolbar">
@@ -33,7 +49,7 @@
               <div class="sub">Registered farmers with farm setup, GPS mapping and credit status</div>
             </div>
           </div>
-          <table class="table">
+          <div class="table-wrap"><table class="table">
             <thead>
               <tr>
                 <th>Farmer</th>
@@ -87,7 +103,7 @@
                 <td><span class="tag blue">GPS mapped</span></td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         <div class="card">

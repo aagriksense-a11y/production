@@ -10,10 +10,26 @@
     <%- include('partials/topbar', { title: 'AI Advisory' }) %>
     <div class="content">
       <section class="kpis">
-        <div class="kpi-card"><small>Advisories today</small><strong>07</strong><span>▲ 2 vs yesterday</span></div>
-        <div class="kpi-card"><small>High priority</small><strong>03</strong><span class="amber">Needs action</span></div>
-        <div class="kpi-card"><small>Languages</small><strong>04</strong><span>EN, HA, YO, IG</span></div>
-        <div class="kpi-card"><small>Delivery rate</small><strong>98%</strong><span>Via SMS / USSD</span></div>
+        <div class="kpi-card">
+          <small>Advisories sent</small>
+          <strong>1,284</strong>
+          <span>▲ 212 this week</span>
+        </div>
+        <div class="kpi-card">
+          <small>Read rate</small>
+          <strong>76%</strong>
+          <span>across SMS + USSD</span>
+        </div>
+        <div class="kpi-card">
+          <small>Acted on</small>
+          <strong>41%</strong>
+          <span>of read advisories</span>
+        </div>
+        <div class="kpi-card">
+          <small>Languages</small>
+          <strong>4</strong>
+          <span class="amber">EN, HA, IG, YO</span>
+        </div>
       </section>
 
       <section class="grid-2">
@@ -21,65 +37,71 @@
           <div class="card-head">
             <div>
               <b>Advisory queue</b>
-              <div class="sub">Automated insights generated per field</div>
+              <div class="sub">Generated advisories sorted by urgency</div>
             </div>
-            <div class="select">Today ▾</div>
           </div>
+          <div class="table-wrap">
           <table class="table">
             <thead>
               <tr>
-                <th>Field</th>
-                <th>Advisory</th>
-                <th>Priority</th>
+                <th>Type</th>
+                <th>Topic</th>
+                <th>Channel</th>
+                <th>Farmers</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><b>Block D</b><br><small>Ibrahim Musa</small></td>
-                <td>Irrigation gap detected</td>
-                <td><span class="tag red">High</span></td>
-                <td><span class="status-live">Sending</span></td>
+                <td><b>Irrigation</b><small>Weekly</small></td>
+                <td>Rice cluster moisture low</td>
+                <td>SMS + USSD</td>
+                <td>38</td>
+                <td><span class="tag green">Sent</span></td>
               </tr>
               <tr>
-                <td><b>Block C</b><br><small>Fatima Bello</small></td>
-                <td>Fertilise after rainfall</td>
-                <td><span class="tag amber">Medium</span></td>
-                <td><span class="status-done">Sent</span></td>
+                <td><b>Fertilizer</b><small>Growth stage</small></td>
+                <td>Maize early nitrogen topdress</td>
+                <td>SMS</td>
+                <td>52</td>
+                <td><span class="tag green">Sent</span></td>
               </tr>
               <tr>
-                <td><b>Block F</b><br><small>Usman Danladi</small></td>
-                <td>Pest scout reminder</td>
-                <td><span class="tag amber">Medium</span></td>
-                <td><span class="status-done">Sent</span></td>
+                <td><b>Pest alert</b><small>Urgent</small></td>
+                <td>Tomato whitefly detected</td>
+                <td>SMS + USSD</td>
+                <td>7</td>
+                <td><span class="tag amber">Queued</span></td>
               </tr>
               <tr>
-                <td><b>Block A</b><br><small>Amina Yusuf</small></td>
-                <td>Canopy stress scan due</td>
-                <td><span class="tag blue">Low</span></td>
-                <td><span class="status-wait">Queued</span></td>
+                <td><b>Market</b><small>Weekly</small></td>
+                <td>Maize price spike - sell window</td>
+                <td>USSD</td>
+                <td>186</td>
+                <td><span class="tag amber">Queued</span></td>
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <div class="card">
           <div class="card-head">
             <div>
               <b>Delivery channels</b>
-              <div class="sub">Local language alerts to farmers</div>
+              <div class="sub">Advisory reach by channel</div>
             </div>
           </div>
-          <div class="seg seg-lg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
-          <div class="legend">
-            <span><i style="background:#0b5b3e"></i>SMS 64%</span>
-            <span><i style="background:#d5f17f"></i>USSD 21%</span>
-            <span><i style="background:#3d6bff"></i>Voice note 15%</span>
+          <div class="dev-kpis">
+            <div class="dev"><b>SMS</b><span>54%</span></div>
+            <div class="dev"><b>USSD</b><span>31%</span></div>
+            <div class="dev"><b>Voice</b><span>15%</span></div>
           </div>
-          <div class="mini"><span>SMS delivered</span><b>142</b></div>
-          <div class="mini"><span>USSD sessions</span><b>47</b></div>
-          <div class="mini"><span>Voice notes sent</span><b>33</b></div>
-          <div class="mini"><span>Confirmation rate</span><b>91%</b></div>
+          <div class="list">
+            <div class="item"><span><i class="dot green"></i>Delivered</span><div class="progress"><i style="width:76%"></i></div><b>76%</b></div>
+            <div class="item"><span><i class="dot amber"></i>Read</span><div class="progress"><i style="width:61%"></i></div><b>61%</b></div>
+            <div class="item"><span><i class="dot amber"></i>Acted</span><div class="progress"><i style="width:41%"></i></div><b>41%</b></div>
+          </div>
         </div>
       </section>
     </div>

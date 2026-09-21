@@ -7,13 +7,29 @@
 <div class="app">
   <%- include('partials/sidebar', { active: 'agriscore' }) %>
   <div class="main">
-    <%- include('partials/topbar', { title: 'AgriScore & Credit' }) %>
+    <%- include('partials/topbar', { title: 'AgriScore' }) %>
     <div class="content">
       <section class="kpis">
-        <div class="kpi-card"><small>Avg AgriScore</small><strong>695</strong><span>▲ 18 vs last cycle</span></div>
-        <div class="kpi-card"><small>Credit-ready farmers</small><strong>112</strong><span>▲ 9 this month</span></div>
-        <div class="kpi-card"><small>Partner institutions</small><strong>03</strong><span>Banks + MFIs</span></div>
-        <div class="kpi-card"><small>Funding unlocked</small><strong>₦48.2m</strong><span class="amber">2 deals pending</span></div>
+        <div class="kpi-card">
+          <small>Farmers scored</small>
+          <strong>172</strong>
+          <span>of 186 onboarded</span>
+        </div>
+        <div class="kpi-card">
+          <small>Avg AgriScore</small>
+          <strong>681</strong>
+          <span>▲ 24 this quarter</span>
+        </div>
+        <div class="kpi-card">
+          <small>Credit-ready</small>
+          <strong>112</strong>
+          <span>score ≥ 600</span>
+        </div>
+        <div class="kpi-card">
+          <small>Loan access</small>
+          <strong>₦86M</strong>
+          <span class="amber">approved pipeline</span>
+        </div>
       </section>
 
       <section class="grid-2">
@@ -21,66 +37,68 @@
           <div class="card-head">
             <div>
               <b>Score bands</b>
-              <div class="sub">Distribution across the farmer portfolio</div>
+              <div class="sub">Farmer distribution across AgriScore bands</div>
             </div>
           </div>
-          <div class="seg seg-lg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
-          <div class="legend">
-            <span><i style="background:#0b5b3e"></i>Strong 700+ 39%</span>
-            <span><i style="background:#d5f17f"></i>Standard 600-699 41%</span>
-            <span><i style="background:#d8693f"></i>Building below 600 20%</span>
-          </div>
+          <div class="table-wrap">
           <table class="table">
             <thead>
               <tr>
-                <th>Farmer</th>
-                <th>Score</th>
                 <th>Band</th>
+                <th>Range</th>
+                <th>Farmers</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Amina Yusuf</td>
-                <td>742</td>
-                <td>Strong</td>
+                <td><b>Excellent</b></td>
+                <td>800 - 900</td>
+                <td>24</td>
                 <td><span class="tag green">Credit-ready</span></td>
               </tr>
               <tr>
-                <td>Chidi Okeke</td>
-                <td>711</td>
-                <td>Strong</td>
+                <td><b>Good</b></td>
+                <td>700 - 799</td>
+                <td>51</td>
                 <td><span class="tag green">Credit-ready</span></td>
               </tr>
               <tr>
-                <td>Ngozi Eze</td>
-                <td>684</td>
-                <td>Standard</td>
-                <td><span class="tag blue">In review</span></td>
+                <td><b>Fair</b></td>
+                <td>600 - 699</td>
+                <td>37</td>
+                <td><span class="tag blue">Qualifying</span></td>
               </tr>
               <tr>
-                <td>Ibrahim Musa</td>
-                <td>581</td>
-                <td>Building</td>
-                <td><span class="tag gray">Needs data</span></td>
+                <td><b>Needs data</b></td>
+                <td>400 - 599</td>
+                <td>44</td>
+                <td><span class="tag amber">Docs pending</span></td>
+              </tr>
+              <tr>
+                <td><b>Low trust</b></td>
+                <td>0 - 399</td>
+                <td>16</td>
+                <td><span class="tag red">Review</span></td>
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <div class="card">
           <div class="card-head">
             <div>
               <b>Credit readiness</b>
-              <div class="sub">Verified farm profiles as scoring assets</div>
+              <div class="sub">Monthly pipeline toward lending partners</div>
             </div>
           </div>
           <div class="rings">
-            <div class="rings-label"><strong>695</strong>Avg score</div>
+            <div class="rings-label"><strong>112</strong>farmers</div>
           </div>
-          <div class="mini"><span>Profiles licensed</span><b>86</b></div>
-          <div class="mini"><span>New this cycle</span><b>09</b></div>
-          <div class="mini"><span>Pending verification</span><b>18</b></div>
+          <div class="mini"><span>Score inputs</span><b>Yield + plots + repayment</b></div>
+          <div class="mini"><span>Data sources</span><b>NIN, BVN, drone NDVI</b></div>
+          <div class="mini"><span>Avg verified score</span><b>712</b></div>
         </div>
       </section>
     </div>

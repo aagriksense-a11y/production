@@ -10,58 +10,62 @@
     <%- include('partials/topbar', { title: 'IoT Sensors' }) %>
     <div class="content">
       <section class="kpis">
-        <div class="kpi-card"><small>Sensors online</small><strong>178/186</strong><span>96% fleet health</span></div>
-        <div class="kpi-card"><small>Avg soil moisture</small><strong>62%</strong><span class="amber">4 fields below 50%</span></div>
-        <div class="kpi-card"><small>Active alerts</small><strong>05</strong><span>3 high priority</span></div>
-        <div class="kpi-card"><small>Avg battery</small><strong>78%</strong><span>8 below 40%</span></div>
+        <div class="kpi-card">
+          <small>Active sensors</small>
+          <strong>58</strong>
+          <span>of 62 deployed</span>
+        </div>
+        <div class="kpi-card">
+          <small>Soil moisture</small>
+          <strong>34%</strong>
+          <span class="amber">below target</span>
+        </div>
+        <div class="kpi-card">
+          <small>Battery health</small>
+          <strong>82%</strong>
+          <span>fleet average</span>
+        </div>
+        <div class="kpi-card">
+          <small>Alerts today</small>
+          <strong>7</strong>
+          <span>2 need action</span>
+        </div>
       </section>
 
       <section class="grid-2">
         <div class="card">
           <div class="card-head">
             <div>
-              <b>Soil moisture by field</b>
-              <div class="sub">Live readings from ground sensors this week</div>
+              <b>Soil moisture by cluster</b>
+              <div class="sub">Average volumetric moisture at 30 cm depth</div>
             </div>
-            <div class="select">Live ▾</div>
           </div>
           <div class="bar-chart">
             <div class="bar-col">
-              <div class="bar-track"><div class="bar active" style="height:74%"></div></div>
-              <span class="bar-label">Block A</span>
+              <div class="tooltip">52%</div>
+              <div class="bar-track"><span style="height:52%"></span></div>
+              <div class="bar-label">Rice</div>
             </div>
             <div class="bar-col">
-              <div class="bar-track"><div class="bar active" style="height:68%"></div></div>
-              <span class="bar-label">Block B</span>
+              <div class="tooltip">38%</div>
+              <div class="bar-track"><span style="height:38%"></span></div>
+              <div class="bar-label">Maize</div>
             </div>
             <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:51%"></div></div>
-              <span class="bar-label">Block C</span>
+              <div class="tooltip">31%</div>
+              <div class="bar-track"><span style="height:31%"></span></div>
+              <div class="bar-label">Beans</div>
             </div>
             <div class="bar-col">
-              <div class="bar-track">
-                <div class="tooltip">
-                  <div>Block D · Stress</div>
-                  <b>Moisture 44%</b>
-                  Irrigation gap<br>
-                  Recommend drill
-                </div>
-                <div class="bar amber" style="height:44%"></div>
-              </div>
-              <span class="bar-label">Block D</span>
+              <div class="tooltip">24%</div>
+              <div class="bar-track"><span style="height:24%"></span></div>
+              <div class="bar-label">Tomato</div>
             </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar active" style="height:70%"></div></div>
-              <span class="bar-label">Block E</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:60%"></div></div>
-              <span class="bar-label">Block F</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:64%"></div></div>
-              <span class="bar-label">Block G</span>
-            </div>
+          </div>
+          <div class="legend">
+            <span class="legend-item"><i class="dot green"></i>Healthy</span>
+            <span class="legend-item"><i class="dot amber"></i>Watch</span>
+            <span class="legend-item"><i class="dot red"></i>Critical</span>
           </div>
         </div>
 
@@ -69,98 +73,122 @@
           <div class="card-head">
             <div>
               <b>Live alerts</b>
-              <div class="sub">Threshold breaches from sensor fleet</div>
+              <div class="sub">Events from soil, weather and battery sensors</div>
             </div>
-            <div class="select">Today ▾</div>
           </div>
           <div class="alerts">
-            <div><span class="al-dot"></span><div><b>Moisture below threshold</b><small>Block D · Soil C-142 · 2h ago</small></div></div>
-            <div><span class="al-dot"></span><div><b>Battery low</b><small>Block C · Weather W-07 · 5h ago</small></div></div>
-            <div><span class="al-dot amber"></span><div><b>Sensor offline</b><small>Block G · Nut N-03 · Yesterday</small></div></div>
+            <div class="al-item">
+              <i class="al-dot red"></i>
+              <div><b>Moisture critically low</b><small>Tomato cluster · 10 min ago</small></div>
+            </div>
+            <div class="al-item">
+              <i class="al-dot amber"></i>
+              <div><b>Battery below 20%</b><small>STM-014 · 2 h ago</small></div>
+            </div>
+            <div class="al-item">
+              <i class="al-dot amber"></i>
+              <div><b>Rain expected Thu</b><small>Kano forecast · 6 h ago</small></div>
+            </div>
+            <div class="al-item">
+              <i class="al-dot green"></i>
+              <div><b>Irrigation complete</b><small>Rice cluster · 7 h ago</small></div>
+            </div>
           </div>
         </div>
       </section>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input type="text" placeholder="Search sensors by ID or cluster">
+        </div>
+        <button class="btn btn-ghost">All clusters ▾</button>
+        <button class="btn btn-primary">+ Deploy sensor</button>
+      </div>
 
       <section class="grid-3">
         <div class="card span-2">
           <div class="card-head">
             <div>
-              <b>Sensor fleet status</b>
-              <div class="sub">Fleet health, battery and last transmission</div>
+              <b>Sensor fleet</b>
+              <div class="sub">Deployed soil, weather and water sensors</div>
             </div>
-            <div class="select">All clusters ▾</div>
           </div>
-          <table class="table">
+          <div class="table-wrap"><table class="table">
             <thead>
               <tr>
                 <th>Sensor</th>
-                <th>Field</th>
                 <th>Type</th>
+                <th>Cluster</th>
                 <th>Battery</th>
-                <th>Last reading</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><b>S-141</b></td>
-                <td>Block A</td>
-                <td>Soil moisture</td>
-                <td>82%</td>
-                <td>2 min ago</td>
+                <td><div class="row"><span class="sm">01</span><span><b>STM-011</b><small>Deployed Mar 2025</small></span></div></td>
+                <td>Soil</td>
+                <td>Rice cluster</td>
+                <td>86%</td>
                 <td><span class="tag green">Online</span></td>
               </tr>
               <tr>
-                <td><b>S-142</b></td>
-                <td>Block D</td>
-                <td>Soil moisture</td>
-                <td>71%</td>
-                <td>2 min ago</td>
-                <td><span class="tag green">Online</span></td>
-              </tr>
-              <tr>
-                <td><b>W-07</b></td>
-                <td>Block C</td>
-                <td>Weather station</td>
-                <td>34%</td>
-                <td>5 h ago</td>
+                <td><div class="row"><span class="sm co">02</span><span><b>STM-014</b><small>Deployed Mar 2025</small></span></div></td>
+                <td>Soil</td>
+                <td>Tomato farms</td>
+                <td>17%</td>
                 <td><span class="tag amber">Low battery</span></td>
               </tr>
               <tr>
-                <td><b>N-03</b></td>
-                <td>Block G</td>
-                <td>Nutrient</td>
-                <td>58%</td>
-                <td>Yesterday</td>
-                <td><span class="tag red">Offline</span></td>
+                <td><div class="row"><span class="sm fb">03</span><span><b>WTB-003</b><small>Deployed Jan 2025</small></span></div></td>
+                <td>Weather</td>
+                <td>Maize belt</td>
+                <td>91%</td>
+                <td><span class="tag green">Online</span></td>
               </tr>
               <tr>
-                <td><b>S-150</b></td>
-                <td>Block E</td>
-                <td>Soil moisture</td>
-                <td>90%</td>
-                <td>1 min ago</td>
+                <td><div class="row"><span class="sm im">04</span><span><b>WTR-007</b><small>Deployed Feb 2025</small></span></div></td>
+                <td>Water</td>
+                <td>Rice cluster</td>
+                <td>74%</td>
+                <td><span class="tag green">Online</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm ne">05</span><span><b>STM-019</b><small>Deployed Apr 2025</small></span></div></td>
+                <td>Soil</td>
+                <td>Beans block</td>
+                <td>63%</td>
+                <td><span class="tag maroon">Offline</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm sa">06</span><span><b>WTB-005</b><small>Deployed Jan 2025</small></span></div></td>
+                <td>Weather</td>
+                <td>Rice cluster</td>
+                <td>88%</td>
                 <td><span class="tag green">Online</span></td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
         </div>
 
         <div class="card">
           <div class="card-head">
             <div>
               <b>Weather signal</b>
-              <div class="sub">From local weather stations</div>
+              <div class="sub">Next 5-day outlook for monitored clusters</div>
             </div>
           </div>
-          <div class="dev-kpis">
-            <div><strong>31°C</strong><small>Temp</small></div>
-            <div><strong>62%</strong><small>Humidity</small></div>
-            <div><strong>12 mm</strong><small>Rain wk</small></div>
+          <div class="minis">
+            <div class="mini"><span>High</span><b>28°C</b></div>
+            <div class="mini"><span>Low</span><b>21°C</b></div>
+            <div class="mini"><span>Rain</span><b>Thu 40%</b></div>
+            <div class="mini"><span>Humidity</span><b>68%</b></div>
           </div>
-          <div class="mini"><span>Wind speed</span><b>9 km/h</b></div>
-          <div class="mini"><span>Sunshine</span><b>8.1 h</b></div>
-          <div class="mini"><span>Rain forecast</span><b class="amber">Fri</b></div>
+          <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+          <div class="legend">
+            <span class="legend-item"><i class="dot green"></i>Rain today</span>
+            <span class="legend-item"><i class="dot amber"></i>Rain Thu</span>
+          </div>
         </div>
       </section>
     </div>
