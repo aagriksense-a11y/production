@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farms &amp; Plots - Agriksense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+  <a class="brand" href="/">
+    <img src="/images/logo/logo-dark.png" alt="Agriksense">
+  </a>
+
+  <div class="side-title">Operations</div>
+  <a class="side-item " href="/dashboard">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Dashboard
+    </span>
+  </a>
+  <a class="side-item " href="/farmers">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Farmers
+    </span>
+  </a>
+  <a class="side-item active" href="/farms">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Farms & Plots
+    </span>
+  </a>
+
+  <div class="side-title">Monitoring</div>
+  <a class="side-item " href="/drone">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      Drone Monitoring
+    </span>
+  </a>
+  <a class="side-item " href="/iot">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      IoT Sensors
+    </span>
+  </a>
+  <a class="side-item " href="/advisory">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      AI Advisory
+    </span>
+    <span class="badge">07</span>
+  </a>
+
+  <div class="side-title">Credit & Admin</div>
+  <a class="side-item " href="/agriscore">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      AgriScore
+    </span>
+  </a>
+  <a class="side-item " href="/analytics">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
+      Analytics
+    </span>
+  </a>
+
+  <div class="workspace">
+    Workspace
+    <b id="workspaceName">Raoatech Ops</b>
+  </div>
+</aside>
+  <div class="main">
+    <header class="topbar">
+  <div class="topbar-left">
+    <button class="icon-btn mobile-toggle" id="menuBtn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <h1>Farms &amp; Plots</h1>
+    <div class="pill"><span class="dot"></span> Field network live</div>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn" aria-label="Search">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+    </button>
+    <button class="icon-btn" aria-label="Alerts">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+    </button>
+    <div class="user-chip">
+      <span class="avatar" id="userAvatar">A</span>
+      <span id="userLabel">Operator</span>
+    </div>
+  </div>
+</header>
+    <div class="content">
+      <section class="kpis">
+        <div class="kpi-card">
+          <small>Active farms</small>
+          <strong>142</strong>
+          <span>▲ 18 this month</span>
+        </div>
+        <div class="kpi-card">
+          <small>Total hectares</small>
+          <strong>386</strong>
+          <span>2.7 ha avg plot</span>
+        </div>
+        <div class="kpi-card">
+          <small>Crops monitored</small>
+          <strong>12</strong>
+          <span>Maize, beans, rice, tomato</span>
+        </div>
+        <div class="kpi-card">
+          <small>Plots mapped</small>
+          <strong>162</strong>
+          <span class="amber">24 pending GPS</span>
+        </div>
+      </section>
+
+      <section class="grid-3">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Maize belt</b>
+              <div class="sub">18 farms · 54 ha</div>
+            </div>
+            <span class="tag green">Active</span>
+          </div>
+          <div class="mini"><span>Avg yield (2025)</span><b>3.1 t/ha</b></div>
+          <div class="mini"><span>Soil health</span><b>Good</b></div>
+          <div class="mini"><span>Next event</span><b>Fertilizer · wk 12</b></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Rice cluster</b>
+              <div class="sub">12 farms · 31 ha</div>
+            </div>
+            <span class="tag green">Active</span>
+          </div>
+          <div class="mini"><span>Avg yield (2025)</span><b>3.4 t/ha</b></div>
+          <div class="mini"><span>Soil health</span><b>Good</b></div>
+          <div class="mini"><span>Next event</span><b>Irrigation · daily</b></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Tomato farms</b>
+              <div class="sub">7 farms · 11 ha</div>
+            </div>
+            <span class="tag amber">Needs input</span>
+          </div>
+          <div class="mini"><span>Avg yield (2025)</span><b>6.8 t/ha</b></div>
+          <div class="mini"><span>Soil health</span><b>Fair</b></div>
+          <div class="mini"><span>Next event</span><b>Pest control · now</b></div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input type="text" placeholder="Search farms by cluster, crop or location">
+        </div>
+        <button class="btn btn-ghost">All crops ▾</button>
+        <button class="btn btn-primary">+ Register plot</button>
+      </div>
+
+      <section class="grid-3">
+        <div class="card span-2">
+          <div class="card-head">
+            <div>
+              <b>Farm & plot network</b>
+              <div class="sub">Registered plots, crop assignment and map status</div>
+            </div>
+          </div>
+          <div class="table-wrap"><table class="table">
+            <thead>
+              <tr>
+                <th>Plot</th>
+                <th>Crop</th>
+                <th>Area</th>
+                <th>Cluster</th>
+                <th>Map</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="row"><span class="sm">AY</span><span><b>AY - North field</b><small>Amina Yusuf · 2024</small></span></div></td>
+                <td>Maize</td>
+                <td>1.6 ha</td>
+                <td>Maize belt</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm co">CO</span><span><b>CO - Riverside</b><small>Chidi Okeke · 2025</small></span></div></td>
+                <td>Rice</td>
+                <td>1.8 ha</td>
+                <td>Rice cluster</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm fb">FB</span><span><b>FB - Valley plot</b><small>Fatima Bello · 2024</small></span></div></td>
+                <td>Tomato</td>
+                <td>1.1 ha</td>
+                <td>Tomato farms</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm im">IM</span><span><b>IM - East field</b><small>Ibrahim Musa · 2025</small></span></div></td>
+                <td>Maize</td>
+                <td>2.0 ha</td>
+                <td>Maize belt</td>
+                <td><span class="tag amber">Pending</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm ne">NE</span><span><b>NE - Hill plot</b><small>Ngozi Eze · 2023</small></span></div></td>
+                <td>Beans</td>
+                <td>1.4 ha</td>
+                <td>Beans block</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm sa">SA</span><span><b>SA - South field</b><small>Sani Abdullahi · 2025</small></span></div></td>
+                <td>Maize</td>
+                <td>1.5 ha</td>
+                <td>Maize belt</td>
+                <td><span class="tag green">Mapped</span></td>
+              </tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Plot GPS mapping</b>
+              <div class="sub">Farm plots with coordinates on file</div>
+            </div>
+          </div>
+          <div class="map">
+            <span class="pin" style="left:28%;top:26%"></span>
+            <span class="pin" style="left:58%;top:40%"></span>
+            <span class="pin" style="left:42%;top:64%"></span>
+            <span class="pin" style="left:72%;top:58%"></span>
+            <span class="pin" style="left:18%;top:58%"></span>
+          </div>
+          <div class="legend">
+            <span class="legend-item"><i class="dot green"></i>Mapped</span>
+            <span class="legend-item"><i class="dot amber"></i>Pending</span>
+          </div>
+          <div class="mini"><span>Mapped</span><b>162</b></div>
+          <div class="mini"><span>Pending</span><b>24</b></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const menuBtn = document.getElementById("menuBtn");
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => sidebar.classList.toggle("open"));
+  }
+
+  try {
+    const user = JSON.parse(localStorage.getItem("agriksense_user") || "null");
+    if (user) {
+      const full = [user.firstName, user.lastName].filter(Boolean).join(" ") || "Operator";
+      const org = user.organization || "Agriksense Ops";
+      const ws = document.getElementById("workspaceName");
+      const label = document.getElementById("userLabel");
+      const avatar = document.getElementById("userAvatar");
+      if (ws) ws.textContent = org;
+      if (label) label.textContent = full;
+      if (avatar) avatar.textContent = (user.firstName || "A").charAt(0).toUpperCase();
+    }
+  } catch (_) {}
+</script>
+</body>
+</html>
