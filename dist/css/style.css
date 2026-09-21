@@ -175,8 +175,8 @@ a,button{outline-offset:2px}:focus-visible{outline:2px solid currentColor;outlin
 /* ARCH */
 .arch{background:#eef2ed}
 .arch-layout{display:grid;grid-template-columns:.65fr 1.35fr;gap:80px}
-.arch-copy{position:sticky;top:120px;height:max-content}.arch-copy h2{font-size:clamp(48px,5.5vw,74px);line-height:.93;letter-spacing:-.07em;margin:18px 0}.arch-copy p{font-size:14px;line-height:1.7;color:var(--muted)}
-.arch-canvas{background:#fff;border:1px solid #dce2dc;border-radius:30px;padding:16px;box-shadow:0 25px 70px rgba(20,42,29,.07)}
+.arch-copy{position:sticky;top:120px;height:max-content;min-width:0}.arch-copy h2{font-size:clamp(48px,5.5vw,74px);line-height:.93;letter-spacing:-.07em;margin:18px 0}.arch-copy p{font-size:14px;line-height:1.7;color:var(--muted)}
+.arch-canvas{background:#fff;border:1px solid #dce2dc;border-radius:30px;padding:16px;box-shadow:0 25px 70px rgba(20,42,29,.07);min-width:0}
 .arch-inner{min-height:550px;border-radius:21px;background:#edf2ec;position:relative;overflow:hidden;padding:20px}
 .arch-inner:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#85928a 1px,transparent 1px);background-size:17px 17px;opacity:.17}
 .arch-layer{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.node{min-height:105px;border:1px solid #d9e1da;background:rgba(255,255,255,.84);backdrop-filter:blur(10px);border-radius:15px;padding:13px}.node strong{display:block;font-size:10px}.node small{display:block;font-size:8px;line-height:1.5;color:#7d887f;margin-top:7px}
