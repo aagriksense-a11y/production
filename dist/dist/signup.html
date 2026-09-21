@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign Up - Agriksense</title>
+<meta name="description" content="Create your Agriksense account. Join the agricultural intelligence infrastructure for Africa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+<nav class="nav auth-nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/"><img class="brand-logo" src="images/logo/logo-dark.png" alt="Agriksense"></a>
+    <div class="nav-links">
+      <a href="/#platform">Platform</a><a href="/#network">Network</a><a href="/#field">Field</a><a href="/#credit">Credit</a><a href="/dashboard">Dashboard</a>
+    </div>
+    <a class="nav-contact" href="/dashboard">Login</a>
+    <a class="nav-cta" href="/dashboard">Sign up ↗</a>
+    <button class="mobile-menu" aria-label="menu">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner">
+    <a href="/#platform">Platform</a>
+    <a href="/#network">Network</a>
+    <a href="/#field">Field</a>
+    <a href="/#credit">Credit</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/dashboard" style="margin-top:20px;color:var(--lime)">Login</a>
+    <a href="/dashboard" style="color:var(--lime)">Sign up</a>
+  </div>
+  <button class="mobile-nav-close" aria-label="close menu">✕</button>
+</div>
+
+<main class="auth-main">
+  <div class="auth-container">
+    <div class="auth-visual">
+      <div class="auth-visual-content">
+        <div class="auth-logo"><img src="images/logo/logo-tile.png" alt="Agriksense" class="brand-logo-mark"></div>
+        <h1>Start your agricultural<br>intelligence journey</h1>
+        <p>Join operators, cooperatives, and financial institutions building the future of precision agriculture across Sub-Saharan Africa.</p>
+        <div class="auth-features">
+          <div class="auth-feature">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>Verified farm identity & records</span>
+          </div>
+          <div class="auth-feature">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>0-1000 AgriScore credit index</span>
+          </div>
+          <div class="auth-feature">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>Field telemetry & aerial vision</span>
+          </div>
+        </div>
+        <div class="auth-trust">
+          <p class="trust-text">Trusted by agricultural operations across Nigeria</p>
+        </div>
+      </div>
+      <div class="auth-visual-bg"></div>
+    </div>
+
+    <div class="auth-form-panel">
+      <div class="auth-form-wrap">
+        <div class="auth-header">
+          <h2>Create your account</h2>
+          <p>Get started with Agriksense today</p>
+        </div>
+
+        <form class="auth-form" action="#" method="post">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First name</label>
+              <input type="text" id="first-name" name="first_name" placeholder="John" required autocomplete="given-name">
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last name</label>
+              <input type="text" id="last-name" name="last_name" placeholder="Doe" required autocomplete="family-name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label for="organization">Organization name</label>
+            <input type="text" id="organization" name="organization" placeholder="Your company or cooperative" required autocomplete="organization">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+            <span class="input-hint">Must be at least 8 characters</span>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="terms" required>
+              <span>I agree to the <a href="#" class="inline-link">Terms of Service</a> and <a href="#" class="inline-link">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-submit">Create account</button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Already have an account? <a href="/login">Log in</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

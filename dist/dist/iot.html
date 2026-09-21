@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IoT Sensors - Agriksense</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+  <a class="brand" href="/">
+    <img src="/images/logo/logo-dark.png" alt="Agriksense">
+  </a>
+
+  <div class="side-title">Operations</div>
+  <a class="side-item " href="/dashboard">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+      Dashboard
+    </span>
+  </a>
+  <a class="side-item " href="/farmers">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Farmers
+    </span>
+  </a>
+  <a class="side-item " href="/farms">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+      Farms & Plots
+    </span>
+  </a>
+
+  <div class="side-title">Monitoring</div>
+  <a class="side-item " href="/drone">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+      Drone Monitoring
+    </span>
+  </a>
+  <a class="side-item active" href="/iot">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+      IoT Sensors
+    </span>
+  </a>
+  <a class="side-item " href="/advisory">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      AI Advisory
+    </span>
+    <span class="badge">07</span>
+  </a>
+
+  <div class="side-title">Credit & Admin</div>
+  <a class="side-item " href="/agriscore">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      AgriScore
+    </span>
+  </a>
+  <a class="side-item " href="/analytics">
+    <span class="left">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
+      Analytics
+    </span>
+  </a>
+
+  <div class="workspace">
+    Workspace
+    <b id="workspaceName">Raoatech Ops</b>
+  </div>
+</aside>
+  <div class="main">
+    <header class="topbar">
+  <div class="topbar-left">
+    <button class="icon-btn mobile-toggle" id="menuBtn" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+    <h1>IoT Sensors</h1>
+    <div class="pill"><span class="dot"></span> Field network live</div>
+  </div>
+  <div class="topbar-right">
+    <button class="icon-btn" aria-label="Search">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+    </button>
+    <button class="icon-btn" aria-label="Alerts">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+    </button>
+    <div class="user-chip">
+      <span class="avatar" id="userAvatar">A</span>
+      <span id="userLabel">Operator</span>
+    </div>
+  </div>
+</header>
+    <div class="content">
+      <section class="kpis">
+        <div class="kpi-card">
+          <small>Active sensors</small>
+          <strong>58</strong>
+          <span>of 62 deployed</span>
+        </div>
+        <div class="kpi-card">
+          <small>Soil moisture</small>
+          <strong>34%</strong>
+          <span class="amber">below target</span>
+        </div>
+        <div class="kpi-card">
+          <small>Battery health</small>
+          <strong>82%</strong>
+          <span>fleet average</span>
+        </div>
+        <div class="kpi-card">
+          <small>Alerts today</small>
+          <strong>7</strong>
+          <span>2 need action</span>
+        </div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Soil moisture by cluster</b>
+              <div class="sub">Average volumetric moisture at 30 cm depth</div>
+            </div>
+          </div>
+          <div class="bar-chart">
+            <div class="bar-col">
+              <div class="tooltip">52%</div>
+              <div class="bar-track"><span style="height:52%"></span></div>
+              <div class="bar-label">Rice</div>
+            </div>
+            <div class="bar-col">
+              <div class="tooltip">38%</div>
+              <div class="bar-track"><span style="height:38%"></span></div>
+              <div class="bar-label">Maize</div>
+            </div>
+            <div class="bar-col">
+              <div class="tooltip">31%</div>
+              <div class="bar-track"><span style="height:31%"></span></div>
+              <div class="bar-label">Beans</div>
+            </div>
+            <div class="bar-col">
+              <div class="tooltip">24%</div>
+              <div class="bar-track"><span style="height:24%"></span></div>
+              <div class="bar-label">Tomato</div>
+            </div>
+          </div>
+          <div class="legend">
+            <span class="legend-item"><i class="dot green"></i>Healthy</span>
+            <span class="legend-item"><i class="dot amber"></i>Watch</span>
+            <span class="legend-item"><i class="dot red"></i>Critical</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Live alerts</b>
+              <div class="sub">Events from soil, weather and battery sensors</div>
+            </div>
+          </div>
+          <div class="alerts">
+            <div class="al-item">
+              <i class="al-dot red"></i>
+              <div><b>Moisture critically low</b><small>Tomato cluster · 10 min ago</small></div>
+            </div>
+            <div class="al-item">
+              <i class="al-dot amber"></i>
+              <div><b>Battery below 20%</b><small>STM-014 · 2 h ago</small></div>
+            </div>
+            <div class="al-item">
+              <i class="al-dot amber"></i>
+              <div><b>Rain expected Thu</b><small>Kano forecast · 6 h ago</small></div>
+            </div>
+            <div class="al-item">
+              <i class="al-dot green"></i>
+              <div><b>Irrigation complete</b><small>Rice cluster · 7 h ago</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input type="text" placeholder="Search sensors by ID or cluster">
+        </div>
+        <button class="btn btn-ghost">All clusters ▾</button>
+        <button class="btn btn-primary">+ Deploy sensor</button>
+      </div>
+
+      <section class="grid-3">
+        <div class="card span-2">
+          <div class="card-head">
+            <div>
+              <b>Sensor fleet</b>
+              <div class="sub">Deployed soil, weather and water sensors</div>
+            </div>
+          </div>
+          <div class="table-wrap"><table class="table">
+            <thead>
+              <tr>
+                <th>Sensor</th>
+                <th>Type</th>
+                <th>Cluster</th>
+                <th>Battery</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="row"><span class="sm">01</span><span><b>STM-011</b><small>Deployed Mar 2025</small></span></div></td>
+                <td>Soil</td>
+                <td>Rice cluster</td>
+                <td>86%</td>
+                <td><span class="tag green">Online</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm co">02</span><span><b>STM-014</b><small>Deployed Mar 2025</small></span></div></td>
+                <td>Soil</td>
+                <td>Tomato farms</td>
+                <td>17%</td>
+                <td><span class="tag amber">Low battery</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm fb">03</span><span><b>WTB-003</b><small>Deployed Jan 2025</small></span></div></td>
+                <td>Weather</td>
+                <td>Maize belt</td>
+                <td>91%</td>
+                <td><span class="tag green">Online</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm im">04</span><span><b>WTR-007</b><small>Deployed Feb 2025</small></span></div></td>
+                <td>Water</td>
+                <td>Rice cluster</td>
+                <td>74%</td>
+                <td><span class="tag green">Online</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm ne">05</span><span><b>STM-019</b><small>Deployed Apr 2025</small></span></div></td>
+                <td>Soil</td>
+                <td>Beans block</td>
+                <td>63%</td>
+                <td><span class="tag maroon">Offline</span></td>
+              </tr>
+              <tr>
+                <td><div class="row"><span class="sm sa">06</span><span><b>WTB-005</b><small>Deployed Jan 2025</small></span></div></td>
+                <td>Weather</td>
+                <td>Rice cluster</td>
+                <td>88%</td>
+                <td><span class="tag green">Online</span></td>
+              </tr>
+            </tbody>
+          </table></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <b>Weather signal</b>
+              <div class="sub">Next 5-day outlook for monitored clusters</div>
+            </div>
+          </div>
+          <div class="minis">
+            <div class="mini"><span>High</span><b>28°C</b></div>
+            <div class="mini"><span>Low</span><b>21°C</b></div>
+            <div class="mini"><span>Rain</span><b>Thu 40%</b></div>
+            <div class="mini"><span>Humidity</span><b>68%</b></div>
+          </div>
+          <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+          <div class="legend">
+            <span class="legend-item"><i class="dot green"></i>Rain today</span>
+            <span class="legend-item"><i class="dot amber"></i>Rain Thu</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<script>
+  const sidebar = document.getElementById("sidebar");
+  const menuBtn = document.getElementById("menuBtn");
+  if (menuBtn) {
+    menuBtn.addEventListener("click", () => sidebar.classList.toggle("open"));
+  }
+
+  try {
+    const user = JSON.parse(localStorage.getItem("agriksense_user") || "null");
+    if (user) {
+      const full = [user.firstName, user.lastName].filter(Boolean).join(" ") || "Operator";
+      const org = user.organization || "Agriksense Ops";
+      const ws = document.getElementById("workspaceName");
+      const label = document.getElementById("userLabel");
+      const avatar = document.getElementById("userAvatar");
+      if (ws) ws.textContent = org;
+      if (label) label.textContent = full;
+      if (avatar) avatar.textContent = (user.firstName || "A").charAt(0).toUpperCase();
+    }
+  } catch (_) {}
+</script>
+</body>
+</html>
