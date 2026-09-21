@@ -1,10 +1,12 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createRequire } from "node:module";
+import { promisify } from "node:util";
 import { promises as fs } from "node:fs";
+import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const ejs = require("../server/node_modules/ejs");
+const ejs = require("ejs");
+const renderFile = promisify(ejs.renderFile);
 
 const __filename = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(__filename), "..");
@@ -41,7 +43,7 @@ const REDIRECTS = [
 await fs.rm(OUT, { recursive: true, force: true });
 
 for (const page of PAGES) {
-  const html = await ejs.renderFile(
+  const html = await renderFile(
     path.join(VIEWS, page.file),
     {
       title: page.data.title,

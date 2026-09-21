@@ -4,10 +4,14 @@
   "private": true,
   "description": "Agriksense - AI-driven precision agriculture & farm-credit platform",
   "scripts": {
+    "build:static": "node scripts/build-static.mjs",
     "dev": "npm run dev --prefix server",
     "start": "npm run start --prefix server",
     "db:push": "npm run db:push --prefix server",
     "db:generate": "npm run db:generate --prefix server",
     "db:studio": "npm run db:studio --prefix server"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1"
   }
 }
