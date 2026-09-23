@@ -8,6 +8,7 @@
     "predev": "node scripts/kill-port.js",
     "dev": "node --watch src/index.js",
     "prestart": "node scripts/kill-port.js",
+    "postinstall": "node scripts/sync-schema.cjs",
     "start": "node src/index.js",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",

@@ -541,10 +541,7 @@ button{font:inherit;cursor:pointer;border:0;background:none}
   .app{display:block}
   .content{padding:14px;gap:12px}
   .kpis{grid-template-columns:1fr;gap:10px}
-  .kpi-card{display:flex;align-items:center;justify-content:space-between;padding:13px 15px}
-  .kpi-card small{margin:0}
-  .kpi-card strong{font-size:22px;margin:0;flex:0 0 auto}
-  .kpi-card span{margin:0 0 0 8px;text-align:right}
+  .kpi-card{padding:16px 18px}
   .metric{font-size:28px}
   .card{padding:15px}
   .card-head b{font-size:13px}

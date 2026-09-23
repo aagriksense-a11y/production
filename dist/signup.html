@@ -19,21 +19,20 @@
     <div class="nav-links">
       <a href="/#platform">Platform</a><a href="/#network">Network</a><a href="/#field">Field</a><a href="/#credit">Credit</a><a href="/dashboard">Dashboard</a>
     </div>
-    <a class="nav-contact" href="/dashboard">Login</a>
-    <a class="nav-cta" href="/dashboard">Sign up ↗</a>
+    <a class="nav-contact" href="/login">Login</a>
+    <a class="nav-cta" href="/signup">Sign up ↗</a>
     <button class="mobile-menu" aria-label="menu">☰</button>
   </div>
 </nav>
 
 <div class="mobile-nav" id="mobileNav">
   <div class="mobile-nav-inner">
-    <a href="/#platform">Platform</a>
-    <a href="/#network">Network</a>
-    <a href="/#field">Field</a>
-    <a href="/#credit">Credit</a>
-    <a href="/dashboard">Dashboard</a>
-    <a href="/dashboard" style="margin-top:20px;color:var(--lime)">Login</a>
-    <a href="/dashboard" style="color:var(--lime)">Sign up</a>
+    <a href="/dashboard">Platform</a>
+    <a href="/farmers">Network</a>
+    <a href="/farms">Field</a>
+    <a href="/agriscore">Credit</a>
+    <a href="/login" style="margin-top:20px;color:var(--lime)">Login</a>
+    <a href="/signup" style="color:var(--lime)">Sign up</a>
   </div>
   <button class="mobile-nav-close" aria-label="close menu">✕</button>
 </div>
@@ -86,38 +85,122 @@
         </div>
 
         <form class="auth-form" action="#" method="post">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="first-name">First name</label>
-              <input type="text" id="first-name" name="first_name" placeholder="John" required autocomplete="given-name">
+          <div class="form-group">
+            <label>Account type</label>
+            <div class="role-selector" role="radiogroup" aria-label="Account type">
+              <button type="button" class="role-tab active" data-role="farmer">
+                <span class="role-tab-title">Farmer</span>
+                <span class="role-tab-sub">I grow crops or rear livestock</span>
+              </button>
+              <button type="button" class="role-tab" data-role="dco">
+                <span class="role-tab-title">Officer</span>
+                <span class="role-tab-sub">I collect field data</span>
+              </button>
+              <button type="button" class="role-tab" data-role="organization">
+                <span class="role-tab-title">Organization</span>
+                <span class="role-tab-sub">A company or cooperative</span>
+              </button>
+            </div>
+            <input type="hidden" name="role" value="farmer">
+          </div>
+
+          <div data-role-panel="farmer">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="f-first-name">First name</label>
+                <input type="text" id="f-first-name" name="first_name" placeholder="John" required autocomplete="given-name">
+              </div>
+              <div class="form-group">
+                <label for="f-last-name">Last name</label>
+                <input type="text" id="f-last-name" name="last_name" placeholder="Doe" required autocomplete="family-name">
+              </div>
             </div>
             <div class="form-group">
-              <label for="last-name">Last name</label>
-              <input type="text" id="last-name" name="last_name" placeholder="Doe" required autocomplete="family-name">
+              <label for="f-other-name">Other name</label>
+              <input type="text" id="f-other-name" name="other_name" placeholder="Optional">
+            </div>
+            <div class="form-group">
+              <label for="f-phone">WhatsApp phone number</label>
+              <input type="tel" id="f-phone" name="phone" placeholder="+2348..." required autocomplete="tel">
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email address</label>
+              <input type="email" id="f-email" name="email" placeholder="you@example.com">
+              <span class="input-hint">Used only for account recovery</span>
+            </div>
+            <div class="form-group">
+              <label for="f-password">Password</label>
+              <input type="password" id="f-password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+              <span class="input-hint">Must be at least 6 characters</span>
+            </div>
+            <div class="form-group">
+              <label for="f-confirm-password">Confirm password</label>
+              <input type="password" id="f-confirm-password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="consent">
+                <span>I accept the Farmer Informed Consent terms for data collection and verification.</span>
+              </label>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
+          <div data-role-panel="dco" hidden>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="dco-first-name">First name</label>
+                <input type="text" id="dco-first-name" name="first_name" placeholder="Ada" required autocomplete="given-name">
+              </div>
+              <div class="form-group">
+                <label for="dco-last-name">Last name</label>
+                <input type="text" id="dco-last-name" name="last_name" placeholder="Okafor" required autocomplete="family-name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dco-other-name">Other name</label>
+              <input type="text" id="dco-other-name" name="other_name" placeholder="Optional">
+            </div>
+            <div class="form-group">
+              <label for="dco-email">Email address</label>
+              <input type="email" id="dco-email" name="email" placeholder="you@company.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="dco-phone">WhatsApp phone number</label>
+              <input type="tel" id="dco-phone" name="phone" placeholder="+2348..." required autocomplete="tel">
+            </div>
+            <div class="form-group">
+              <label for="dco-password">Password</label>
+              <input type="password" id="dco-password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+              <span class="input-hint">Must be at least 6 characters</span>
+            </div>
+            <div class="form-group">
+              <label for="dco-confirm-password">Confirm password</label>
+              <input type="password" id="dco-confirm-password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password">
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="organization">Organization name</label>
-            <input type="text" id="organization" name="organization" placeholder="Your company or cooperative" required autocomplete="organization">
-          </div>
-
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
-            <span class="input-hint">Must be at least 8 characters</span>
-          </div>
-
-          <div class="form-group">
-            <label class="checkbox-label">
-              <input type="checkbox" name="terms" required>
-              <span>I agree to the <a href="#" class="inline-link">Terms of Service</a> and <a href="#" class="inline-link">Privacy Policy</a></span>
-            </label>
+          <div data-role-panel="organization" hidden>
+            <div class="form-group">
+              <label for="org-org-name">Organization name</label>
+              <input type="text" id="org-org-name" name="org_name" placeholder="Your company or cooperative" required autocomplete="organization">
+            </div>
+            <div class="form-group">
+              <label for="org-email">Work email address</label>
+              <input type="email" id="org-email" name="email" placeholder="you@company.com" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="org-phone">Phone number</label>
+              <input type="tel" id="org-phone" name="phone" placeholder="+2348...">
+            </div>
+            <div class="form-group">
+              <label for="org-password">Password</label>
+              <input type="password" id="org-password" name="password" placeholder="Create a strong password" required autocomplete="new-password">
+              <span class="input-hint">Must be at least 6 characters</span>
+            </div>
+            <div class="form-group">
+              <label for="org-confirm-password">Confirm password</label>
+              <input type="password" id="org-confirm-password" name="confirm_password" placeholder="Repeat your password" required autocomplete="new-password">
+            </div>
           </div>
 
           <button type="submit" class="btn-submit">Create account</button>
