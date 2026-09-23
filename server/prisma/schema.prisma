@@ -11,6 +11,7 @@ enum UserRole {
   FARMER
   DATA_COLLECTION_OFFICER
   ORGANIZATION
+  ADMIN
 }
 
 enum OnboardingStatus {

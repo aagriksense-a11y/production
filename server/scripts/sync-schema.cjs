@@ -22,3 +22,11 @@ try {
   console.error("schema-sync: db push failed.", err.message);
   process.exit(1);
 }
+
+const { seedAdmin } = require("./seed-admin.cjs");
+seedAdmin()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error("seed-admin failed:", err.message);
+    process.exit(1);
+  });
