@@ -96,6 +96,9 @@
       <span class="avatar" id="userAvatar">A</span>
       <span id="userLabel">Operator</span>
     </div>
+    <button class="icon-btn" id="logoutBtn" aria-label="Log out" title="Log out">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    </button>
   </div>
 </header>
     <div class="content">
@@ -217,23 +220,54 @@
   </div>
 </div>
 <script>
+  const hasSession = !!localStorage.getItem("agriksense_token");
+  if (!hasSession) {
+    window.location.replace("/login");
+  }
+
   const sidebar = document.getElementById("sidebar");
   const menuBtn = document.getElementById("menuBtn");
   if (menuBtn) {
     menuBtn.addEventListener("click", () => sidebar.classList.toggle("open"));
   }
+  if (sidebar) {
+    document.addEventListener("click", (e) => {
+      if (!sidebar.classList.contains("open")) return;
+      if (sidebar.contains(e.target)) return;
+      if (menuBtn && menuBtn.contains(e.target)) return;
+      sidebar.classList.remove("open");
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+      }
+    });
+    sidebar.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => sidebar.classList.remove("open"));
+    });
+  }
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("agriksense_token");
+      localStorage.removeItem("agriksense_refresh");
+      localStorage.removeItem("agriksense_user");
+      window.location.href = "/login";
+    });
+  }
 
   try {
     const user = JSON.parse(localStorage.getItem("agriksense_user") || "null");
     if (user) {
-      const full = [user.firstName, user.lastName].filter(Boolean).join(" ") || "Operator";
-      const org = user.organization || "Agriksense Ops";
-      const ws = document.getElementById("workspaceName");
+      const profile = user.profile || {};
+      const full = profile.type === "organization"
+        ? (profile.orgName || "Operator")
+        : ([profile.firstName, profile.lastName].filter(Boolean).join(" ") || "Operator");
       const label = document.getElementById("userLabel");
       const avatar = document.getElementById("userAvatar");
-      if (ws) ws.textContent = org;
       if (label) label.textContent = full;
-      if (avatar) avatar.textContent = (user.firstName || "A").charAt(0).toUpperCase();
+      if (avatar) avatar.textContent = (profile.firstName || "O").charAt(0).toUpperCase();
     }
   } catch (_) {}
 </script>

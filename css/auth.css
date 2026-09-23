@@ -141,6 +141,25 @@
 }
 .auth-error[hidden]{display:none}
 
+.role-selector{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.role-tab{
+  display:flex;flex-direction:column;gap:3px;text-align:left;
+  padding:12px;border:1.5px solid var(--line);border-radius:12px;
+  background:#fff;cursor:pointer;font-family:inherit;
+  transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.role-tab:hover{border-color:#c4d4c9}
+.role-tab.active{
+  border-color:var(--green);background:rgba(213,241,127,.1);
+  box-shadow:0 0 0 4px rgba(11,91,62,.06);
+}
+.role-tab-title{font-size:13px;font-weight:650;color:var(--ink);letter-spacing:-.01em}
+.role-tab-sub{font-size:11px;color:var(--muted);line-height:1.35}
+
+@media(max-width:520px){
+  .role-selector{grid-template-columns:1fr}
+}
+
 .auth-footer{text-align:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
 .auth-footer p{font-size:14px;color:var(--muted);margin:0}
 .auth-footer a{color:var(--green);font-weight:650;text-decoration:none;transition:color .2s}

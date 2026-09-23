@@ -9,25 +9,184 @@ datasource db {
 
 enum UserRole {
   FARMER
-  ORGANISATION
-  FIELD_AGENT
-  ADMIN
-  BANK_PARTNER
+  DATA_COLLECTION_OFFICER
+  ORGANIZATION
+}
+
+enum OnboardingStatus {
+  PHASE_1_BASIC
+  PHASE_2_COMPLETED
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
 }
 
 model User {
-  id             String   @id @default(cuid())
-  email          String   @unique
-  passwordHash   String
+  id             String           @id @default(cuid())
+  platformId     String           @unique
+  role           UserRole
+  email          String?          @unique
+  phoneNumber    String?          @unique
+  passwordHash   String?
+  authProvider   AuthProvider     @default(LOCAL)
+  onboardingStep OnboardingStatus @default(PHASE_1_BASIC)
+  isActive       Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  farmerProfile FarmerProfile?
+  dcoProfile    DcoProfile?
+  orgProfile    OrgProfile?
+  refreshTokens RefreshToken[]
+  bankAccounts  BankAccount[]
+
+  @@index([platformId])
+  @@index([role])
+  @@map("users")
+}
+
+model FarmerProfile {
+  id                String             @id @default(cuid())
+  userId            String             @unique
+  firstName         String
+  lastName          String
+  otherName         String?
+  consentAccepted   Boolean            @default(false)
+  consentAcceptedAt DateTime?
+  altPhoneNumber    String?
+  nin               String?
+  ninDocUrl         String?
+  ninStatus         VerificationStatus @default(PENDING)
+  address           String?
+  cityTown          String?
+  lga               String?
+  state             String?
+  avatarUrl         String?
+  managerName       String?
+  managerPhone      String?
+  managerEmail      String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  user                    User                     @relation(fields: [userId], references: [id])
+  organizationMemberships OrganizationMembership[]
+
+  @@index([userId])
+}
+
+model DcoProfile {
+  id             String             @id @default(cuid())
+  userId         String             @unique
   firstName      String
   lastName       String
-  organization   String?
-  role           UserRole @default(ORGANISATION)
-  phone          String?
-  isActive       Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  otherName      String?
+  altPhoneNumber String?
+  nin            String?
+  ninDocUrl      String?
+  ninStatus      VerificationStatus @default(PENDING)
+  address        String?
+  cityTown       String?
+  lga            String?
+  state          String?
+  avatarUrl      String?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
 
-  @@index([email])
-  @@map("users")
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model OrgProfile {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  orgName             String
+  headquartersAddress String?
+  cityTown            String?
+  lga                 String?
+  state               String?
+  isRegistered        Boolean            @default(false)
+  cacNumber           String?
+  cacStatus           VerificationStatus @default(PENDING)
+  cacCertUrl          String?
+  cacForm2Url         String?
+  cacForm7Url         String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  user        User                     @relation(fields: [userId], references: [id])
+  directors   Director[]
+  memberships OrganizationMembership[]
+
+  @@index([userId])
+}
+
+model Director {
+  id             String   @id @default(cuid())
+  orgProfileId   String
+  fullName       String
+  phoneNumber    String
+  email          String?
+  nin            String
+  ninDocUrl      String?
+  address        String?
+  utilityBillUrl String?
+  createdAt      DateTime @default(now())
+
+  orgProfile OrgProfile @relation(fields: [orgProfileId], references: [id])
+
+  @@index([orgProfileId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model BankAccount {
+  id            String   @id @default(cuid())
+  userId        String
+  accountName   String
+  accountNumber String
+  bankName      String
+  bankCode      String?
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model OrganizationMembership {
+  id           String    @id @default(cuid())
+  farmerId     String
+  orgId        String
+  membershipId String
+  isVerified   Boolean   @default(false)
+  verifiedAt   DateTime?
+  createdAt    DateTime  @default(now())
+
+  farmer          FarmerProfile @relation(fields: [farmerProfileId], references: [id])
+  organization    OrgProfile    @relation(fields: [orgProfileId], references: [id])
+  farmerProfileId String
+  orgProfileId    String
+
+  @@unique([farmerId, orgId])
+  @@index([orgId])
 }
