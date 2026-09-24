@@ -16,8 +16,8 @@ const isProduction =
   /\.(ohio|oregon|virginia)-postgres\./i.test(dbUrl) ||
   renderDbHost;
 
-function run(cmd) {
-  execSync(cmd, { stdio: "inherit" });
+function run(cmd, env) {
+  execSync(cmd, { stdio: "inherit", env: env || process.env });
 }
 
 try {
@@ -56,6 +56,12 @@ if (isProduction) {
 
 const { seedAdmin } = require("./seed-admin.cjs");
 seedAdmin()
+  .then(() => {
+    if (process.env.SEED_DEMO === "true") {
+      console.log("schema-sync: SEED_DEMO enabled -> seeding demo data");
+      run("node scripts/seed-demo.cjs", { ...process.env, SEED_ALLOW_PROD: "true" });
+    }
+  })
   .then(() => process.exit(0))
   .catch((err) => {
     console.error("seed-admin failed:", err.message);

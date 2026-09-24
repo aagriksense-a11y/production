@@ -299,11 +299,20 @@ async function getFarmerDetail(request, reply) {
   };
 }
 
-async function createFarmer(request, reply) {
+async function createUser(request, reply) {
   const b = request.body || {};
-  const { firstName, lastName, otherName, phoneNumber, email, password, state, lga, cityTown, address, nin } = b;
-  if (!firstName || !lastName || !phoneNumber || !password) {
-    return reply.code(400).send({ success: false, message: "firstName, lastName, phoneNumber and password are required" });
+  const { role = "FARMER", firstName, lastName, otherName, phoneNumber, email, password, state, lga, cityTown, address, nin, orgName, cacNumber } = b;
+  if (!phoneNumber || !password) {
+    return reply.code(400).send({ success: false, message: "phoneNumber and password are required" });
+  }
+  if (!["FARMER", "DATA_COLLECTION_OFFICER", "ORGANIZATION"].includes(role)) {
+    return reply.code(400).send({ success: false, message: "role must be FARMER, DATA_COLLECTION_OFFICER or ORGANIZATION" });
+  }
+  if (role === "ORGANIZATION" && !orgName) {
+    return reply.code(400).send({ success: false, message: "orgName is required for organization accounts" });
+  }
+  if (role !== "ORGANIZATION" && (!firstName || !lastName)) {
+    return reply.code(400).send({ success: false, message: "firstName and lastName are required" });
   }
 
   const existing = await prisma.user.findFirst({ where: { OR: [{ phoneNumber }, ...(email ? [{ email: email.toLowerCase() }] : [])] } });
@@ -311,34 +320,79 @@ async function createFarmer(request, reply) {
 
   const pid = (await prisma.$queryRawUnsafe("SELECT floor(random()*8999999999+1000000000)::text AS id"))[0].id;
   const passwordHash = await bcrypt.hash(password, 12);
+  const base = {
+    platformId: pid,
+    role,
+    phoneNumber,
+    email: email ? email.toLowerCase() : null,
+    passwordHash,
+    authProvider: "LOCAL",
+    onboardingStep: "PHASE_1_BASIC",
+  };
 
-  const user = await prisma.user.create({
-    data: {
-      platformId: pid,
-      role: "FARMER",
-      phoneNumber,
-      email: email ? email.toLowerCase() : null,
-      passwordHash,
-      authProvider: "LOCAL",
-      onboardingStep: "PHASE_1_BASIC",
-      farmerProfile: {
-        create: {
-          firstName: titleCase(firstName),
-          lastName: titleCase(lastName),
-          otherName: otherName ? titleCase(otherName) : null,
-          nin,
-          ninStatus: nin ? "PENDING" : "PENDING",
-          address,
-          cityTown,
-          lga,
-          state: titleCase(state),
+  let user;
+  if (role === "FARMER") {
+    user = await prisma.user.create({
+      data: {
+        ...base,
+        farmerProfile: {
+          create: {
+            firstName: titleCase(firstName),
+            lastName: titleCase(lastName),
+            otherName: otherName ? titleCase(otherName) : null,
+            nin,
+            ninStatus: "PENDING",
+            address,
+            cityTown,
+            lga,
+            state: titleCase(state),
+          },
         },
       },
-    },
-    include: { farmerProfile: true },
-  });
+      include: { farmerProfile: true },
+    });
+  } else if (role === "DATA_COLLECTION_OFFICER") {
+    user = await prisma.user.create({
+      data: {
+        ...base,
+        dcoProfile: {
+          create: {
+            firstName: titleCase(firstName),
+            lastName: titleCase(lastName),
+            otherName: otherName ? titleCase(otherName) : null,
+            nin,
+            ninStatus: "PENDING",
+            address,
+            cityTown,
+            lga,
+            state: titleCase(state),
+          },
+        },
+      },
+      include: { dcoProfile: true },
+    });
+  } else {
+    user = await prisma.user.create({
+      data: {
+        ...base,
+        orgProfile: {
+          create: {
+            orgName,
+            headquartersAddress: address,
+            cityTown,
+            lga,
+            state: titleCase(state),
+            isRegistered: !!cacNumber,
+            cacNumber,
+            cacStatus: cacNumber ? "PENDING" : "PENDING",
+          },
+        },
+      },
+      include: { orgProfile: true },
+    });
+  }
 
-  return reply.code(201).send({ success: true, data: { id: user.id, platformId: user.platformId } });
+  return reply.code(201).send({ success: true, data: { id: user.id, platformId: user.platformId, role: user.role } });
 }
 
 async function listFarms(request, reply) {
@@ -651,7 +705,7 @@ export default async function adminRoutes(fastify) {
   fastify.get("/summary", { onRequest: [requireAuth, requireRole("ADMIN")] }, wrap(dashboardSummary));
   fastify.get("/farmers", { onRequest: [requireAuth, requireRole("ADMIN")] }, wrap(farmersList));
   fastify.get("/farmers/:id", { onRequest: [requireAuth, requireRole("ADMIN")] }, wrap(getFarmerDetail));
-  fastify.post("/farmers", { onRequest: [requireAuth, requireRole("ADMIN")] }, createFarmer);
+  fastify.post("/farmers", { onRequest: [requireAuth, requireRole("ADMIN")] }, createUser);
   fastify.get("/farms", { onRequest: [requireAuth, requireRole("ADMIN")] }, wrap(listFarms));
   fastify.get("/plots", { onRequest: [requireAuth, requireRole("ADMIN")] }, wrap(listPlots));
   fastify.post("/farms", { onRequest: [requireAuth, requireRole("ADMIN")] }, createFarm);

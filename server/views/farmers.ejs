@@ -74,22 +74,29 @@
 <div class="modal" id="createModal" style="display:none">
   <div class="modal-card">
     <div class="card-head">
-      <div><b>Onboard farmer</b><div class="sub">Create a farmer account (phase 1)</div></div>
+      <div><b>Create account</b><div class="sub">Onboard a farmer, DCO or organization (starts as PENDING)</div></div>
       <button class="icon-btn" id="createClose">✕</button>
     </div>
     <form id="createFarmerForm" class="form-grid">
-      <div class="form-group"><label>First name *</label><input name="firstName" required></div>
-      <div class="form-group"><label>Last name *</label><input name="lastName" required></div>
-      <div class="form-group"><label>Other name</label><input name="otherName"></div>
+      <div class="form-group full"><label>Account type *</label><select name="role" id="roleSelect"><option value="FARMER">Farmer</option><option value="DATA_COLLECTION_OFFICER">Data Collection Officer</option><option value="ORGANIZATION">Organization</option></select></div>
+      <div id="personFields" style="display:contents">
+        <div class="form-group"><label>First name *</label><input name="firstName" required></div>
+        <div class="form-group"><label>Last name *</label><input name="lastName" required></div>
+        <div class="form-group"><label>Other name</label><input name="otherName"></div>
+      </div>
+      <div id="orgFields" style="display:none">
+        <div class="form-group full"><label>Organization name *</label><input name="orgName"></div>
+        <div class="form-group"><label>CAC number (optional)</label><input name="cacNumber"></div>
+      </div>
       <div class="form-group"><label>Phone number *</label><input name="phoneNumber" required placeholder="2348012345678"></div>
       <div class="form-group"><label>Email</label><input name="email" type="email"></div>
       <div class="form-group"><label>Password *</label><input name="password" type="password" required minlength="8"></div>
-      <div class="form-group"><label>State</label><input name="state" id="createState"></div>
+      <div class="form-group"><label>State</label><input name="state"></div>
       <div class="form-group"><label>LGA</label><input name="lga"></div>
       <div class="form-group"><label>City / town</label><input name="cityTown"></div>
       <div class="form-group"><label>Address</label><input name="address"></div>
       <div class="form-group"><label>NIN (optional)</label><input name="nin"></div>
-      <div class="form-actions"><button class="btn btn-primary" type="submit">Create farmer</button><span class="form-error" id="createError"></span></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Create account</button><span class="form-error" id="createError"></span></div>
     </form>
   </div>
 </div>
@@ -220,6 +227,15 @@ document.getElementById("stateFilter").addEventListener("change", () => loadFarm
 document.getElementById("statusFilter").addEventListener("change", () => loadFarmers(0));
 
 document.getElementById("addFarmerBtn").addEventListener("click", () => document.getElementById("createModal").style.display = "flex");
+document.getElementById("roleSelect").addEventListener("change", (e) => {
+  const isOrg = e.target.value === "ORGANIZATION";
+  document.getElementById("personFields").style.display = isOrg ? "none" : "contents";
+  document.getElementById("orgFields").style.display = isOrg ? "block" : "none";
+  const personInputs = document.getElementById("personFields").querySelectorAll("[required]");
+  personInputs.forEach((i) => (i.required = !isOrg));
+  const orgName = document.getElementById("orgFields").querySelector("[name=orgName]");
+  orgName.required = isOrg;
+});
 document.getElementById("createClose").addEventListener("click", () => document.getElementById("createModal").style.display = "none");
 document.getElementById("overlay").addEventListener("click", () => { closeDrawer(); document.getElementById("createModal").style.display = "none"; });
 document.getElementById("drawerClose").addEventListener("click", closeDrawer);
