@@ -16,64 +16,85 @@
     <img src="/images/logo/logo-dark.png" alt="Agriksense">
   </a>
 
-  <div class="side-title">Operations</div>
-  <a class="side-item " href="/dashboard">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-      Dashboard
-    </span>
-  </a>
-  <a class="side-item " href="/farmers">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Farmers
-    </span>
-  </a>
-  <a class="side-item active" href="/farms">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-      Farms & Plots
-    </span>
-  </a>
+  <div class="side-select" id="roleBadge">
+    <a href="/dashboard" class="side-item" id="homeLink">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Home
+      </span>
+    </a>
+  </div>
 
-  <div class="side-title">Monitoring</div>
-  <a class="side-item " href="/drone">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
-      Drone Monitoring
-    </span>
-  </a>
-  <a class="side-item " href="/iot">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
-      IoT Sensors
-    </span>
-  </a>
-  <a class="side-item " href="/advisory">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      AI Advisory
-    </span>
-    <span class="badge">07</span>
-  </a>
+  <div class="admin-only" id="adminSection">
+    <div class="side-title">Operations</div>
+    <a class="side-item " href="/dashboard">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Dashboard
+      </span>
+    </a>
+    <a class="side-item " href="/farmers">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Farmers
+      </span>
+    </a>
+    <a class="side-item active" href="/farms">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        Farms & Plots
+      </span>
+    </a>
 
-  <div class="side-title">Credit & Admin</div>
-  <a class="side-item " href="/agriscore">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      AgriScore
-    </span>
-  </a>
-  <a class="side-item " href="/analytics">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
-      Analytics
-    </span>
-  </a>
+    <div class="side-title">Monitoring</div>
+    <a class="side-item " href="/drone">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        Drone Monitoring
+      </span>
+    </a>
+    <a class="side-item " href="/iot">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        IoT Sensors
+      </span>
+    </a>
+    <a class="side-item " href="/advisory">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        AI Advisory
+      </span>
+      <span class="badge" id="advisoryBadge">0</span>
+    </a>
+
+    <div class="side-title">Credit & Admin</div>
+    <a class="side-item " href="/agriscore">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        AgriScore
+      </span>
+    </a>
+    <a class="side-item " href="/analytics">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
+        Analytics
+      </span>
+    </a>
+  </div>
+
+  <div class="non-admin" id="memberSection">
+    <div class="side-title">My Workspace</div>
+    <a class="side-item" href="/farmer-dashboard" id="memberHomeLink">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        My Dashboard
+      </span>
+    </a>
+  </div>
 
   <div class="workspace">
     Workspace
-    <b id="workspaceName">Raoatech Ops</b>
+    <b id="workspaceName">Agriksense</b>
   </div>
 </aside>
   <div class="main">
@@ -83,18 +104,16 @@
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
     <h1>Farms &amp; Plots</h1>
-    <div class="pill"><span class="dot"></span> Field network live</div>
+    <div class="pill" id="statusPill"><span class="dot"></span> Field network live</div>
   </div>
   <div class="topbar-right">
-    <button class="icon-btn" aria-label="Search">
-      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
-    </button>
-    <button class="icon-btn" aria-label="Alerts">
+    <div class="pill id-pill" id="platformIdField" style="display:none"><span class="id-label">My Agriksense ID</span><b id="platformIdVal"></b></div>
+    <button class="icon-btn" id="alertsBtn" aria-label="Alerts">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
     </button>
     <div class="user-chip">
       <span class="avatar" id="userAvatar">A</span>
-      <span id="userLabel">Operator</span>
+      <span id="userLabel">User</span>
     </div>
     <button class="icon-btn" id="logoutBtn" aria-label="Log out" title="Log out">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -102,75 +121,19 @@
   </div>
 </header>
     <div class="content">
-      <section class="kpis">
-        <div class="kpi-card">
-          <small>Active farms</small>
-          <strong>142</strong>
-          <span>▲ 18 this month</span>
-        </div>
-        <div class="kpi-card">
-          <small>Total hectares</small>
-          <strong>386</strong>
-          <span>2.7 ha avg plot</span>
-        </div>
-        <div class="kpi-card">
-          <small>Crops monitored</small>
-          <strong>12</strong>
-          <span>Maize, beans, rice, tomato</span>
-        </div>
-        <div class="kpi-card">
-          <small>Plots mapped</small>
-          <strong>162</strong>
-          <span class="amber">24 pending GPS</span>
-        </div>
-      </section>
+      <div id="loading" class="card">Loading farms & plots…</div>
 
-      <section class="grid-3">
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <b>Maize belt</b>
-              <div class="sub">18 farms · 54 ha</div>
-            </div>
-            <span class="tag green">Active</span>
-          </div>
-          <div class="mini"><span>Avg yield (2025)</span><b>3.1 t/ha</b></div>
-          <div class="mini"><span>Soil health</span><b>Good</b></div>
-          <div class="mini"><span>Next event</span><b>Fertilizer · wk 12</b></div>
-        </div>
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <b>Rice cluster</b>
-              <div class="sub">12 farms · 31 ha</div>
-            </div>
-            <span class="tag green">Active</span>
-          </div>
-          <div class="mini"><span>Avg yield (2025)</span><b>3.4 t/ha</b></div>
-          <div class="mini"><span>Soil health</span><b>Good</b></div>
-          <div class="mini"><span>Next event</span><b>Irrigation · daily</b></div>
-        </div>
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <b>Tomato farms</b>
-              <div class="sub">7 farms · 11 ha</div>
-            </div>
-            <span class="tag amber">Needs input</span>
-          </div>
-          <div class="mini"><span>Avg yield (2025)</span><b>6.8 t/ha</b></div>
-          <div class="mini"><span>Soil health</span><b>Fair</b></div>
-          <div class="mini"><span>Next event</span><b>Pest control · now</b></div>
-        </div>
-      </section>
+      <section class="kpis" id="kpis" style="display:none"></section>
 
-      <div class="toolbar">
+      <div class="toolbar" id="toolbar" style="display:none">
         <div class="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
-          <input type="text" placeholder="Search farms by cluster, crop or location">
+          <input type="text" id="searchInput" placeholder="Search farms by name, farmer or location">
         </div>
-        <button class="btn btn-ghost">All crops ▾</button>
-        <button class="btn btn-primary">+ Register plot</button>
+        <select id="cropFilter" class="select"><option value="">All crops</option></select>
+        <select id="stateFilter" class="select"><option value="">All states</option></select>
+        <button class="btn btn-ghost" id="assignBtn">Assign to DCO</button>
+        <button class="btn btn-primary" id="addPlotBtn">+ Register plot</button>
       </div>
 
       <section class="grid-3">
@@ -178,93 +141,151 @@
           <div class="card-head">
             <div>
               <b>Farm & plot network</b>
-              <div class="sub">Registered plots, crop assignment and map status</div>
+              <div class="sub" id="resultCount"></div>
             </div>
           </div>
           <div class="table-wrap"><table class="table">
             <thead>
               <tr>
-                <th>Plot</th>
+                <th>Field</th>
                 <th>Crop</th>
                 <th>Area</th>
-                <th>Cluster</th>
+                <th>Location</th>
+                <th>Moisture</th>
                 <th>Map</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><div class="row"><span class="sm">AY</span><span><b>AY - North field</b><small>Amina Yusuf · 2024</small></span></div></td>
-                <td>Maize</td>
-                <td>1.6 ha</td>
-                <td>Maize belt</td>
-                <td><span class="tag green">Mapped</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm co">CO</span><span><b>CO - Riverside</b><small>Chidi Okeke · 2025</small></span></div></td>
-                <td>Rice</td>
-                <td>1.8 ha</td>
-                <td>Rice cluster</td>
-                <td><span class="tag green">Mapped</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm fb">FB</span><span><b>FB - Valley plot</b><small>Fatima Bello · 2024</small></span></div></td>
-                <td>Tomato</td>
-                <td>1.1 ha</td>
-                <td>Tomato farms</td>
-                <td><span class="tag green">Mapped</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm im">IM</span><span><b>IM - East field</b><small>Ibrahim Musa · 2025</small></span></div></td>
-                <td>Maize</td>
-                <td>2.0 ha</td>
-                <td>Maize belt</td>
-                <td><span class="tag amber">Pending</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm ne">NE</span><span><b>NE - Hill plot</b><small>Ngozi Eze · 2023</small></span></div></td>
-                <td>Beans</td>
-                <td>1.4 ha</td>
-                <td>Beans block</td>
-                <td><span class="tag green">Mapped</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm sa">SA</span><span><b>SA - South field</b><small>Sani Abdullahi · 2025</small></span></div></td>
-                <td>Maize</td>
-                <td>1.5 ha</td>
-                <td>Maize belt</td>
-                <td><span class="tag green">Mapped</span></td>
-              </tr>
-            </tbody>
+            <tbody id="plotRows"></tbody>
           </table></div>
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <div>
-              <b>Plot GPS mapping</b>
-              <div class="sub">Farm plots with coordinates on file</div>
-            </div>
-          </div>
-          <div class="map">
-            <span class="pin" style="left:28%;top:26%"></span>
-            <span class="pin" style="left:58%;top:40%"></span>
-            <span class="pin" style="left:42%;top:64%"></span>
-            <span class="pin" style="left:72%;top:58%"></span>
-            <span class="pin" style="left:18%;top:58%"></span>
-          </div>
+          <b>Plot GPS mapping</b>
+          <div class="mini"><span>Mapped</span><b id="mapMapped"></b></div>
+          <div class="mini"><span>Pending</span><b id="mapPending"></b></div>
+          <div class="mini"><span>Area under watch</span><b id="mapArea"></b></div>
+          <div class="map" id="plotMap"><span id="mapEmpty" style="color:#667068;font-size:12px;display:grid;place-items:center;height:100%">Map preview</span></div>
           <div class="legend">
             <span class="legend-item"><i class="dot green"></i>Mapped</span>
             <span class="legend-item"><i class="dot amber"></i>Pending</span>
           </div>
-          <div class="mini"><span>Mapped</span><b>162</b></div>
-          <div class="mini"><span>Pending</span><b>24</b></div>
+        </div>
+      </section>
+
+      <section class="grid-2" id="cropRow" style="display:none">
+        <div class="card">
+          <div class="card-head"><div><b>Area by crop</b><div class="sub">Hectares under monitoring per crop</div></div></div>
+          <div class="area-bars" id="cropBars"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><b>Fare rates</b><div class="sub">Transport cost per mile by state (admin)</div></div></div>
+          <div class="table-wrap"><table class="table">
+            <thead><tr><th>State</th><th>₦ / mile</th></tr></thead>
+            <tbody id="fareRows"></tbody>
+          </table></div>
         </div>
       </section>
     </div>
   </div>
 </div>
+
+<!-- Register plot modal -->
+<div class="modal" id="plotModal" style="display:none">
+  <div class="modal-card">
+    <div class="card-head">
+      <div><b>Register plot</b><div class="sub">Add a plot under an existing farm</div></div>
+      <button class="icon-btn" id="plotClose">✕</button>
+    </div>
+    <form id="plotForm" class="form-grid">
+      <div class="form-group full"><label>Farm *</label><select name="farmId" id="farmSelect" required></select></div>
+      <div class="form-group"><label>Plot name *</label><input name="name" required placeholder="e.g. AY - North field"></div>
+      <div class="form-group"><label>Crop *</label><input name="crop" required placeholder="Maize"></div>
+      <div class="form-group"><label>Area (ha)</label><input name="areaHa" type="number" step="0.1"></div>
+      <div class="form-group"><label>Season</label><input name="season" placeholder="2026 Wet"></div>
+      <div class="form-group"><label>Cluster</label><input name="cluster" placeholder="Maize belt"></div>
+      <div class="form-group"><label>Soil moisture (%)</label><input name="soilMoisture" type="number" step="1"></div>
+      <div class="form-group"><label>Stress level</label><select name="stressLevel"><option value="">—</option><option>Low</option><option>Watch</option><option>High</option></select></div>
+      <div class="form-group"><label>Latitude (optional)</label><input name="lat" type="number" step="any"></div>
+      <div class="form-group"><label>Longitude (optional)</label><input name="lng" type="number" step="any"></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Register plot</button><span class="form-error" id="plotError"></span></div>
+    </form>
+  </div>
+</div>
+
+<!-- Assign to DCO modal -->
+<div class="modal" id="assignModal" style="display:none">
+  <div class="modal-card">
+    <div class="card-head">
+      <div><b>Assign farms to DCO</b><div class="sub">Select a DCO and farms for the next field visit</div></div>
+      <button class="icon-btn" id="assignClose">✕</button>
+    </div>
+    <form id="assignForm" class="form-grid">
+      <div class="form-group full"><label>Data Collection Officer *</label><select name="dcoUserId" id="dcoSelect" required></select></div>
+      <div class="form-group full"><label>Farms *</label><select name="farmIds" id="farmAssignSelect" multiple required style="height:140px"></select>
+        <small style="color:#889189">Ctrl / Cmd + click to select multiple</small></div>
+      <div class="form-group full"><label>Note (optional)</label><input name="note"></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Assign farms</button><span class="form-error" id="assignError"></span></div>
+    </form>
+  </div>
+</div>
+
 <script>
-  const hasSession = !!localStorage.getItem("agriksense_token");
+  const LS_TOKEN = "agriksense_token";
+  const LS_REFRESH = "agriksense_refresh";
+  const LS_USER = "agriksense_user";
+
+  function getToken() { return localStorage.getItem(LS_TOKEN); }
+  function getStoredUser() {
+    try { return JSON.parse(localStorage.getItem(LS_USER) || "null"); } catch (_) { return null; }
+  }
+
+  window.AG = {
+    token: getToken,
+    user: getStoredUser,
+    api: async function (path, opts = {}) {
+      const headers = Object.assign({ "Content-Type": "application/json" }, opts.headers || {});
+      const token = getToken();
+      if (token) headers.Authorization = "Bearer " + token;
+      const res = await fetch(path, Object.assign({}, opts, { headers }));
+      if (res.status === 401) {
+        localStorage.removeItem(LS_TOKEN);
+        localStorage.removeItem(LS_REFRESH);
+        localStorage.removeItem(LS_USER);
+        if (!window.location.pathname.startsWith("/login")) window.location.replace("/login");
+        throw new Error("Unauthorized");
+      }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message || "Request failed");
+      return data;
+    },
+    money: (n) => {
+      if (n === null || n === undefined) return "—";
+      return "₦" + Number(n).toLocaleString("en-NG", { maximumFractionDigits: 0 });
+    },
+    num: (n) => {
+      if (n === null || n === undefined) return "—";
+      return Number(n).toLocaleString("en-NG");
+    },
+    mask: (s) => {
+      if (!s) return "";
+      if (s.startsWith("+")) return "+***" + s.slice(-4);
+      return "***" + s.slice(-4);
+    },
+    tag: (kind) => {
+      const map = {
+        VERIFIED: "green", REJECTED: "red", PENDING: "amber",
+        HEALTHY: "green", WATCHLIST: "amber", CRITICAL: "red",
+        MAPPED: "green", ASSIGNED: "blue", COMPLETED: "green", VISITED: "blue",
+        REQUESTED: "amber", CANCELLED: "gray", ACTIVE: "green",
+        DORMANT: "gray", HARVESTED: "blue", MAINTENANCE: "amber", OFFLINE: "red", ONLINE: "green",
+        PHASE_1_BASIC: "amber", PHASE_2_COMPLETED: "green", LOW: "gray", MEDIUM: "blue", HIGH: "amber", CRITICAL: "red",
+      };
+      return map[kind] || "gray";
+    },
+    esc: (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])),
+  };
+
+  const hasSession = !!getToken();
   if (!hasSession) {
     window.location.replace("/login");
   }
@@ -294,26 +315,243 @@
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("agriksense_token");
-      localStorage.removeItem("agriksense_refresh");
-      localStorage.removeItem("agriksense_user");
+      localStorage.removeItem(LS_TOKEN);
+      localStorage.removeItem(LS_REFRESH);
+      localStorage.removeItem(LS_USER);
       window.location.href = "/login";
     });
   }
 
+  // Role-switch: ADMIN keeps current page; others get sent to their dashboard
+  (function roleGuard() {
+    const user = getStoredUser();
+    if (!user) return;
+    const role = user.role;
+    const mapping = {
+      FARMER: "/farmer-dashboard",
+      DATA_COLLECTION_OFFICER: "/dco-dashboard",
+      ORGANIZATION: "/org-dashboard",
+    };
+    if (role === "ADMIN") return;
+    const target = mapping[role];
+    if (!target) return;
+    const allowedForRole = {
+      FARMER: ["/farmer-dashboard"],
+      DATA_COLLECTION_OFFICER: ["/dco-dashboard"],
+      ORGANIZATION: ["/org-dashboard"],
+    };
+    const path = window.location.pathname;
+    if (path !== target) {
+      window.location.replace(target);
+    }
+  })();
+
   try {
-    const user = JSON.parse(localStorage.getItem("agriksense_user") || "null");
+    const user = getStoredUser();
     if (user) {
       const profile = user.profile || {};
       const full = profile.type === "organization"
-        ? (profile.orgName || "Operator")
-        : ([profile.firstName, profile.lastName].filter(Boolean).join(" ") || "Operator");
+        ? (profile.orgName || "Organization")
+        : ([profile.firstName, profile.lastName].filter(Boolean).join(" ") || "User");
       const label = document.getElementById("userLabel");
       const avatar = document.getElementById("userAvatar");
       if (label) label.textContent = full;
-      if (avatar) avatar.textContent = (profile.firstName || "O").charAt(0).toUpperCase();
+      if (avatar) avatar.textContent = (profile.firstName || "A").charAt(0).toUpperCase();
+
+      const isAdmin = user.role === "ADMIN";
+      const platformField = document.getElementById("platformIdField");
+      const platformVal = document.getElementById("platformIdVal");
+      if (platformField) {
+        const masked = false;
+        const reveal = () => {
+          platformVal.textContent = user.platformId || "";
+        };
+        const maskVal = () => {
+          platformVal.textContent = AG.mask(user.platformId);
+        };
+        maskVal();
+        platformField.style.display = "inline-flex";
+        platformField.title = "Click to show / hide My Agriksense ID";
+        platformField.addEventListener("click", () => {
+          const isMasked = platformVal.textContent.includes("***");
+          if (isMasked) reveal(); else maskVal();
+        });
+      }
+
+      // Toggle sidebar sections by role
+      const adminSection = document.getElementById("adminSection");
+      const memberSection = document.getElementById("memberSection");
+      const memberHomeLink = document.getElementById("memberHomeLink");
+      const roleBadge = document.getElementById("roleBadge");
+      if (isAdmin) {
+        if (adminSection) adminSection.style.display = "block";
+        if (memberSection) memberSection.style.display = "none";
+        if (roleBadge) roleBadge.style.display = "none";
+      } else {
+        if (adminSection) adminSection.style.display = "none";
+        if (memberSection) memberSection.style.display = "block";
+        if (roleBadge) roleBadge.style.display = "none";
+        if (memberHomeLink) memberHomeLink.href = user.role === "FARMER" ? "/farmer-dashboard" : user.role === "DATA_COLLECTION_OFFICER" ? "/dco-dashboard" : "/org-dashboard";
+      }
     }
   } catch (_) {}
+</script>
+<script>
+let allPlots = [];
+
+function mode(arr) { return [...arr].filter((v, i, a) => a.indexOf(v) === i); }
+
+async function loadData() {
+  const [farmData, plotData, fareData, dcoData] = await Promise.all([
+    AG.api("/api/admin/farms?limit=200"),
+    AG.api("/api/admin/plots"),
+    AG.api("/api/admin/fare-rates"),
+    AG.api("/api/admin/dcos"),
+  ]);
+  allPlots = plotData.data;
+  renderPlots();
+  renderKpis(farmData.data);
+  renderFares(fareData.data);
+  populateFarmSelect(farmData.data.rows);
+  populateDcoSelect(dcoData.data);
+  populateAssignFarms(farmData.data.rows);
+  document.getElementById("cropRow").style.display = "grid";
+
+  // populate filters
+  const crops = mode(allPlots.map((p) => p.crop).filter(Boolean)).sort();
+  const states = mode(allPlots.map((p) => p.state).filter(Boolean)).sort();
+  document.getElementById("cropFilter").insertAdjacentHTML("beforeend", crops.map((c) => `<option>${AG.esc(c)}</option>`).join(""));
+  document.getElementById("stateFilter").insertAdjacentHTML("beforeend", states.map((s) => `<option>${AG.esc(s)}</option>`).join(""));
+}
+
+function renderKpis(farmData) {
+  const totalHa = allPlots.reduce((a, p) => a + (p.areaHa || 0), 0);
+  const mapped = allPlots.filter((p) => p.mapStatus === "MAPPED").length;
+  const topCrops = mode(allPlots.map((p) => p.crop).filter(Boolean)).slice(0, 3).join(", ");
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi-card"><small>Active farms</small><strong>${AG.num(farmData.total)}</strong><span>registered farms</span></div>
+    <div class="kpi-card"><small>Total hectares</small><strong>${AG.num(Math.round(totalHa * 10) / 10)}</strong><span>${AG.num(allPlots.length)} plots</span></div>
+    <div class="kpi-card"><small>Crops monitored</small><strong>${AG.num(mode(allPlots.map((p) => p.crop).filter(Boolean)).length)}</strong><span>${AG.esc(topCrops || "—")}</span></div>
+    <div class="kpi-card"><small>Plots mapped</small><strong>${AG.num(mapped)}</strong><span class="amber">${AG.num(allPlots.length - mapped)} pending GPS</span></div>`;
+  document.getElementById("kpis").style.display = "grid";
+  document.getElementById("toolbar").style.display = "flex";
+  document.getElementById("loading").style.display = "none";
+
+  document.getElementById("mapMapped").textContent = AG.num(mapped);
+  document.getElementById("mapPending").textContent = AG.num(allPlots.length - mapped);
+  document.getElementById("mapArea").textContent = AG.num(Math.round(totalHa * 10) / 10) + " ha";
+
+  const pins = allPlots.filter((p) => p.lat != null && p.lng != null).slice(0, 8);
+  const mapEl = document.getElementById("plotMap");
+  if (pins.length) {
+    const minLat = Math.min(...pins.map((p) => p.lat)), maxLat = Math.max(...pins.map((p) => p.lat));
+    const minLng = Math.min(...pins.map((p) => p.lng)), maxLng = Math.max(...pins.map((p) => p.lng));
+    const spanLat = Math.max(0.01, maxLat - minLat), spanLng = Math.max(0.01, maxLng - minLng);
+    mapEl.innerHTML = pins.map((p) => {
+      const x = Math.round(((p.lng - minLng) / spanLng) * 88 + 6);
+      const y = Math.round(((maxLat - p.lat) / spanLat) * 78 + 8);
+      return `<span class="pin" style="left:${x}%;top:${y}%" title="${AG.esc(p.name)}»"></span>`;
+    }).join("");
+  } else {
+    mapEl.innerHTML = `<span style="grid-area:1/1;color:#667068;font-size:12px;display:grid;place-items:center;height:100%">${AG.esc("No GPS coordinates yet")}</span>`;
+  }
+}
+
+function renderPlots() {
+  const q = (document.getElementById("searchInput").value || "").toLowerCase();
+  const crop = document.getElementById("cropFilter").value;
+  const state = document.getElementById("stateFilter").value;
+  let plots = allPlots;
+  if (q) plots = plots.filter((p) => (p.name + " " + p.farmName + " " + (p.farmer || "")).toLowerCase().includes(q));
+  if (crop) plots = plots.filter((p) => p.crop === crop);
+  if (state) plots = plots.filter((p) => p.state === state);
+
+  document.getElementById("resultCount").textContent = `${AG.num(plots.length)} plots`;
+  document.getElementById("plotRows").innerHTML = plots.length ? plots.map((p) => {
+    const moisture = p.soilMoisture != null ? (p.soilMoisture + "%") : "—";
+    const stressCls = p.stressLevel === "High" ? "red" : p.stressLevel === "Watch" ? "amber" : "green";
+    const mapTag = p.mapStatus === "MAPPED" ? `<span class="tag green">Mapped</span>` : `<span class="tag amber">Pending</span>`;
+    return `<tr>
+      <td><div class="row"><span class="sm">${AG.esc((p.farmer || "F").charAt(0))}</span><span><b>${AG.esc(p.name)}</b><small>${AG.esc(p.farmName)} · ${AG.esc(p.farmer || "")}</small></span></div></td>
+      <td>${AG.esc(p.crop || "—")}</td>
+      <td>${p.areaHa ? p.areaHa + " ha" : "—"}</td>
+      <td>${p.state ? AG.esc(p.state) : "—"}</td>
+      <td><span class="tag ${stressCls}">${moisture}</span></td>
+      <td>${mapTag}</td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="6" style="padding:30px;text-align:center;color:#889189">No plots match your filters</td></tr>`;
+
+  const crops = mode(plots.map((p) => p.crop).filter(Boolean));
+  const maxArea = Math.max(0.1, ...crops.map((c) => plots.filter((p) => p.crop === c).reduce((a, p) => a + (p.areaHa || 0), 0)));
+  document.getElementById("cropBars").innerHTML = crops.map((c) => {
+    const area = plots.filter((p) => p.crop === c).reduce((a, p) => a + (p.areaHa || 0), 0);
+    return `<div class="ab"><b>${AG.esc(c)}</b><div class="track"><div class="fill" style="width:${Math.max(4, Math.round((area / maxArea) * 100))}%"></div></div><span>${AG.num(Math.round(area * 10) / 10)} ha</span></div>`;
+  }).join("");
+}
+
+function renderFares(fares) {
+  document.getElementById("fareRows").innerHTML = fares.length ? fares.map((f) => `
+    <tr><td><b>${AG.esc(f.state)}</b></td><td>${AG.money(f.costPerMile)}</td></tr>
+  `).join("") : `<tr><td colspan="2" style="padding:20px;text-align:center;color:#889189">No fare rates set</td></tr>`;
+}
+
+function populateFarmSelect(farms) {
+  document.getElementById("farmSelect").innerHTML = farms.map((f) => `<option value="${f.id}">${AG.esc(f.name)} — ${AG.esc(f.farmer)}</option>`).join("");
+}
+function populateAssignFarms(farms) {
+  document.getElementById("farmAssignSelect").innerHTML = farms.map((f) => `<option value="${f.id}">${AG.esc(f.name)} — ${AG.esc(f.state)}</option>`).join("");
+}
+function populateDcoSelect(dcos) {
+  document.getElementById("dcoSelect").innerHTML = dcos.map((d) => `<option value="${d.id}">${AG.esc(d.fullName)} — ${AG.esc(d.state || "")}</option>`).join("");
+}
+
+(function initFarms() {
+  loadData().catch((err) => {
+    document.getElementById("loading").textContent = "Failed to load farms: " + err.message;
+    document.getElementById("loading").style.color = "#c44747";
+  });
+})();
+
+document.getElementById("searchInput").addEventListener("input", debounce(renderPlots, 250));
+document.getElementById("cropFilter").addEventListener("change", renderPlots);
+document.getElementById("stateFilter").addEventListener("change", renderPlots);
+
+document.getElementById("addPlotBtn").addEventListener("click", () => document.getElementById("plotModal").style.display = "flex");
+document.getElementById("plotClose").addEventListener("click", () => document.getElementById("plotModal").style.display = "none");
+document.getElementById("assignBtn").addEventListener("click", () => document.getElementById("assignModal").style.display = "flex");
+document.getElementById("assignClose").addEventListener("click", () => document.getElementById("assignModal").style.display = "none");
+
+document.getElementById("plotForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const payload = Object.fromEntries(new FormData(form).entries());
+  document.getElementById("plotError").textContent = "";
+  try {
+    await AG.api("/api/admin/plots", { method: "POST", body: JSON.stringify(payload) });
+    document.getElementById("plotModal").style.display = "none";
+    form.reset();
+    loadData();
+  } catch (err) { document.getElementById("plotError").textContent = err.message; }
+});
+
+document.getElementById("assignForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const fd = new FormData(form);
+  const payload = {
+    dcoUserId: fd.get("dcoUserId"),
+    note: fd.get("note"),
+    farmIds: fd.getAll("farmIds"),
+  };
+  document.getElementById("assignError").textContent = "";
+  try {
+    await AG.api("/api/admin/assignments", { method: "POST", body: JSON.stringify(payload) });
+    document.getElementById("assignModal").style.display = "none";
+    form.reset();
+  } catch (err) { document.getElementById("assignError").textContent = err.message; }
+});
+
+function debounce(fn, ms) { let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); }; }
 </script>
 </body>
 </html>
