@@ -28,18 +28,20 @@ async function seedAdmin() {
     const passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 12);
     const existing = await prisma.user.findFirst({ where: { email: ADMIN_EMAIL } });
 
-    if (existing) {
-      await prisma.user.update({
-        where: { id: existing.id },
-        data: {
-          role: "ADMIN",
-          passwordHash,
-          isActive: true,
-          ...(ADMIN_PHONE ? { phoneNumber: ADMIN_PHONE } : {}),
-        },
-      });
-      console.log(`seed-admin: promoted ${ADMIN_EMAIL} to ADMIN and reset password`);
-    } else {
+if (existing) {
+    const platformId = existing.platformId || (await uniquePlatformId());
+    await prisma.user.update({
+      where: { id: existing.id },
+      data: {
+        role: "ADMIN",
+        passwordHash,
+        isActive: true,
+        platformId,
+        ...(ADMIN_PHONE ? { phoneNumber: ADMIN_PHONE } : {}),
+      },
+    });
+    console.log(`seed-admin: promoted ${ADMIN_EMAIL} to ADMIN and reset password (platformId ${platformId})`);
+  } else {
       const platformId = await uniquePlatformId();
       await prisma.user.create({
         data: {
