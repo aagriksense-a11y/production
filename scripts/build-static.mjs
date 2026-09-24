@@ -20,6 +20,9 @@ const PAGES = [
   { name: "dashboard", file: "dashboard.ejs", data: { title: "Dashboard", active: "dashboard" } },
   { name: "farmers", file: "farmers.ejs", data: { title: "Farmers", active: "farmers" } },
   { name: "farms", file: "farms.ejs", data: { title: "Farms & Plots", active: "farms" } },
+  { name: "farmer-dashboard", file: "farmer-dashboard.ejs", data: { title: "Farmer Dashboard", active: "dashboard" } },
+  { name: "dco-dashboard", file: "dco-dashboard.ejs", data: { title: "DCO Dashboard", active: "dashboard" } },
+  { name: "org-dashboard", file: "org-dashboard.ejs", data: { title: "Organization Dashboard", active: "dashboard" } },
   { name: "drone", file: "drone.ejs", data: { title: "Drone Monitoring", active: "drone" } },
   { name: "iot", file: "iot.ejs", data: { title: "IoT Sensors", active: "iot" } },
   { name: "advisory", file: "advisory.ejs", data: { title: "AI Advisory", active: "advisory" } },
@@ -28,9 +31,13 @@ const PAGES = [
 ];
 
 const REDIRECTS = [
+  "/api/*  https://production-lvw9.onrender.com/api/:splat  200",
   "/dashboard /dashboard.html 200",
   "/farmers /farmers.html 200",
   "/farms /farms.html 200",
+  "/farmer-dashboard /farmer-dashboard.html 200",
+  "/dco-dashboard /dco-dashboard.html 200",
+  "/org-dashboard /org-dashboard.html 200",
   "/drone /drone.html 200",
   "/iot /iot.html 200",
   "/advisory /advisory.html 200",

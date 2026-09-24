@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - Agriksense</title>
+<title>Organization Dashboard - Agriksense</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -103,7 +103,7 @@
     <button class="icon-btn mobile-toggle" id="menuBtn" aria-label="Open menu">
       <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
-    <h1>Operations dashboard</h1>
+    <h1>Organization Dashboard</h1>
     <div class="pill" id="statusPill"><span class="dot"></span> Field network live</div>
   </div>
   <div class="topbar-right">
@@ -121,87 +121,74 @@
   </div>
 </header>
     <div class="content">
-      <div id="loading" class="card">Loading platform data…</div>
+      <div id="loading" class="card">Loading your organization…</div>
 
       <section class="kpis" id="kpis" style="display:none"></section>
 
-      <section class="grid-2" id="chartRow" style="display:none">
+      <section class="grid-2" id="idRow" style="display:none">
         <div class="card">
           <div class="card-head">
-            <div>
-              <b>New farmer signups</b>
-              <div class="sub">Daily registrations over the last 7 days</div>
-            </div>
+            <div><b>My Agriksense ID</b><div class="sub">Your unique platform identity</div></div>
+            <span class="tag" id="cacTag"></span>
           </div>
-          <div class="bar-chart" id="signupBars"></div>
+          <div class="id-box" id="platformIdBox"></div>
+          <div class="mini"><span>Organization</span><b id="orgName"></b></div>
+          <div class="mini"><span>CAC number</span><b id="cacNum"></b></div>
+          <div class="mini"><span>Headquarters</span><b id="hqValue">—</b></div>
         </div>
         <div class="card">
           <div class="card-head">
-            <div>
-              <b>Field health mix</b>
-              <div class="sub">Health classification across monitored plots</div>
-            </div>
+            <div><b>Directors / contact persons</b><div class="sub">Registered directors on the admin portal</div></div>
           </div>
-          <div class="donut" id="healthDonut"></div>
-          <div class="legend" id="healthLegend"></div>
+          <div class="list" id="directorList"></div>
         </div>
       </section>
 
-      <section class="grid-3" id="networkRow" style="display:none">
+      <section class="grid-3" id="memberRow" style="display:none">
         <div class="card span-2">
           <div class="card-head">
-            <div>
-              <b>Farm & plot network</b>
-              <div class="sub">Recent farms with live moisture and credit band</div>
-            </div>
+            <div><b>My members</b><div class="sub">Farmers linked to this organization</div></div>
+            <button class="btn btn-primary" id="addMemberBtn">+ Add member</button>
           </div>
           <div class="table-wrap"><table class="table">
-            <thead>
-              <tr>
-                <th>Farm</th>
-                <th>Farmer</th>
-                <th>Moisture</th>
-                <th>Stress</th>
-                <th>AgriScore</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="networkRows"></tbody>
+            <thead><tr><th>Member</th><th>Location</th><th>Membership ID</th><th>Status</th></tr></thead>
+            <tbody id="memberRows"></tbody>
           </table></div>
         </div>
         <div class="card">
-          <b>Network snapshot</b>
-          <div class="mini"><span>Online sensors</span><b id="snapSensors"></b></div>
-          <div class="mini"><span>Mapped plots</span><b id="snapMapped"></b></div>
-          <div class="mini"><span>Credit-ready farmers</span><b id="snapCredit"></b></div>
-          <div class="mini"><span>Pending visit requests</span><b id="snapVisits"></b></div>
-          <div class="rings" id="scoreRing"></div>
-        </div>
-      </section>
-
-      <section class="grid-2" id="advisoryRow" style="display:none">
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <b>AI advisories</b>
-              <div class="sub">Latest advisories pushed to farmers</div>
-            </div>
-          </div>
-          <div class="list" id="advisoryList"></div>
-        </div>
-        <div class="card">
-          <div class="card-head">
-            <div>
-              <b>Season outlook</b>
-              <div class="sub">Crops under monitoring by area</div>
-            </div>
-          </div>
-          <div class="area-bars" id="cropBars"></div>
+          <b>Membership summary</b>
+          <div class="mini"><span>Total members</span><b id="mTotal"></b></div>
+          <div class="mini"><span>Verified memberships</span><b id="mVerified"></b></div>
+          <div class="mini"><span>Pending verification</span><b id="mPending"></b></div>
         </div>
       </section>
     </div>
   </div>
 </div>
+
+<!-- Add member modal -->
+<div class="modal" id="memberModal" style="display:none">
+  <div class="modal-card">
+    <div class="card-head">
+      <div><b>Add organization member</b><div class="sub">Create a farmer & link to this organization</div></div>
+      <button class="icon-btn" id="memberClose">✕</button>
+    </div>
+    <form id="memberForm" class="form-grid">
+      <div class="form-group"><label>First name *</label><input name="firstName" required></div>
+      <div class="form-group"><label>Last name *</label><input name="lastName" required></div>
+      <div class="form-group"><label>Other name</label><input name="otherName"></div>
+      <div class="form-group"><label>Phone number *</label><input name="phoneNumber" required placeholder="2348012345678"></div>
+      <div class="form-group"><label>Email (optional)</label><input name="email" type="email"></div>
+      <div class="form-group"><label>Membership ID (optional)</label><input name="membershipId" placeholder="Leave blank to auto-generate"></div>
+      <div class="form-group"><label>State</label><input name="state"></div>
+      <div class="form-group"><label>LGA</label><input name="lga"></div>
+      <div class="form-group"><label>City / town</label><input name="cityTown"></div>
+      <div class="form-group"><label>Address</label><input name="address"></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Add member</button><span class="form-error" id="memberError"></span></div>
+    </form>
+  </div>
+</div>
+
 <script>
   const LS_TOKEN = "agriksense_token";
   const LS_REFRESH = "agriksense_refresh";
@@ -370,102 +357,72 @@
   } catch (_) {}
 </script>
 <script>
-(async function initAdminDashboard() {
-  try {
-    const { data } = await AG.api("/api/admin/summary");
-    const k = data.kpis;
-    const hid = (el) => el.style.display = "";
-
+function loadOrg() {
+  AG.api("/api/dashboards/organization").then(({ data }) => {
+    const o = data.org;
     document.getElementById("loading").style.display = "none";
-    hid(document.getElementById("kpis"));
-    hid(document.getElementById("chartRow"));
-    hid(document.getElementById("networkRow"));
-    hid(document.getElementById("advisoryRow"));
+    ["kpis", "idRow", "memberRow"].forEach((id) => (document.getElementById(id).style.display = ""));
 
-    // KPIs
-    const kpiDefs = [
-      { small: "Farmers onboarded", strong: AG.num(k.farmers), span: `<span>▲ ${AG.num(k.monthFarmers)} this month</span>` },
-      { small: "Fields monitored", strong: AG.num(k.fieldsMonitored), span: `<span>${AG.num(k.sensorsOnline)}/${AG.num(k.sensors)} sensors online</span>` },
-      { small: "Avg AgriScore", strong: AG.num(k.avgAgriScore), span: `<span>across verified profiles</span>` },
-      { small: "Open advisories", strong: String(k.openAdvisories).padStart(2, "0"), span: `<span>${AG.num(k.farmVisitRequests)} visit requests pending</span>` },
-      { small: "DCOs active", strong: AG.num(k.dcos), span: `<span>${AG.num(k.orgs)} organizations</span>` },
-    ];
-    document.getElementById("kpis").innerHTML = kpiDefs.map((d, i) => `
-      <div class="kpi-card">
-        <small>${d.small}</small>
-        <strong>${d.strong}</strong>
-        ${d.span}
-      </div>`).join("");
+    const members = data.members;
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi-card"><small>Members</small><strong>${AG.num(members.length)}</strong><span>${AG.num(members.filter((m) => m.isVerified).length)} verified</span></div>
+      <div class="kpi-card"><small>Directors</small><strong>${AG.num(data.directors.length)}</strong><span>on file</span></div>
+      <div class="kpi-card"><small>Registration</small><strong>${o.isRegistered ? "Yes" : "No"}</strong><span>${o.isRegistered ? "CAC " + AG.esc(o.cacNumber || "") : "not registered"}</span></div>
+      <div class="kpi-card"><small>HQ</small><strong>${AG.esc(o.state || "—")}</strong><span>${AG.esc(o.lga || "") || ""}</span></div>`;
 
-    // Weekly signups bar chart
-    const days = data.weeklySignups;
-    const maxCount = Math.max(1, ...days.map((d) => d.count));
-    document.getElementById("signupBars").innerHTML = days.map((d) => {
-      const h = Math.max(6, Math.round((d.count / maxCount) * 100));
-      const label = new Date(d.day).toLocaleDateString("en", { weekday: "short" });
-      return `<div class="bar-col" title="${label}: ${d.count} signups">
-        <div class="bar-track"><div class="bar" style="height:${h}%"></div></div>
-        <span class="bar-label">${label}</span>
-      </div>`;
-    }).join("");
+    const box = document.getElementById("platformIdBox");
+    const id = data.platformId;
+    box.innerHTML = `<div class="id-value" id="idValue">${AG.esc(AG.mask(id))}</div>
+      <button class="icon-btn" id="eyeBtn" title="Show / hide ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>`;
+    document.getElementById("eyeBtn").addEventListener("click", () => {
+      const v = document.getElementById("idValue");
+      if (v.textContent.includes("***")) v.textContent = id; else v.textContent = AG.mask(id);
+    });
+    document.getElementById("cacTag").textContent = o.cacStatus;
+    document.getElementById("cacTag").className = "tag " + AG.tag(o.cacStatus);
+    document.getElementById("orgName").textContent = o.orgName;
+    document.getElementById("cacNum").textContent = o.cacNumber || "—";
+    // hq element id
+    const hqEl = document.getElementById("hqValue");
+    if (hqEl) hqEl.textContent = AG.esc([o.headquartersAddress, o.cityTown, o.lga, o.state].filter(Boolean).join(", ")) || "—";
 
-    // Health donut
-    const hm = data.healthMix;
-    document.getElementById("healthDonut").style.setProperty("--a", hm.healthy);
-    document.getElementById("healthDonut").style.setProperty("--b", hm.watch);
-    document.getElementById("healthDonut").style.setProperty("--c", hm.critical);
-    document.getElementById("healthLegend").innerHTML = `
-      <span class="legend-item"><i class="dot green"></i>Healthy ${hm.healthy}%</span>
-      <span class="legend-item"><i class="dot amber"></i>Watch ${hm.watch}%</span>
-      <span class="legend-item"><i class="dot red"></i>Critical ${hm.critical}%</span>`;
+    document.getElementById("directorList").innerHTML = data.directors.length ? data.directors.map((d) => `
+      <div class="i"><span><b>${AG.esc(d.fullName)}</b><small>${AG.esc(d.phoneNumber)}${d.email ? " · " + AG.esc(d.email) : ""}</small></span></div>`
+    ).join("") : `<div class="i"><span>No directors on file</span></div>`;
 
-    // Network table
-    const rows = data.recentFarms;
-    document.getElementById("networkRows").innerHTML = rows.length ? rows.map((f) => {
-      const stressCls = f.stress === "High" ? "red" : f.stress === "Watch" ? "amber" : "green";
-      const statusTag = f.status === "MAPPED" ? `<span class="tag green">Mapped</span>` : `<span class="tag amber">Pending</span>`;
-      const score = f.agriScore !== null && f.agriScore !== undefined ? `<span class="tag ${AG.tag(f.agriScore >= 650 ? "HEALTHY" : "WATCHLIST")}">${AG.num(f.agriScore)}</span>` : `<span class="tag gray">—</span>`;
-      return `<tr>
-        <td><div class="row"><span class="sm">${AG.esc((f.farmer || "F").charAt(0))}</span><span><b>${AG.esc(f.name)}</b><small>${AG.esc(f.state || "—")} · ${AG.num(f.areaHa)} ha</small></span></div></td>
-        <td><b>${AG.esc(f.farmer)}</b><small>${AG.esc(f.farmerPhone || "")}</small></td>
-        <td>${f.moisture !== null && f.moisture !== undefined ? f.moisture + "%" : "—"}</td>
-        <td><span class="tag ${stressCls}">${AG.esc(f.stress || "Low")}</span></td>
-        <td>${score}</td>
-        <td>${statusTag}</td>
-      </tr>`;
-    }).join("") : `<tr><td colspan="6" style="color:#88918;padding:24px;text-align:center">No farms registered yet</td></tr>`;
+    document.getElementById("memberRows").innerHTML = members.length ? members.map((m) => `
+      <tr>
+        <td><div class="row"><span class="sm">${AG.esc((m.farmer.name || "M").charAt(0))}</span><span><b>${AG.esc(m.farmer.name)}</b><small>${AG.esc(m.farmer.phoneNumber || "")}</small></span></div></td>
+        <td>${AG.esc([m.farmer.cityTown, m.farmer.lga, m.farmer.state].filter(Boolean).join(", ")) || "—"}</td>
+        <td><b>${AG.esc(m.membershipId)}</b></td>
+        <td><span class="tag ${AG.tag(m.isVerified ? "VERIFIED" : "PENDING")}">${m.isVerified ? "Verified" : "Unverified"}</span></td>
+      </tr>`).join("") : `<tr><td colspan="4" style="padding:26px;text-align:center;color:#889189">No members yet — add your first member</td></tr>`;
 
-    // Snapshot
-    document.getElementById("snapSensors").textContent = `${k.sensorsOnline}/${k.sensors}`;
-    document.getElementById("snapMapped").textContent = AG.num(data.gpsPlotCount);
-    document.getElementById("snapCredit").textContent = AG.num(data.creditCount);
-    document.getElementById("snapVisits").textContent = AG.num(k.farmVisitRequests);
-    document.getElementById("scoreRing").innerHTML = `<div class="rings-label"><strong>${AG.num(k.avgAgriScore)}</strong>AgriScore</div>`;
-
-    // Advisor list
-    const adv = data.recentAdvisories;
-    document.getElementById("advisoryList").innerHTML = adv.length ? adv.map((a) => `
-      <div class="i"><span>
-        <b>${AG.esc(a.title)}</b>
-        <small>${AG.esc(a.type)}${a.farmer ? " · " + AG.esc(a.farmer) : ""} · ${new Date(a.createdAt).toLocaleDateString("en-GB")}</small>
-      </span><span class="tag ${AG.tag(a.priority)}">${AG.esc(a.priority)}</span></div>
-    `).join("") : `<div class="i"><span>No advisories yet</span></div>`;
-
-    // Crop bars
-    const crops = data.crops;
-    const maxArea = Math.max(0.1, ...crops.map((c) => c.areaHa));
-    document.getElementById("cropBars").innerHTML = crops.map((c) => `
-      <div class="ab"><b>${AG.esc(c.crop)}</b><div class="track"><div class="fill" style="width:${Math.max(4, Math.round((c.areaHa / maxArea) * 100))}%"></div></div><span>${AG.num(c.areaHa)} ha</span></div>
-    `).join("");
-
-    // advisory badge
-    const badge = document.getElementById("advisoryBadge");
-    if (badge) badge.textContent = adv.length;
-  } catch (err) {
-    document.getElementById("loading").textContent = "Failed to load dashboard: " + err.message;
+    document.getElementById("mTotal").textContent = AG.num(members.length);
+    document.getElementById("mVerified").textContent = AG.num(members.filter((m) => m.isVerified).length);
+    document.getElementById("mPending").textContent = AG.num(members.filter((m) => !m.isVerified).length);
+  }).catch((err) => {
+    document.getElementById("loading").textContent = "Failed to load organization: " + err.message;
     document.getElementById("loading").style.color = "#c44747";
-  }
-})();
+  });
+}
+
+document.getElementById("addMemberBtn").addEventListener("click", () => document.getElementById("memberModal").style.display = "flex");
+document.getElementById("memberClose").addEventListener("click", () => document.getElementById("memberModal").style.display = "none");
+
+document.getElementById("memberForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  document.getElementById("memberError").textContent = "";
+  try {
+    await AG.api("/api/dashboards/organization/members", { method: "POST", body: JSON.stringify(payload) });
+    document.getElementById("memberModal").style.display = "none";
+    e.target.reset();
+    loadOrg();
+  } catch (err) { document.getElementById("memberError").textContent = err.message; }
+});
+
+loadOrg();
 </script>
 </body>
 </html>

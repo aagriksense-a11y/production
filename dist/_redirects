@@ -1,6 +1,10 @@
+/api/*  https://production-lvw9.onrender.com/api/:splat  200
 /dashboard /dashboard.html 200
 /farmers /farmers.html 200
 /farms /farms.html 200
+/farmer-dashboard /farmer-dashboard.html 200
+/dco-dashboard /dco-dashboard.html 200
+/org-dashboard /org-dashboard.html 200
 /drone /drone.html 200
 /iot /iot.html 200
 /advisory /advisory.html 200
