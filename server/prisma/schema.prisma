@@ -32,7 +32,7 @@ enum AuthProvider {
 
 model User {
   id             String           @id @default(cuid())
-  platformId     String           @unique
+  platformId     String           @unique @default("")
   role           UserRole
   email          String?          @unique
   phoneNumber    String?          @unique
