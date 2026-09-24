@@ -30,6 +30,66 @@ enum AuthProvider {
   GOOGLE
 }
 
+enum PlotStatus {
+  ACTIVE
+  DORMANT
+  HARVESTED
+}
+
+enum MapStatus {
+  MAPPED
+  PENDING
+}
+
+enum SensorType {
+  SOIL_MOISTURE
+  SOIL_NUTRIENT
+  WEATHER
+  TEMPERATURE
+}
+
+enum SensorStatus {
+  ONLINE
+  OFFLINE
+  MAINTENANCE
+}
+
+enum AdvisoryType {
+  IRRIGATION
+  PEST_DISEASE
+  INPUT_TIMING
+  SOIL_HEALTH
+  HARVEST
+  AI_ADVICE
+}
+
+enum AdvisoryPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AdvisoryChannel {
+  WHATSAPP
+  SMS
+  USSD
+  EMAIL
+}
+
+enum VisitStatus {
+  REQUESTED
+  ASSIGNED
+  COMPLETED
+  CANCELLED
+}
+
+enum AssignmentStatus {
+  ASSIGNED
+  VISITED
+  COMPLETED
+}
+
 model User {
   id             String           @id @default(cuid())
   platformId     String           @unique @default("")
@@ -48,6 +108,11 @@ model User {
   orgProfile    OrgProfile?
   refreshTokens RefreshToken[]
   bankAccounts  BankAccount[]
+  farms         Farm[]
+  advisories    Advisory[]
+  visitRequests FarmVisitRequest[] @relation("VisitRequestDco")
+  visitDecided  FarmVisitRequest[] @relation("VisitDecider")
+  assignments   FarmAssignment[] @relation("DcoAssignments")
 
   @@index([platformId])
   @@index([role])
@@ -74,6 +139,8 @@ model FarmerProfile {
   managerName       String?
   managerPhone      String?
   managerEmail      String?
+  agriScore         Int?
+  creditReady       Boolean          @default(false)
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 
@@ -190,4 +257,163 @@ model OrganizationMembership {
 
   @@unique([farmerId, orgId])
   @@index([orgId])
+}
+
+model Farm {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  state       String?
+  lga         String?
+  cityTown    String?
+  village     String?
+  landmark    String?
+  address     String?
+  lat         Float?
+  lng         Float?
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  owner       User              @relation(fields: [ownerId], references: [id])
+  plots       Plot[]
+  assignments FarmAssignment[]
+  visitFarms  FarmVisitFarm[]
+
+  @@index([ownerId])
+  @@index([state])
+}
+
+model Plot {
+  id            String    @id @default(cuid())
+  name          String
+  crop          String?
+  areaHa        Float?
+  soilHealth    String?
+  soilMoisture  Float?
+  stressLevel   String?
+  cluster       String?
+  season        String?
+  plantedAt     DateTime?
+  status        PlotStatus @default(ACTIVE)
+  mapStatus     MapStatus  @default(PENDING)
+  lat           Float?
+  lng           Float?
+  farmId        String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  farm      Farm            @relation(fields: [farmId], references: [id])
+  sensors   Sensor[]
+  advisories Advisory[]
+
+  @@index([farmId])
+  @@index([crop])
+}
+
+model Sensor {
+  id         String       @id @default(cuid())
+  name       String
+  sensorType SensorType   @default(SOIL_MOISTURE)
+  status     SensorStatus @default(ONLINE)
+  battery    Int?
+  plotId     String
+  createdAt  DateTime     @default(now())
+
+  plot     Plot            @relation(fields: [plotId], references: [id])
+  readings SensorReading[]
+
+  @@index([plotId])
+}
+
+model SensorReading {
+  id         String   @id @default(cuid())
+  sensorId   String
+  value      Float
+  unit       String
+  recordedAt DateTime @default(now())
+
+  sensor Sensor @relation(fields: [sensorId], references: [id])
+
+  @@index([sensorId])
+}
+
+model Advisory {
+  id          String           @id @default(cuid())
+  title       String
+  body        String
+  type        AdvisoryType     @default(AI_ADVICE)
+  priority    AdvisoryPriority @default(MEDIUM)
+  channel     AdvisoryChannel  @default(WHATSAPP)
+  language    String           @default("en")
+  sent        Boolean          @default(false)
+  sentAt      DateTime?
+  plotId      String?
+  farmerId    String?
+  createdAt   DateTime         @default(now())
+
+  plot   Plot? @relation(fields: [plotId], references: [id])
+  farmer User? @relation(fields: [farmerId], references: [id])
+
+  @@index([plotId])
+  @@index([farmerId])
+}
+
+model FareRate {
+  id          String   @id @default(cuid())
+  state       String   @unique
+  costPerMile Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FarmVisitRequest {
+  id               String      @id @default(cuid())
+  dcoUserId        String
+  status           VisitStatus @default(REQUESTED)
+  farmCount        Int         @default(0)
+  estimatedCost    Float?
+  notes            String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  decidedByUserId  String?
+
+  dco      User              @relation("VisitRequestDco", fields: [dcoUserId], references: [id])
+  decidedBy User?            @relation("VisitDecider", fields: [decidedByUserId], references: [id])
+  farms    FarmVisitFarm[]
+
+  @@index([dcoUserId])
+}
+
+model FarmVisitFarm {
+  id            String   @id @default(cuid())
+  requestId     String
+  farmId        String?
+  farmName      String?
+  address       String?
+  state         String?
+  transportCost Float?
+  distanceKm    Float?
+
+  request FarmVisitRequest @relation(fields: [requestId], references: [id])
+  farm    Farm?            @relation(fields: [farmId], references: [id])
+
+  @@index([requestId])
+}
+
+model FarmAssignment {
+  id          String           @id @default(cuid())
+  farmId      String
+  dcoUserId   String
+  status      AssignmentStatus @default(ASSIGNED)
+  notes       String?
+  assignedAt  DateTime         @default(now())
+  visitedAt   DateTime?
+  completedAt DateTime?
+
+  farm Farm @relation(fields: [farmId], references: [id])
+  dco  User @relation("DcoAssignments", fields: [dcoUserId], references: [id])
+
+  @@unique([farmId, dcoUserId])
+  @@index([dcoUserId])
 }

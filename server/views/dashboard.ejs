@@ -9,114 +9,44 @@
   <div class="main">
     <%- include('partials/topbar', { title: 'Operations dashboard' }) %>
     <div class="content">
-      <section class="kpis">
-        <div class="kpi-card">
-          <small>Farmers onboarded</small>
-          <strong>186</strong>
-          <span>▲ 24 this month</span>
-        </div>
-        <div class="kpi-card">
-          <small>Fields monitored</small>
-          <strong>42</strong>
-          <span>96% sensors online</span>
-        </div>
-        <div class="kpi-card">
-          <small>Avg AgriScore</small>
-          <strong>695</strong>
-          <span>▲ 18 vs last cycle</span>
-        </div>
-        <div class="kpi-card">
-          <small>Open advisories</small>
-          <strong>07</strong>
-          <span>3 high priority</span>
-        </div>
-      </section>
+      <div id="loading" class="card">Loading platform data…</div>
 
-      <section class="grid-2">
+      <section class="kpis" id="kpis" style="display:none"></section>
+
+      <section class="grid-2" id="chartRow" style="display:none">
         <div class="card">
           <div class="card-head">
             <div>
-              <b>IoT sensor activity</b>
-              <div class="sub">Moisture, nutrients and weather signals this week</div>
-            </div>
-            <div class="select">Last week ▾</div>
-          </div>
-          <div class="metric">42h 18min <span class="up">▲8%</span></div>
-          <div class="bar-chart">
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:72%"></div></div>
-              <span class="bar-label">Mon</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:56%"></div></div>
-              <span class="bar-label">Tue</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:38%"></div></div>
-              <span class="bar-label">Wed</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track">
-                <div class="tooltip">
-                  <div>Block B · Thu</div>
-                  <b>Soil pass 5h 12m</b>
-                  Drone 2h 40m<br>
-                  Advisory 19m
-                </div>
-                <div class="bar active" style="height:86%"></div>
-              </div>
-              <span class="bar-label">Thu</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:68%"></div></div>
-              <span class="bar-label">Fri</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:78%"></div></div>
-              <span class="bar-label">Sat</span>
-            </div>
-            <div class="bar-col">
-              <div class="bar-track"><div class="bar" style="height:34%"></div></div>
-              <span class="bar-label">Sun</span>
+              <b>New farmer signups</b>
+              <div class="sub">Daily registrations over the last 7 days</div>
             </div>
           </div>
+          <div class="bar-chart" id="signupBars"></div>
         </div>
-
         <div class="card">
           <div class="card-head">
             <div>
-              <b>Drone / NDVI progress</b>
-              <div class="sub">Aerial monitoring across north cluster</div>
+              <b>Field health mix</b>
+              <div class="sub">Health classification across monitored plots</div>
             </div>
-            <div class="select">Maize cycle ▾</div>
           </div>
-          <div class="progress">
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span><span></span>
-          </div>
-          <div class="list">
-            <div class="i"><span>Soil baseline mapping</span><span class="status-done">Completed</span></div>
-            <div class="i"><span>Canopy stress scan</span><span class="status-live">In progress</span></div>
-            <div class="i"><span>Irrigation gap report</span><span class="status-wait">Queued</span></div>
-          </div>
+          <div class="donut" id="healthDonut"></div>
+          <div class="legend" id="healthLegend"></div>
         </div>
       </section>
 
-      <section class="grid-3">
+      <section class="grid-3" id="networkRow" style="display:none">
         <div class="card span-2">
           <div class="card-head">
             <div>
               <b>Farm & plot network</b>
-              <div class="sub">GPS-mapped fields with live telemetry and credit band</div>
+              <div class="sub">Recent farms with live moisture and credit band</div>
             </div>
-            <div class="select">All clusters ▾</div>
           </div>
           <div class="table-wrap"><table class="table">
             <thead>
               <tr>
-                <th>Field</th>
+                <th>Farm</th>
                 <th>Farmer</th>
                 <th>Moisture</th>
                 <th>Stress</th>
@@ -124,84 +54,140 @@
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Block A · 2.4 ha</td>
-                <td>Amina Yusuf</td>
-                <td>74%</td>
-                <td>Low</td>
-                <td>742</td>
-                <td><span class="tag green">Healthy</span></td>
-              </tr>
-              <tr>
-                <td>Block B · 1.8 ha</td>
-                <td>Chidi Okeke</td>
-                <td>68%</td>
-                <td>Low</td>
-                <td>711</td>
-                <td><span class="tag green">Healthy</span></td>
-              </tr>
-              <tr>
-                <td>Block C · 3.1 ha</td>
-                <td>Fatima Bello</td>
-                <td>51%</td>
-                <td>Watch</td>
-                <td>633</td>
-                <td><span class="tag amber">Watchlist</span></td>
-              </tr>
-              <tr>
-                <td>Block D · 2.0 ha</td>
-                <td>Ibrahim Musa</td>
-                <td>44%</td>
-                <td>High</td>
-                <td>581</td>
-                <td><span class="tag blue">Advisory</span></td>
-              </tr>
-            </tbody>
+            <tbody id="networkRows"></tbody>
           </table></div>
         </div>
-
         <div class="card">
-          <b>AgriScore network</b>
-          <div class="mini"><span>Fields online</span><b>40/42</b></div>
-          <div class="mini"><span>Sensor health</span><b>96%</b></div>
-          <div class="mini"><span>Credit band B</span><b>Standard</b></div>
-          <div class="rings">
-            <div class="rings-label"><strong>695</strong>AgriScore</div>
-          </div>
+          <b>Network snapshot</b>
+          <div class="mini"><span>Online sensors</span><b id="snapSensors"></b></div>
+          <div class="mini"><span>Mapped plots</span><b id="snapMapped"></b></div>
+          <div class="mini"><span>Credit-ready farmers</span><b id="snapCredit"></b></div>
+          <div class="mini"><span>Pending visit requests</span><b id="snapVisits"></b></div>
+          <div class="rings" id="scoreRing"></div>
         </div>
       </section>
 
-      <section class="grid-2">
+      <section class="grid-2" id="advisoryRow" style="display:none">
         <div class="card">
           <div class="card-head">
             <div>
               <b>AI advisories</b>
-              <div class="sub">English + local language alerts via SMS / USSD</div>
+              <div class="sub">Latest advisories pushed to farmers</div>
             </div>
-            <div class="select">Today ▾</div>
           </div>
-          <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
-          <div class="mini"><span>Irrigation guidance</span><b>3 sent</b></div>
-          <div class="mini"><span>Pest / disease watch</span><b>2 sent</b></div>
-          <div class="mini"><span>Input timing</span><b>2 sent</b></div>
+          <div class="list" id="advisoryList"></div>
         </div>
-
         <div class="card">
           <div class="card-head">
             <div>
-              <b>Yield confidence</b>
-              <div class="sub">Season KPI across verified farm profiles</div>
+              <b>Season outlook</b>
+              <div class="sub">Crops under monitoring by area</div>
             </div>
-            <div class="select">This month ▾</div>
           </div>
-          <div class="metric" style="margin-top:12px">90.75% <span class="up">▲12%</span></div>
-          <div class="area"></div>
+          <div class="area-bars" id="cropBars"></div>
         </div>
       </section>
     </div>
   </div>
 </div>
 <%- include('partials/scripts') %>
+<script>
+(async function initAdminDashboard() {
+  try {
+    const { data } = await AG.api("/api/admin/summary");
+    const k = data.kpis;
+    const hid = (el) => el.style.display = "";
+
+    document.getElementById("loading").style.display = "none";
+    hid(document.getElementById("kpis"));
+    hid(document.getElementById("chartRow"));
+    hid(document.getElementById("networkRow"));
+    hid(document.getElementById("advisoryRow"));
+
+    // KPIs
+    const kpiDefs = [
+      { small: "Farmers onboarded", strong: AG.num(k.farmers), span: `<span>▲ ${AG.num(k.monthFarmers)} this month</span>` },
+      { small: "Fields monitored", strong: AG.num(k.fieldsMonitored), span: `<span>${AG.num(k.sensorsOnline)}/${AG.num(k.sensors)} sensors online</span>` },
+      { small: "Avg AgriScore", strong: AG.num(k.avgAgriScore), span: `<span>across verified profiles</span>` },
+      { small: "Open advisories", strong: String(k.openAdvisories).padStart(2, "0"), span: `<span>${AG.num(k.farmVisitRequests)} visit requests pending</span>` },
+      { small: "DCOs active", strong: AG.num(k.dcos), span: `<span>${AG.num(k.orgs)} organizations</span>` },
+    ];
+    document.getElementById("kpis").innerHTML = kpiDefs.map((d, i) => `
+      <div class="kpi-card">
+        <small>${d.small}</small>
+        <strong>${d.strong}</strong>
+        ${d.span}
+      </div>`).join("");
+
+    // Weekly signups bar chart
+    const days = data.weeklySignups;
+    const maxCount = Math.max(1, ...days.map((d) => d.count));
+    document.getElementById("signupBars").innerHTML = days.map((d) => {
+      const h = Math.max(6, Math.round((d.count / maxCount) * 100));
+      const label = new Date(d.day).toLocaleDateString("en", { weekday: "short" });
+      return `<div class="bar-col" title="${label}: ${d.count} signups">
+        <div class="bar-track"><div class="bar" style="height:${h}%"></div></div>
+        <span class="bar-label">${label}</span>
+      </div>`;
+    }).join("");
+
+    // Health donut
+    const hm = data.healthMix;
+    document.getElementById("healthDonut").style.setProperty("--a", hm.healthy);
+    document.getElementById("healthDonut").style.setProperty("--b", hm.watch);
+    document.getElementById("healthDonut").style.setProperty("--c", hm.critical);
+    document.getElementById("healthLegend").innerHTML = `
+      <span class="legend-item"><i class="dot green"></i>Healthy ${hm.healthy}%</span>
+      <span class="legend-item"><i class="dot amber"></i>Watch ${hm.watch}%</span>
+      <span class="legend-item"><i class="dot red"></i>Critical ${hm.critical}%</span>`;
+
+    // Network table
+    const rows = data.recentFarms;
+    document.getElementById("networkRows").innerHTML = rows.length ? rows.map((f) => {
+      const stressCls = f.stress === "High" ? "red" : f.stress === "Watch" ? "amber" : "green";
+      const statusTag = f.status === "MAPPED" ? `<span class="tag green">Mapped</span>` : `<span class="tag amber">Pending</span>`;
+      const score = f.agriScore !== null && f.agriScore !== undefined ? `<span class="tag ${AG.tag(f.agriScore >= 650 ? "HEALTHY" : "WATCHLIST")}">${AG.num(f.agriScore)}</span>` : `<span class="tag gray">—</span>`;
+      return `<tr>
+        <td><div class="row"><span class="sm">${AG.esc((f.farmer || "F").charAt(0))}</span><span><b>${AG.esc(f.name)}</b><small>${AG.esc(f.state || "—")} · ${AG.num(f.areaHa)} ha</small></span></div></td>
+        <td><b>${AG.esc(f.farmer)}</b><small>${AG.esc(f.farmerPhone || "")}</small></td>
+        <td>${f.moisture !== null && f.moisture !== undefined ? f.moisture + "%" : "—"}</td>
+        <td><span class="tag ${stressCls}">${AG.esc(f.stress || "Low")}</span></td>
+        <td>${score}</td>
+        <td>${statusTag}</td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="6" style="color:#88918;padding:24px;text-align:center">No farms registered yet</td></tr>`;
+
+    // Snapshot
+    document.getElementById("snapSensors").textContent = `${k.sensorsOnline}/${k.sensors}`;
+    document.getElementById("snapMapped").textContent = AG.num(data.gpsPlotCount);
+    document.getElementById("snapCredit").textContent = AG.num(data.creditCount);
+    document.getElementById("snapVisits").textContent = AG.num(k.farmVisitRequests);
+    document.getElementById("scoreRing").innerHTML = `<div class="rings-label"><strong>${AG.num(k.avgAgriScore)}</strong>AgriScore</div>`;
+
+    // Advisor list
+    const adv = data.recentAdvisories;
+    document.getElementById("advisoryList").innerHTML = adv.length ? adv.map((a) => `
+      <div class="i"><span>
+        <b>${AG.esc(a.title)}</b>
+        <small>${AG.esc(a.type)}${a.farmer ? " · " + AG.esc(a.farmer) : ""} · ${new Date(a.createdAt).toLocaleDateString("en-GB")}</small>
+      </span><span class="tag ${AG.tag(a.priority)}">${AG.esc(a.priority)}</span></div>
+    `).join("") : `<div class="i"><span>No advisories yet</span></div>`;
+
+    // Crop bars
+    const crops = data.crops;
+    const maxArea = Math.max(0.1, ...crops.map((c) => c.areaHa));
+    document.getElementById("cropBars").innerHTML = crops.map((c) => `
+      <div class="ab"><b>${AG.esc(c.crop)}</b><div class="track"><div class="fill" style="width:${Math.max(4, Math.round((c.areaHa / maxArea) * 100))}%"></div></div><span>${AG.num(c.areaHa)} ha</span></div>
+    `).join("");
+
+    // advisory badge
+    const badge = document.getElementById("advisoryBadge");
+    if (badge) badge.textContent = adv.length;
+  } catch (err) {
+    document.getElementById("loading").textContent = "Failed to load dashboard: " + err.message;
+    document.getElementById("loading").style.color = "#c44747";
+  }
+})();
+</script>
 </body>
 </html>

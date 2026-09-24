@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head', { title: 'Organization Dashboard' }) %>
+</head>
+<body>
+<div class="app">
+  <%- include('partials/sidebar', { active: 'dashboard' }) %>
+  <div class="main">
+    <%- include('partials/topbar', { title: 'Organization Dashboard' }) %>
+    <div class="content">
+      <div id="loading" class="card">Loading your organization…</div>
+
+      <section class="kpis" id="kpis" style="display:none"></section>
+
+      <section class="grid-2" id="idRow" style="display:none">
+        <div class="card">
+          <div class="card-head">
+            <div><b>My Agriksense ID</b><div class="sub">Your unique platform identity</div></div>
+            <span class="tag" id="cacTag"></span>
+          </div>
+          <div class="id-box" id="platformIdBox"></div>
+          <div class="mini"><span>Organization</span><b id="orgName"></b></div>
+          <div class="mini"><span>CAC number</span><b id="cacNum"></b></div>
+          <div class="mini"><span>Headquarters</span><b id="hqValue">—</b></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div><b>Directors / contact persons</b><div class="sub">Registered directors on the admin portal</div></div>
+          </div>
+          <div class="list" id="directorList"></div>
+        </div>
+      </section>
+
+      <section class="grid-3" id="memberRow" style="display:none">
+        <div class="card span-2">
+          <div class="card-head">
+            <div><b>My members</b><div class="sub">Farmers linked to this organization</div></div>
+            <button class="btn btn-primary" id="addMemberBtn">+ Add member</button>
+          </div>
+          <div class="table-wrap"><table class="table">
+            <thead><tr><th>Member</th><th>Location</th><th>Membership ID</th><th>Status</th></tr></thead>
+            <tbody id="memberRows"></tbody>
+          </table></div>
+        </div>
+        <div class="card">
+          <b>Membership summary</b>
+          <div class="mini"><span>Total members</span><b id="mTotal"></b></div>
+          <div class="mini"><span>Verified memberships</span><b id="mVerified"></b></div>
+          <div class="mini"><span>Pending verification</span><b id="mPending"></b></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Add member modal -->
+<div class="modal" id="memberModal" style="display:none">
+  <div class="modal-card">
+    <div class="card-head">
+      <div><b>Add organization member</b><div class="sub">Create a farmer & link to this organization</div></div>
+      <button class="icon-btn" id="memberClose">✕</button>
+    </div>
+    <form id="memberForm" class="form-grid">
+      <div class="form-group"><label>First name *</label><input name="firstName" required></div>
+      <div class="form-group"><label>Last name *</label><input name="lastName" required></div>
+      <div class="form-group"><label>Other name</label><input name="otherName"></div>
+      <div class="form-group"><label>Phone number *</label><input name="phoneNumber" required placeholder="2348012345678"></div>
+      <div class="form-group"><label>Email (optional)</label><input name="email" type="email"></div>
+      <div class="form-group"><label>Membership ID (optional)</label><input name="membershipId" placeholder="Leave blank to auto-generate"></div>
+      <div class="form-group"><label>State</label><input name="state"></div>
+      <div class="form-group"><label>LGA</label><input name="lga"></div>
+      <div class="form-group"><label>City / town</label><input name="cityTown"></div>
+      <div class="form-group"><label>Address</label><input name="address"></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Add member</button><span class="form-error" id="memberError"></span></div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/scripts') %>
+<script>
+function loadOrg() {
+  AG.api("/api/dashboards/organization").then(({ data }) => {
+    const o = data.org;
+    document.getElementById("loading").style.display = "none";
+    ["kpis", "idRow", "memberRow"].forEach((id) => (document.getElementById(id).style.display = ""));
+
+    const members = data.members;
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi-card"><small>Members</small><strong>${AG.num(members.length)}</strong><span>${AG.num(members.filter((m) => m.isVerified).length)} verified</span></div>
+      <div class="kpi-card"><small>Directors</small><strong>${AG.num(data.directors.length)}</strong><span>on file</span></div>
+      <div class="kpi-card"><small>Registration</small><strong>${o.isRegistered ? "Yes" : "No"}</strong><span>${o.isRegistered ? "CAC " + AG.esc(o.cacNumber || "") : "not registered"}</span></div>
+      <div class="kpi-card"><small>HQ</small><strong>${AG.esc(o.state || "—")}</strong><span>${AG.esc(o.lga || "") || ""}</span></div>`;
+
+    const box = document.getElementById("platformIdBox");
+    const id = data.platformId;
+    box.innerHTML = `<div class="id-value" id="idValue">${AG.esc(AG.mask(id))}</div>
+      <button class="icon-btn" id="eyeBtn" title="Show / hide ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>`;
+    document.getElementById("eyeBtn").addEventListener("click", () => {
+      const v = document.getElementById("idValue");
+      if (v.textContent.includes("***")) v.textContent = id; else v.textContent = AG.mask(id);
+    });
+    document.getElementById("cacTag").textContent = o.cacStatus;
+    document.getElementById("cacTag").className = "tag " + AG.tag(o.cacStatus);
+    document.getElementById("orgName").textContent = o.orgName;
+    document.getElementById("cacNum").textContent = o.cacNumber || "—";
+    // hq element id
+    const hqEl = document.getElementById("hqValue");
+    if (hqEl) hqEl.textContent = AG.esc([o.headquartersAddress, o.cityTown, o.lga, o.state].filter(Boolean).join(", ")) || "—";
+
+    document.getElementById("directorList").innerHTML = data.directors.length ? data.directors.map((d) => `
+      <div class="i"><span><b>${AG.esc(d.fullName)}</b><small>${AG.esc(d.phoneNumber)}${d.email ? " · " + AG.esc(d.email) : ""}</small></span></div>`
+    ).join("") : `<div class="i"><span>No directors on file</span></div>`;
+
+    document.getElementById("memberRows").innerHTML = members.length ? members.map((m) => `
+      <tr>
+        <td><div class="row"><span class="sm">${AG.esc((m.farmer.name || "M").charAt(0))}</span><span><b>${AG.esc(m.farmer.name)}</b><small>${AG.esc(m.farmer.phoneNumber || "")}</small></span></div></td>
+        <td>${AG.esc([m.farmer.cityTown, m.farmer.lga, m.farmer.state].filter(Boolean).join(", ")) || "—"}</td>
+        <td><b>${AG.esc(m.membershipId)}</b></td>
+        <td><span class="tag ${AG.tag(m.isVerified ? "VERIFIED" : "PENDING")}">${m.isVerified ? "Verified" : "Unverified"}</span></td>
+      </tr>`).join("") : `<tr><td colspan="4" style="padding:26px;text-align:center;color:#889189">No members yet — add your first member</td></tr>`;
+
+    document.getElementById("mTotal").textContent = AG.num(members.length);
+    document.getElementById("mVerified").textContent = AG.num(members.filter((m) => m.isVerified).length);
+    document.getElementById("mPending").textContent = AG.num(members.filter((m) => !m.isVerified).length);
+  }).catch((err) => {
+    document.getElementById("loading").textContent = "Failed to load organization: " + err.message;
+    document.getElementById("loading").style.color = "#c44747";
+  });
+}
+
+document.getElementById("addMemberBtn").addEventListener("click", () => document.getElementById("memberModal").style.display = "flex");
+document.getElementById("memberClose").addEventListener("click", () => document.getElementById("memberModal").style.display = "none");
+
+document.getElementById("memberForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(e.target).entries());
+  document.getElementById("memberError").textContent = "";
+  try {
+    await AG.api("/api/dashboards/organization/members", { method: "POST", body: JSON.stringify(payload) });
+    document.getElementById("memberModal").style.display = "none";
+    e.target.reset();
+    loadOrg();
+  } catch (err) { document.getElementById("memberError").textContent = err.message; }
+});
+
+loadOrg();
+</script>
+</body>
+</html>
