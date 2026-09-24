@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head', { title: 'My Dashboard' }) %>
+</head>
+<body>
+<div class="app">
+  <%- include('partials/sidebar', { active: 'dashboard' }) %>
+  <div class="main">
+    <%- include('partials/topbar', { title: 'My Farm Dashboard' }) %>
+    <div class="content">
+      <div id="loading" class="card">Loading your profile…</div>
+
+      <section class="kpis" id="kpis" style="display:none"></section>
+
+      <section class="grid-2" id="idRow" style="display:none">
+        <div class="card">
+          <div class="card-head">
+            <div><b>My Agriksense ID</b><div class="sub">Your unique platform identity</div></div>
+            <span class="tag green" id="creditTag"></span>
+          </div>
+          <div class="id-box" id="platformIdBox"></div>
+          <div class="mini"><span>Onboarding</span><b id="onboardingLabel"></b></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div><b>Association memberships</b><div class="sub">Membership IDs from your organizations</div></div>
+          </div>
+          <div class="list" id="membershipList"></div>
+        </div>
+      </section>
+
+      <section class="grid-3" id="farmRow" style="display:none">
+        <div class="card span-2">
+          <div class="card-head">
+            <div><b>My farms & plots</b><div class="sub">Registered land, crops and live sensors</div></div>
+          </div>
+          <div class="roster" id="farmCards" style="padding:8px 0"></div>
+        </div>
+        <div class="card">
+          <b>Season summary</b>
+          <div class="mini"><span>Farms</span><b id="stFarms"></b></div>
+          <div class="mini"><span>Plots</span><b id="stPlots"></b></div>
+          <div class="mini"><span>Total area</span><b id="stArea"></b></div>
+          <div class="mini"><span>Sensors online</span><b id="stSensors"></b></div>
+          <div class="rings" id="scoreRing"></div>
+        </div>
+      </section>
+
+      <section class="card" id="advRow" style="display:none">
+        <div class="card-head"><div><b>My advisories</b><div class="sub">Latest AI advisory sent to your plots</div></div></div>
+        <div class="list" id="advisoryList"></div>
+      </section>
+    </div>
+  </div>
+</div>
+<%- include('partials/scripts') %>
+<script>
+(function initFarmerDashboard() {
+  AG.api("/api/dashboards/farmer").then(({ data }) => {
+    const st = data.stats;
+    document.getElementById("loading").style.display = "none";
+    ["kpis", "idRow", "farmRow", "advRow"].forEach((id) => (document.getElementById(id).style.display = ""));
+
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi-card"><small>My farms</small><strong>${AG.num(st.farms)}</strong><span>registered</span></div>
+      <div class="kpi-card"><small>Plots</small><strong>${AG.num(st.plots)}</strong><span>${AG.num(st.areaHa)} ha total</span></div>
+      <div class="kpi-card"><small>Sensors online</small><strong>${AG.num(st.sensorsOnline)}/${AG.num(st.sensors)}</strong><span>field telemetry</span></div>
+      <div class="kpi-card"><small>AgriScore</small><strong>${data.profile.agriScore != null ? AG.num(data.profile.agriScore) : "—"}</strong><span>${data.profile.creditReady ? "credit-ready ✅" : "building profile"}</span></div>`;
+
+    // Platform ID with eye toggle
+    const box = document.getElementById("platformIdBox");
+    const id = data.platformId;
+    box.innerHTML = `<div class="id-value" id="idValue">${AG.esc(AG.mask(id))}</div>
+      <button class="icon-btn" id="eyeBtn" title="Show / hide ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>`;
+    document.getElementById("eyeBtn").addEventListener("click", () => {
+      const v = document.getElementById("idValue");
+      if (v.textContent.includes("***")) v.textContent = id; else v.textContent = AG.mask(id);
+    });
+    document.getElementById("creditTag").textContent = data.profile.creditReady ? "Credit-ready" : "In credit review";
+    document.getElementById("onboardingLabel").textContent = data.onboardingStep === "PHASE_2_COMPLETED" ? "Completed" : "In progress";
+
+    const mlist = data.memberships;
+    document.getElementById("membershipList").innerHTML = mlist.length ? mlist.map((m) => `
+      <div class="i"><span><b>${AG.esc(m.orgName)}</b><small>Membership ID ${AG.esc(m.membershipId)}</small></span>
+      <span class="tag ${AG.tag(m.isVerified ? "VERIFIED" : "PENDING")}">${m.isVerified ? "Verified" : "Unverified"}</span></div>`
+    ).join("") : `<div class="i"><span>No association memberships yet</span></div>`;
+
+    const farms = data.farms;
+    document.getElementById("farmCards").innerHTML = farms.length ? farms.map((f) => `
+      <div class="rprofile">
+        <span class="r-avatar">${AG.esc((f.name || "F").charAt(0))}</span>
+        <div class="r-info">
+          <b>${AG.esc(f.name)}</b>
+          <small>${AG.esc([f.cityTown, f.lga, f.state].filter(Boolean).join(", ")) || "—"}</small>
+          <div class="meta">${f.plots.map((p) => `<span class="r-chip g">${AG.esc(p.crop || "plot")} · ${p.areaHa ?? "—"}ha</span>`).join("")}</div>
+        </div>
+      </div>`).join("") : `<div style="color:#889189;font-size:13px;padding:12px 0">You haven't registered any farms yet — reach out to your DCO.</div>`;
+
+    document.getElementById("stFarms").textContent = AG.num(st.farms);
+    document.getElementById("stPlots").textContent = AG.num(st.plots);
+    document.getElementById("stArea").textContent = AG.num(st.areaHa) + " ha";
+    document.getElementById("stSensors").textContent = `${AG.num(st.sensorsOnline)}/${AG.num(st.sensors)}`;
+    document.getElementById("scoreRing").innerHTML = `<div class="rings-label"><strong>${data.profile.agriScore != null ? AG.num(data.profile.agriScore) : "—"}</strong>AgriScore</div>`;
+
+    const adv = farms.flatMap((f) => f.plots.flatMap((p) => p.advisories)).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    document.getElementById("advisoryList").innerHTML = adv.length ? adv.slice(0, 6).map((a) => `
+      <div class="i"><span><b>${AG.esc(a.title)}</b><small>${AG.esc((a.body || "").slice(0, 90))}${(a.body || "").length > 90 ? "…" : ""}</small></span>
+      <span class="tag ${AG.tag(a.priority)}">${AG.esc(a.priority)}</span></div>`
+    ).join("") : `<div class="i"><span>No advisories yet</span></div>`;
+  }).catch((err) => {
+    document.getElementById("loading").textContent = "Failed to load dashboard: " + err.message;
+    document.getElementById("loading").style.color = "#c44747";
+  });
+})();
+</script>
+</body>
+</html>

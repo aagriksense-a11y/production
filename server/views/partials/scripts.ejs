@@ -1,5 +1,60 @@
 <script>
-  const hasSession = !!localStorage.getItem("agriksense_token");
+  const LS_TOKEN = "agriksense_token";
+  const LS_REFRESH = "agriksense_refresh";
+  const LS_USER = "agriksense_user";
+
+  function getToken() { return localStorage.getItem(LS_TOKEN); }
+  function getStoredUser() {
+    try { return JSON.parse(localStorage.getItem(LS_USER) || "null"); } catch (_) { return null; }
+  }
+
+  window.AG = {
+    token: getToken,
+    user: getStoredUser,
+    api: async function (path, opts = {}) {
+      const headers = Object.assign({ "Content-Type": "application/json" }, opts.headers || {});
+      const token = getToken();
+      if (token) headers.Authorization = "Bearer " + token;
+      const res = await fetch(path, Object.assign({}, opts, { headers }));
+      if (res.status === 401) {
+        localStorage.removeItem(LS_TOKEN);
+        localStorage.removeItem(LS_REFRESH);
+        localStorage.removeItem(LS_USER);
+        if (!window.location.pathname.startsWith("/login")) window.location.replace("/login");
+        throw new Error("Unauthorized");
+      }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message || "Request failed");
+      return data;
+    },
+    money: (n) => {
+      if (n === null || n === undefined) return "—";
+      return "₦" + Number(n).toLocaleString("en-NG", { maximumFractionDigits: 0 });
+    },
+    num: (n) => {
+      if (n === null || n === undefined) return "—";
+      return Number(n).toLocaleString("en-NG");
+    },
+    mask: (s) => {
+      if (!s) return "";
+      if (s.startsWith("+")) return "+***" + s.slice(-4);
+      return "***" + s.slice(-4);
+    },
+    tag: (kind) => {
+      const map = {
+        VERIFIED: "green", REJECTED: "red", PENDING: "amber",
+        HEALTHY: "green", WATCHLIST: "amber", CRITICAL: "red",
+        MAPPED: "green", ASSIGNED: "blue", COMPLETED: "green", VISITED: "blue",
+        REQUESTED: "amber", CANCELLED: "gray", ACTIVE: "green",
+        DORMANT: "gray", HARVESTED: "blue", MAINTENANCE: "amber", OFFLINE: "red", ONLINE: "green",
+        PHASE_1_BASIC: "amber", PHASE_2_COMPLETED: "green", LOW: "gray", MEDIUM: "blue", HIGH: "amber", CRITICAL: "red",
+      };
+      return map[kind] || "gray";
+    },
+    esc: (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])),
+  };
+
+  const hasSession = !!getToken();
   if (!hasSession) {
     window.location.replace("/login");
   }
@@ -29,24 +84,84 @@
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("agriksense_token");
-      localStorage.removeItem("agriksense_refresh");
-      localStorage.removeItem("agriksense_user");
+      localStorage.removeItem(LS_TOKEN);
+      localStorage.removeItem(LS_REFRESH);
+      localStorage.removeItem(LS_USER);
       window.location.href = "/login";
     });
   }
 
+  // Role-switch: ADMIN keeps current page; others get sent to their dashboard
+  (function roleGuard() {
+    const user = getStoredUser();
+    if (!user) return;
+    const role = user.role;
+    const mapping = {
+      FARMER: "/farmer-dashboard",
+      DATA_COLLECTION_OFFICER: "/dco-dashboard",
+      ORGANIZATION: "/org-dashboard",
+    };
+    if (role === "ADMIN") return;
+    const target = mapping[role];
+    if (!target) return;
+    const allowedForRole = {
+      FARMER: ["/farmer-dashboard"],
+      DATA_COLLECTION_OFFICER: ["/dco-dashboard"],
+      ORGANIZATION: ["/org-dashboard"],
+    };
+    const path = window.location.pathname;
+    if (path !== target) {
+      window.location.replace(target);
+    }
+  })();
+
   try {
-    const user = JSON.parse(localStorage.getItem("agriksense_user") || "null");
+    const user = getStoredUser();
     if (user) {
       const profile = user.profile || {};
       const full = profile.type === "organization"
-        ? (profile.orgName || "Operator")
-        : ([profile.firstName, profile.lastName].filter(Boolean).join(" ") || "Operator");
+        ? (profile.orgName || "Organization")
+        : ([profile.firstName, profile.lastName].filter(Boolean).join(" ") || "User");
       const label = document.getElementById("userLabel");
       const avatar = document.getElementById("userAvatar");
       if (label) label.textContent = full;
-      if (avatar) avatar.textContent = (profile.firstName || "O").charAt(0).toUpperCase();
+      if (avatar) avatar.textContent = (profile.firstName || "A").charAt(0).toUpperCase();
+
+      const isAdmin = user.role === "ADMIN";
+      const platformField = document.getElementById("platformIdField");
+      const platformVal = document.getElementById("platformIdVal");
+      if (platformField) {
+        const masked = false;
+        const reveal = () => {
+          platformVal.textContent = user.platformId || "";
+        };
+        const maskVal = () => {
+          platformVal.textContent = AG.mask(user.platformId);
+        };
+        maskVal();
+        platformField.style.display = "inline-flex";
+        platformField.title = "Click to show / hide My Agriksense ID";
+        platformField.addEventListener("click", () => {
+          const isMasked = platformVal.textContent.includes("***");
+          if (isMasked) reveal(); else maskVal();
+        });
+      }
+
+      // Toggle sidebar sections by role
+      const adminSection = document.getElementById("adminSection");
+      const memberSection = document.getElementById("memberSection");
+      const memberHomeLink = document.getElementById("memberHomeLink");
+      const roleBadge = document.getElementById("roleBadge");
+      if (isAdmin) {
+        if (adminSection) adminSection.style.display = "block";
+        if (memberSection) memberSection.style.display = "none";
+        if (roleBadge) roleBadge.style.display = "none";
+      } else {
+        if (adminSection) adminSection.style.display = "none";
+        if (memberSection) memberSection.style.display = "block";
+        if (roleBadge) roleBadge.style.display = "none";
+        if (memberHomeLink) memberHomeLink.href = user.role === "FARMER" ? "/farmer-dashboard" : user.role === "DATA_COLLECTION_OFFICER" ? "/dco-dashboard" : "/org-dashboard";
+      }
     }
   } catch (_) {}
 </script>

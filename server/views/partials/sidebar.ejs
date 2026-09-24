@@ -3,63 +3,84 @@
     <img src="/images/logo/logo-dark.png" alt="Agriksense">
   </a>
 
-  <div class="side-title">Operations</div>
-  <a class="side-item <%= active === 'dashboard' ? 'active' : '' %>" href="/dashboard">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-      Dashboard
-    </span>
-  </a>
-  <a class="side-item <%= active === 'farmers' ? 'active' : '' %>" href="/farmers">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Farmers
-    </span>
-  </a>
-  <a class="side-item <%= active === 'farms' ? 'active' : '' %>" href="/farms">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-      Farms & Plots
-    </span>
-  </a>
+  <div class="side-select" id="roleBadge">
+    <a href="/dashboard" class="side-item" id="homeLink">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Home
+      </span>
+    </a>
+  </div>
 
-  <div class="side-title">Monitoring</div>
-  <a class="side-item <%= active === 'drone' ? 'active' : '' %>" href="/drone">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
-      Drone Monitoring
-    </span>
-  </a>
-  <a class="side-item <%= active === 'iot' ? 'active' : '' %>" href="/iot">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
-      IoT Sensors
-    </span>
-  </a>
-  <a class="side-item <%= active === 'advisory' ? 'active' : '' %>" href="/advisory">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      AI Advisory
-    </span>
-    <span class="badge">07</span>
-  </a>
+  <div class="admin-only" id="adminSection">
+    <div class="side-title">Operations</div>
+    <a class="side-item <%= active === 'dashboard' ? 'active' : '' %>" href="/dashboard">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        Dashboard
+      </span>
+    </a>
+    <a class="side-item <%= active === 'farmers' ? 'active' : '' %>" href="/farmers">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Farmers
+      </span>
+    </a>
+    <a class="side-item <%= active === 'farms' ? 'active' : '' %>" href="/farms">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        Farms & Plots
+      </span>
+    </a>
 
-  <div class="side-title">Credit & Admin</div>
-  <a class="side-item <%= active === 'agriscore' ? 'active' : '' %>" href="/agriscore">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      AgriScore
-    </span>
-  </a>
-  <a class="side-item <%= active === 'analytics' ? 'active' : '' %>" href="/analytics">
-    <span class="left">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
-      Analytics
-    </span>
-  </a>
+    <div class="side-title">Monitoring</div>
+    <a class="side-item <%= active === 'drone' ? 'active' : '' %>" href="/drone">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        Drone Monitoring
+      </span>
+    </a>
+    <a class="side-item <%= active === 'iot' ? 'active' : '' %>" href="/iot">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+        IoT Sensors
+      </span>
+    </a>
+    <a class="side-item <%= active === 'advisory' ? 'active' : '' %>" href="/advisory">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        AI Advisory
+      </span>
+      <span class="badge" id="advisoryBadge">0</span>
+    </a>
+
+    <div class="side-title">Credit & Admin</div>
+    <a class="side-item <%= active === 'agriscore' ? 'active' : '' %>" href="/agriscore">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        AgriScore
+      </span>
+    </a>
+    <a class="side-item <%= active === 'analytics' ? 'active' : '' %>" href="/analytics">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
+        Analytics
+      </span>
+    </a>
+  </div>
+
+  <div class="non-admin" id="memberSection">
+    <div class="side-title">My Workspace</div>
+    <a class="side-item" href="/farmer-dashboard" id="memberHomeLink">
+      <span class="left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+        My Dashboard
+      </span>
+    </a>
+  </div>
 
   <div class="workspace">
     Workspace
-    <b id="workspaceName">Raoatech Ops</b>
+    <b id="workspaceName">Agriksense</b>
   </div>
 </aside>

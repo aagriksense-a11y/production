@@ -8,6 +8,8 @@ import fastifyStatic from "@fastify/static";
 import fastifyView from "@fastify/view";
 import ejs from "ejs";
 import authRoutes from "./routes/auth.js";
+import adminRoutes from "./routes/admin.js";
+import dashboardRoutes from "./routes/dashboard.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,6 +61,8 @@ await app.register(fastifyView, {
 
 app.get("/health", async () => ({ ok: true, service: "agriksense-api" }));
 await app.register(authRoutes, { prefix: "/api/auth" });
+await app.register(adminRoutes, { prefix: "/api/admin" });
+await app.register(dashboardRoutes, { prefix: "/api/dashboards" });
 
 app.get("/", async (_request, reply) => reply.view("index.ejs"));
 app.get("/login", async (_request, reply) => reply.view("login.ejs"));
@@ -66,6 +70,9 @@ app.get("/signup", async (_request, reply) => reply.view("signup.ejs"));
 app.get("/dashboard", async (_request, reply) => reply.view("dashboard.ejs"));
 app.get("/farmers", async (_request, reply) => reply.view("farmers.ejs"));
 app.get("/farms", async (_request, reply) => reply.view("farms.ejs"));
+app.get("/farmer-dashboard", async (_request, reply) => reply.view("farmer-dashboard.ejs"));
+app.get("/dco-dashboard", async (_request, reply) => reply.view("dco-dashboard.ejs"));
+app.get("/org-dashboard", async (_request, reply) => reply.view("org-dashboard.ejs"));
 app.get("/drone", async (_request, reply) => reply.view("drone.ejs"));
 app.get("/iot", async (_request, reply) => reply.view("iot.ejs"));
 app.get("/advisory", async (_request, reply) => reply.view("advisory.ejs"));

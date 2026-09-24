@@ -9,44 +9,26 @@
   <div class="main">
     <%- include('partials/topbar', { title: 'Farmers' }) %>
     <div class="content">
-      <section class="kpis">
-        <div class="kpi-card">
-          <small>Total farmers</small>
-          <strong>186</strong>
-          <span>▲ 24 this month</span>
-        </div>
-        <div class="kpi-card">
-          <small>Verified profiles</small>
-          <strong>168</strong>
-          <span>90% of onboarded</span>
-        </div>
-        <div class="kpi-card">
-          <small>GPS plotted</small>
-          <strong>162</strong>
-          <span>▲ 12 this month</span>
-        </div>
-        <div class="kpi-card">
-          <small>Credit-ready</small>
-          <strong>112</strong>
-          <span class="amber">74 awaiting docs</span>
-        </div>
-      </section>
+      <div id="loading" class="card">Loading farmers…</div>
 
-      <div class="toolbar">
+      <section class="kpis" id="kpis" style="display:none"></section>
+
+      <div class="toolbar" id="toolbar" style="display:none">
         <div class="search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
-          <input type="text" placeholder="Search farmers by name, phone or location">
+          <input type="text" id="searchInput" placeholder="Search farmers by name, phone, or platform ID">
         </div>
-        <button class="btn btn-ghost">All clusters ▾</button>
-        <button class="btn btn-primary">+ Onboard farmer</button>
+        <select id="stateFilter" class="select"><option value="">All states</option></select>
+        <select id="statusFilter" class="select"><option value="">All statuses</option><option value="VERIFIED">Verified</option><option value="PENDING">Pending</option></select>
+        <button class="btn btn-primary" id="addFarmerBtn">+ Onboard farmer</button>
       </div>
 
-      <section class="grid-3">
+      <section class="grid-3" id="tableRow" style="display:none">
         <div class="card span-2">
           <div class="card-head">
             <div>
               <b>Farmer registry</b>
-              <div class="sub">Registered farmers with farm setup, GPS mapping and credit status</div>
+              <div class="sub" id="resultCount"></div>
             </div>
           </div>
           <div class="table-wrap"><table class="table">
@@ -56,76 +38,220 @@
                 <th>Location</th>
                 <th>Plots</th>
                 <th>AgriScore</th>
+                <th>Memberships</th>
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><div class="row"><span class="sm">AY</span><span><b>Amina Yusuf</b><small>+234 803 111 2233</small></span></div></td>
-                <td>Kano</td>
-                <td>2 plots · 2.4 ha</td>
-                <td>742</td>
-                <td><span class="tag green">Verified</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm co">CO</span><span><b>Chidi Okeke</b><small>+234 802 445 6710</small></span></div></td>
-                <td>Enugu</td>
-                <td>1 plot · 1.8 ha</td>
-                <td>711</td>
-                <td><span class="tag green">Verified</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm fb">FB</span><span><b>Fatima Bello</b><small>+234 805 220 1180</small></span></div></td>
-                <td>Kaduna</td>
-                <td>3 plots · 3.1 ha</td>
-                <td>633</td>
-                <td><span class="tag blue">GPS mapped</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm im">IM</span><span><b>Ibrahim Musa</b><small>+234 809 771 4420</small></span></div></td>
-                <td>Katsina</td>
-                <td>2 plots · 2.0 ha</td>
-                <td>581</td>
-                <td><span class="tag amber">Docs pending</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm ne">NE</span><span><b>Ngozi Eze</b><small>+234 806 300 9917</small></span></div></td>
-                <td>Plateau</td>
-                <td>2 plots · 2.6 ha</td>
-                <td>684</td>
-                <td><span class="tag green">Verified</span></td>
-              </tr>
-              <tr>
-                <td><div class="row"><span class="sm sa">SA</span><span><b>Sani Abdullahi</b><small>+234 807 556 3389</small></span></div></td>
-                <td>Jigawa</td>
-                <td>1 plot · 1.5 ha</td>
-                <td>645</td>
-                <td><span class="tag blue">GPS mapped</span></td>
-              </tr>
-            </tbody>
+            <tbody id="farmerRows"></tbody>
           </table></div>
+          <div class="pagination" id="pagination" style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end"></div>
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <div>
-              <b>Onboarding funnel</b>
-              <div class="sub">Farmer lifecycle across registration steps</div>
-            </div>
-          </div>
-          <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i></div>
-          <div class="mini"><span>Registered</span><b>186</b></div>
-          <div class="mini"><span>GPS plotted</span><b>162</b></div>
-          <div class="mini"><span>Verification done</span><b>150</b></div>
-          <div class="mini"><span>Credit-ready</span><b>112</b></div>
-          <div class="rings">
-            <div class="rings-label"><strong>90%</strong>pipeline</div>
-          </div>
+          <b>Onboarding funnel</b>
+          <div class="seg" id="funnelSeg"></div>
+          <div class="mini"><span>Registered</span><b id="fnRegistered"></b></div>
+          <div class="mini"><span>NIN verified</span><b id="fnVerified"></b></div>
+          <div class="mini"><span>GPS plotted</span><b id="fnGps"></b></div>
+          <div class="mini"><span>Credit-ready</span><b id="fnCredit"></b></div>
         </div>
       </section>
     </div>
   </div>
 </div>
+
+<!-- Farmer detail drawer -->
+<div class="drawer" id="farmerDrawer">
+  <div class="drawer-head">
+    <b>Farmer profile</b>
+    <button class="icon-btn" id="drawerClose" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-body" id="farmerDetailBody"></div>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- Create farmer modal -->
+<div class="modal" id="createModal" style="display:none">
+  <div class="modal-card">
+    <div class="card-head">
+      <div><b>Onboard farmer</b><div class="sub">Create a farmer account (phase 1)</div></div>
+      <button class="icon-btn" id="createClose">✕</button>
+    </div>
+    <form id="createFarmerForm" class="form-grid">
+      <div class="form-group"><label>First name *</label><input name="firstName" required></div>
+      <div class="form-group"><label>Last name *</label><input name="lastName" required></div>
+      <div class="form-group"><label>Other name</label><input name="otherName"></div>
+      <div class="form-group"><label>Phone number *</label><input name="phoneNumber" required placeholder="2348012345678"></div>
+      <div class="form-group"><label>Email</label><input name="email" type="email"></div>
+      <div class="form-group"><label>Password *</label><input name="password" type="password" required minlength="8"></div>
+      <div class="form-group"><label>State</label><input name="state" id="createState"></div>
+      <div class="form-group"><label>LGA</label><input name="lga"></div>
+      <div class="form-group"><label>City / town</label><input name="cityTown"></div>
+      <div class="form-group"><label>Address</label><input name="address"></div>
+      <div class="form-group"><label>NIN (optional)</label><input name="nin"></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Create farmer</button><span class="form-error" id="createError"></span></div>
+    </form>
+  </div>
+</div>
+
 <%- include('partials/scripts') %>
+<script>
+let currentPage = 1;
+
+function initials(f) { return ((f.firstName || "F").charAt(0) + (f.lastName || "").charAt(0)) || "F"; }
+
+async function loadFarmers(increment = 0) {
+  currentPage = Math.max(1, currentPage + increment);
+  const q = encodeURIComponent(document.getElementById("searchInput").value);
+  const state = encodeURIComponent(document.getElementById("stateFilter").value);
+  const status = encodeURIComponent(document.getElementById("statusFilter").value);
+  const { data } = await AG.api(`/api/admin/farmers?q=${q}&state=${state}&status=${status}&page=${currentPage}`);
+  renderFarmers(data);
+}
+
+function renderFarmers(data) {
+  document.getElementById("resultCount").textContent = `${AG.num(data.total)} farmers`;
+  const rows = data.rows;
+  document.getElementById("farmerRows").innerHTML = rows.length ? rows.map((f) => {
+    const scoreTag = f.agriScore ? `<span class="tag ${AG.tag(f.agriScore >= 650 ? "HEALTHY" : "WATCHLIST")}">${AG.num(f.agriScore)}</span>` : `<span class="tag gray">—</span>`;
+    const memTag = f.totalMemberships
+      ? `<span class="tag ${f.verifiedMemberships === f.totalMemberships ? "green" : "amber"}">${f.verifiedMemberships}/${f.totalMemberships}</span>`
+      : `<span class="tag gray">0</span>`;
+    return `<tr class="clickable" data-id="${f.id}" onclick="openFarmer('${f.id}')">
+      <td><div class="row"><span class="sm">${AG.esc(initials(f))}</span><span><b>${AG.esc(f.fullName)}</b><small>${AG.esc(f.phoneNumber || "")} · ID ${AG.esc(f.platformId)}</small></span></div></td>
+      <td>${AG.esc(f.state || "—")}${f.lga ? ` · ${AG.esc(f.lga)}` : ""}</td>
+      <td>${AG.num(f.plots)} plots · ${f.areaHa} ha</td>
+      <td>${scoreTag}</td>
+      <td>${memTag}</td>
+      <td><span class="tag ${AG.tag(f.ninStatus)}">${AG.esc(f.ninStatus)}</span></td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="6" style="padding:30px;text-align:center;color:#889189">No farmers match your search</td></tr>`;
+
+  const pages = Math.max(1, Math.ceil(data.total / data.limit));
+  document.getElementById("pagination").innerHTML = `
+    <button class="btn btn-ghost" ${currentPage <= 1 ? "disabled" : ""} onclick="loadFarmers(-1)">← Previous</button>
+    <span style="font-size:12px;color:#5c665f;align-self:center">Page ${currentPage} of ${pages}</span>
+    <button class="btn btn-ghost" ${currentPage >= pages ? "disabled" : ""} onclick="loadFarmers(1)">Next →</button>`;
+}
+
+async function openFarmer(id) {
+  try {
+    const { data } = await AG.api(`/api/admin/farmers/${id}`);
+    const p = data.profile || {};
+    const farms = data.farms || [];
+    const memberhips = data.memberships || [];
+    document.getElementById("farmerDetailBody").innerHTML = `
+      <div class="detail-head">
+        <span class="r-avatar">${AG.esc(initials({ firstName: p.firstName, lastName: p.lastName }))}</span>
+        <div>
+          <b>${AG.esc(`${p.firstName || ""} ${p.lastName || ""}`.trim())}</b>
+          <small>ID ${AG.esc(data.platformId)} · ${AG.esc(data.email || "")} · ${AG.esc(data.phoneNumber || "")}</small>
+        </div>
+      </div>
+      <div class="detail-block">
+        <b>Residence</b>
+        <span>${AG.esc([p.address, p.cityTown, p.lga, p.state].filter(Boolean).join(", ") || "—")}</span>
+      </div>
+      <div class="detail-block">
+        <b>NIN verification</b>
+        <span><span class="tag ${AG.tag(p.ninStatus)}">${AG.esc(p.ninStatus)}</span> ${p.nin ? `· ${AG.esc(p.nin)}` : ""}</span>
+      </div>
+      <div class="detail-block">
+        <b>Memberships</b>
+        ${memberhips.length ? memberhips.map((m) => `<span class="mini-line"><span>${AG.esc(m.orgName)} · ${AG.esc(m.memberId)}</span><span class="tag ${AG.tag(m.isVerified ? "VERIFIED" : "PENDING")}">${m.isVerified ? "Verified" : "Unverified"}</span></span>`).join("") : `<span class="gray">No memberships</span>`}
+      </div>
+      <div class="detail-block">
+        <b>Bank accounts</b>
+        ${(data.bankAccounts || []).map((b) => `<span class="mini-line"><span>${AG.esc(b.bankName)}</span><small>${AG.esc(b.accountName)} · ${AG.esc(b.accountNumber)}</small></span>`).join("") || `<span class="gray">None added</span>`}
+      </div>
+      <div class="detail-block">
+        <b>Farms & plots (${AG.num(farms.length)})</b>
+        ${farms.length ? farms.map((f) => `
+          <div class="mini-line">
+            <span><b>${AG.esc(f.name)}</b><small>${AG.esc(f.state || "")} · ${AG.num(f.plots.length)} plots</small></span>
+          </div>
+        `).join("") : `<span class="gray">No farms registered</span>`}
+      </div>`;
+    document.getElementById("farmerDrawer").classList.add("open");
+    document.getElementById("overlay").classList.add("open");
+  } catch (err) { alert(err.message); }
+}
+
+function closeDrawer() {
+  document.getElementById("farmerDrawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
+}
+
+async function loadSummary() {
+  const { data } = await AG.api("/api/admin/summary");
+  const funnel = data.funnel;
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi-card"><small>Total farmers</small><strong>${AG.num(data.farmerCount)}</strong><span>${AG.num(funnel.registered)} registered</span></div>
+    <div class="kpi-card"><small>Verified profiles</small><strong>${AG.num(data.verifiedCount)}</strong><span>NIN verified</span></div>
+    <div class="kpi-card"><small>GPS plotted</small><strong>${AG.num(data.gpsPlotCount)}</strong><span>mapped plots</span></div>
+    <div class="kpi-card"><small>Credit-ready</small><strong>${AG.num(data.creditCount)}</strong><span class="amber">${AG.num(funnel.verified)} awaiting docs</span></div>`;
+  const maxF = Math.max(1, funnel.registered, funnel.verified, funnel.gpsPlotCount, funnel.creditCount);
+  const seg = (v, cls) => `<i class="${cls}" style="width:${Math.round((v / maxF) * 100)}%"></i>`;
+  document.getElementById("funnelSeg").innerHTML = seg(funnel.verified, "a") + seg(funnel.gpsPlotCount, "b") + seg(funnel.creditCount, "c");
+  document.getElementById("fnRegistered").textContent = AG.num(funnel.registered);
+  document.getElementById("fnVerified").textContent = AG.num(funnel.verified);
+  document.getElementById("fnGps").textContent = AG.num(funnel.gpsPlotted);
+  document.getElementById("fnCredit").textContent = AG.num(funnel.creditReady);
+
+  document.getElementById("kpis").style.display = "grid";
+  document.getElementById("toolbar").style.display = "flex";
+  document.getElementById("tableRow").style.display = "grid";
+  document.getElementById("loading").style.display = "none";
+}
+
+(async function initFarmers() {
+  try {
+    await loadSummary();
+    await loadStates();
+    await loadFarmers(0);
+  } catch (err) {
+    document.getElementById("loading").textContent = "Failed to load farmers: " + err.message;
+    document.getElementById("loading").style.color = "#c44747";
+  }
+})();
+
+document.getElementById("searchInput").addEventListener("input", debounce(() => loadFarmers(0), 300));
+document.getElementById("stateFilter").addEventListener("change", () => loadFarmers(0));
+document.getElementById("statusFilter").addEventListener("change", () => loadFarmers(0));
+
+document.getElementById("addFarmerBtn").addEventListener("click", () => document.getElementById("createModal").style.display = "flex");
+document.getElementById("createClose").addEventListener("click", () => document.getElementById("createModal").style.display = "none");
+document.getElementById("overlay").addEventListener("click", () => { closeDrawer(); document.getElementById("createModal").style.display = "none"; });
+document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+
+document.getElementById("createFarmerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const payload = Object.fromEntries(new FormData(form).entries());
+  document.getElementById("createError").textContent = "";
+  try {
+    await AG.api("/api/admin/farmers", { method: "POST", body: JSON.stringify(payload) });
+    document.getElementById("createModal").style.display = "none";
+    form.reset();
+    loadFarmers(0);
+  } catch (err) {
+    document.getElementById("createError").textContent = err.message;
+  }
+});
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+async function loadStates() {
+  try {
+    const { data } = await AG.api("/api/admin/farmers?limit=200");
+    const statesSet = new Set((data.rows || []).map((f) => f.state).filter(Boolean));
+    const opts = [...statesSet].sort().map((s) => `<option value="${AG.esc(s)}">${AG.esc(s)}</option>`).join("");
+    document.getElementById("stateFilter").insertAdjacentHTML("beforeend", opts);
+  } catch (_) {}
+}
+</script>
 </body>
 </html>

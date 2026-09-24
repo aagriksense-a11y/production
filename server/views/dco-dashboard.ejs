@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%- include('partials/head', { title: 'DCO Dashboard' }) %>
+</head>
+<body>
+<div class="app">
+  <%- include('partials/sidebar', { active: 'dashboard' }) %>
+  <div class="main">
+    <%- include('partials/topbar', { title: 'Data Collection Officer' }) %>
+    <div class="content">
+      <div id="loading" class="card">Loading your dashboard…</div>
+
+      <section class="kpis" id="kpis" style="display:none"></section>
+
+      <section class="grid-2" id="idRow" style="display:none">
+        <div class="card">
+          <div class="card-head">
+            <div><b>My Agriksense ID</b><div class="sub">Your unique platform identity</div></div>
+            <button class="btn btn-ghost" id="visitBtn">+ Request farm visit</button>
+          </div>
+          <div class="id-box" id="platformIdBox"></div>
+          <div class="mini"><span>Onboarding</span><b id="onboardingLabel"></b></div>
+          <div class="mini"><span>Available fare rate (${""}your state)</span><b id="fareRate"></b></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><b>My visit requests</b><div class="sub">Farm visit requests sent to admin</div></div></div>
+          <div class="list" id="visitList"></div>
+        </div>
+      </section>
+
+      <section class="card" id="assignRow" style="display:none">
+        <div class="card-head"><div><b>Assigned farms</b><div class="sub">Farms assigned to you by the platform administrator</div></div></div>
+        <div class="table-wrap"><table class="table">
+          <thead><tr><th>Farm</th><th>Farmer</th><th>Location</th><th>Plots</th><th>Status</th></tr></thead>
+          <tbody id="assignRows"></tbody>
+        </table></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Visit request modal -->
+<div class="modal" id="visitModal" style="display:none">
+  <div class="modal-card">
+    <div class="card-head">
+      <div><b>Request farm visit</b><div class="sub">Notify admin you're available to visit farms</div></div>
+      <button class="icon-btn" id="visitClose">✕</button>
+    </div>
+    <form id="visitForm" class="form-grid">
+      <div class="form-group full"><label>I know existing farms</label>
+        <select name="knownMode" id="knownMode">
+          <option value="yes">Yes — I'll list the farms</option>
+          <option value="no">No — farms should be assigned to me</option>
+        </select>
+      </div>
+      <div class="form-group full" id="knownFarmsFields">
+        <label>Known farms</label>
+        <div id="knownFarmRows"></div>
+        <button type="button" class="btn btn-ghost" id="addFarmRow" style="margin-top:8px">+ Add farm</button>
+      </div>
+      <div class="form-group full"><label>Note to admin</label><input name="notes" placeholder="e.g. Farms along the same corridor; can cover in one trip"></div>
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Submit request</button><span class="form-error" id="visitError"></span></div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/scripts') %>
+<script>
+let assignmentData = [];
+
+function farmRowHtml() {
+  return `<div class="vfarm"><input name="farmName" placeholder="Farm name" required><input name="location" placeholder="Location / address"><input name="distanceKm" type="number" min="0" step="0.5" placeholder="Distance (km)"></div>`;
+}
+
+function buildFarmRows(count) {
+  document.getElementById("knownFarmRows").innerHTML = Array.from({ length: count }, farmRowHtml).join("");
+}
+
+function loadDco() {
+  AG.api("/api/dashboards/dco").then(({ data }) => {
+    assignmentData = data;
+    document.getElementById("loading").style.display = "none";
+    ["kpis", "idRow", "assignRow"].forEach((id) => (document.getElementById(id).style.display = ""));
+
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi-card"><small>Visit requests</small><strong>${AG.num(data.visitRequests.length)}</strong><span>${AG.num(data.visitRequests.filter((r) => r.status === "REQUESTED").length)} pending review</span></div>
+      <div class="kpi-card"><small>Assigned farms</small><strong>${AG.num(data.assignments.length)}</strong><span>${AG.num(data.assignments.filter((a) => a.status === "ASSIGNED").length)} to visit</span></div>
+      <div class="kpi-card"><small>Completed visits</small><strong>${AG.num(data.assignments.filter((a) => a.status === "COMPLETED" || a.status === "VISITED").length)}</strong><span>completed</span></div>
+      <div class="kpi-card"><small>Home base</small><strong>${AG.esc(data.profile.cityTown || "—")}</strong><span>${AG.esc(data.profile.state || "")}</span></div>`;
+
+    const box = document.getElementById("platformIdBox");
+    const id = data.platformId;
+    box.innerHTML = `<div class="id-value" id="idValue">${AG.esc(AG.mask(id))}</div>
+      <button class="icon-btn" id="eyeBtn" title="Show / hide ID"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>`;
+    document.getElementById("eyeBtn").addEventListener("click", () => {
+      const v = document.getElementById("idValue");
+      if (v.textContent.includes("***")) v.textContent = id; else v.textContent = AG.mask(id);
+    });
+    document.getElementById("onboardingLabel").textContent = data.onboardingStep === "PHASE_2_COMPLETED" ? "Completed" : "In progress";
+    document.getElementById("fareRate").textContent = data.fareRate ? AG.money(data.fareRate.costPerMile) + " / mile" : "No fare set for your state";
+
+    const vreq = data.visitRequests;
+    document.getElementById("visitList").innerHTML = vreq.length ? vreq.slice(0, 6).map((r) => `
+      <div class="i"><span><b>${AG.num(r.farmCount)} farms · ${AG.money(r.estimatedCost)}</b><small>${new Date(r.createdAt).toLocaleDateString("en-GB")}</small></span>
+      <span class="tag ${AG.tag(r.status)}">${AG.esc(r.status)}</span></div>`
+    ).join("") : `<div class="i"><span>No visit requests yet</span></div>`;
+
+    const assigns = data.assignments;
+    document.getElementById("assignRows").innerHTML = assigns.length ? assigns.map((a) => `
+      <tr>
+        <td><b>${AG.esc(a.farm.name)}</b><small>${AG.esc(a.farm.address || "")}</small></td>
+        <td>${AG.esc(a.farm.farmer)}<small>${AG.esc(a.farm.farmerPhone || "")}</small></td>
+        <td>${AG.esc([a.farm.cityTown, a.farm.lga, a.farm.state].filter(Boolean).join(", ")) || "—"}</td>
+        <td>${a.farm.plots.map((p) => `${AG.esc(p.crop || "—")} ${p.areaHa ?? ""}ha`).join(", ") || "—"}</td>
+        <td><span class="tag ${AG.tag(a.status)}">${AG.esc(a.status)}</span></td>
+      </tr>`).join("") : `<tr><td colspan="5" style="padding:26px;text-align:center;color:#889189">No farms assigned yet</td></tr>`;
+  }).catch((err) => {
+    document.getElementById("loading").textContent = "Failed to load dashboard: " + err.message;
+    document.getElementById("loading").style.color = "#c44747";
+  });
+}
+
+document.getElementById("visitBtn").addEventListener("click", () => {
+  buildFarmRows(1);
+  document.getElementById("visitModal").style.display = "flex";
+});
+document.getElementById("visitClose").addEventListener("click", () => document.getElementById("visitModal").style.display = "none");
+document.getElementById("addFarmRow").addEventListener("click", () => document.getElementById("knownFarmRows").insertAdjacentHTML("beforeend", farmRowHtml()));
+document.getElementById("knownMode").addEventListener("change", (e) => {
+  document.getElementById("knownFarmsFields").style.display = e.target.value === "yes" ? "block" : "none";
+});
+
+document.getElementById("visitForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const knownMode = fd.get("knownMode");
+  const knownFarms = [];
+  if (knownMode === "yes") {
+    const fnames = fd.getAll("farmName");
+    const locs = fd.getAll("location");
+    const dists = fd.getAll("distanceKm");
+    for (let i = 0; i < fnames.length; i++) {
+      if (!fnames[i]) continue;
+      knownFarms.push({ farmName: fnames[i], address: locs[i] || "", distanceKm: Number(dists[i]) || 0 });
+    }
+  }
+  document.getElementById("visitError").textContent = "";
+  try {
+    await AG.api("/api/dashboards/dco/visit-requests", { method: "POST", body: JSON.stringify({ knownFarms, notes: fd.get("notes") }) });
+    document.getElementById("visitModal").style.display = "none";
+    e.target.reset();
+    loadDco();
+  } catch (err) { document.getElementById("visitError").textContent = err.message; }
+});
+
+loadDco();
+</script>
+</body>
+</html>
